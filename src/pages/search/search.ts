@@ -3,9 +3,6 @@ import { IonicPage, NavController, NavParams,ModalController } from 'ionic-angul
 import { CalendarModal, CalendarModalOptions, DayConfig } from "ion2-calendar";
 import { convertEnumToColumn } from 'ion-multi-picker';
 import { ContactPage } from '../contact/contact'; 
-enum Cabin {
-  经济舱,商务舱,头等舱
-}
 @IonicPage()
 @Component({
   selector: 'page-search',
@@ -15,17 +12,22 @@ export class SearchPage {
   depCity: string = '出发城市';
   arrCity: string = '到达城市';	
   isEx: boolean = true;
-  cabin: Cabin;
-  Cabin;
-  cabins: any[];
   dependentColumns: any[];
+  independentColumns: any[] = ['经济舱'];
   currentDate: String;
   change:string = 'OW';
+ 
   constructor(public navCtrl: NavController, public navParams: NavParams,public modalCtrl: ModalController) {
     //cabin start
-    this.cabin = Cabin.经济舱;
-    this.Cabin = Cabin;
-    this.cabins = convertEnumToColumn(this.Cabin);
+    // Independent columns
+    this.independentColumns = [
+      {
+        options: 
+       [{ text: '经济舱', value: 'Y' },
+        { text: '头等舱', value: 'F' },
+        { text: '商务舱', value: 'C' }]
+      }
+    ];
     //cabin end
     //time start
     this.currentDate = (new Date()).toISOString();
