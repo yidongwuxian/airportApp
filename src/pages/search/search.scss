@@ -1,0 +1,82 @@
+page-search {
+	.city{
+	    display: flex;
+	    margin-top:-4px;
+	    >div{
+	        width:45%;
+	        text-align: center;
+	        font-size: 24px;
+	        color:blue;
+	    }
+	    .ex{
+	        font-size: 30px;                                   
+	    }
+	    .exchange{
+	        width:10%;
+	        transition: .5s; 
+	        margin-top:-3px;                    
+	    }
+	    .rotateEx{
+	        transform: rotate(360deg);
+	    }
+	}
+	.date{
+		    >div{ display: flex; 
+		    	.mu-checkbox-icon{
+                    margin-left:5px;
+                }            
+                .dateItem{
+                    flex: 1;
+                    height: 0.4rem;
+                    align-items: center;
+                    height:45px;
+                    .dateBox{
+                        width:45%;
+                        .mu-date-picker{
+                            height:0.4rem;
+                            margin-top:25px;
+                            width:100px;
+                            overflow: hidden;
+                            
+                        }
+                        .mu-text-field-line{
+                            background: transparent;
+                        }
+                        .mu-text-field-input{
+                            font-size: 16px;
+                            width:100px;
+                            color:blue;
+                        }
+                        .mu-text-field-content{
+                            width:100px;
+                        }
+                        
+                    }
+                    .iconfont{
+                        color:blue;
+                        font-size: 14px;
+                        margin-right: 8px;                       
+                    }
+                    .back{
+                        color:yellow;
+                    }
+                    .riqi{
+                        font-size: 16px;
+                        color:blue;
+                    }
+                    .week{
+                        color:gray;
+                        margin-left:5px;
+                    }                   
+                }
+                .routeType{
+                    display: flex;
+                    align-items: center; 
+                    .wangfanText{
+                        font-size: 14px;
+                    }                                      
+                }
+		    }
+                
+        }
+}

@@ -1,0 +1,55 @@
+page-contact {
+  ::-webkit-scrollbar {
+    width: 0
+  }
+
+  $modal-size: 20vw;
+  .indexed-menu {
+    width: 20px;
+    text-align: center;
+    float: right;
+    position: fixed;
+    right: 0;
+    top: 60px;
+    z-index: 104;
+    .indexed-item {
+      transition: all .3s ease-out;
+      margin: 1px 0;
+      color: #999;
+      &.activate {
+        transform: scale(1.5);
+        color: #000;
+      }
+    }
+  }
+
+  .content-ios {
+    .indexed-menu {
+      top: 50px;
+    }
+  }
+
+  .modal {
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    position: fixed;
+    pointer-events: none;
+    width: $modal-size;
+    height: $modal-size;
+    line-height: $modal-size;
+    margin-left: -($modal-size * 0.5);
+    margin-top: -($modal-size * 0.5);
+    color: #fff;
+    font-size: 3em;
+    text-align: center;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.52);
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.16);
+    transition: opacity .5s;
+    opacity: 0;
+    &.show {
+      opacity: 1
+    }
+  }
+}

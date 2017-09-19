@@ -1,0 +1,118 @@
+html{
+    font-size:100px;
+}
+body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, p, h1, h2, h3, h4,h5, h6, i, b, textarea, button, input, select, figure, figcaption {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+    border: none;
+    box-sizing: border-box;
+    font-size:0.12rem;
+    font-family: "Hiragino Sans GB",sans-serif;
+    -webkit-tap-highlight-color:transparent;
+    -webkit-font-smoothing: antialiased;
+    //touch-action: none; 
+    &:focus {
+        outline: none;
+    }
+}
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/  
+::-webkit-scrollbar  
+{  
+    width: 0px;  
+    height: 0px;  
+    background-color: #F5F5F5;  
+}  
+  
+/*定义滚动条轨道 内阴影+圆角*/  
+::-webkit-scrollbar-track  
+{  
+    -webkit-box-shadow: inset 0 0 1px rgba(0,0,0,0);  
+    border-radius: 10px;  
+    background-color: #F5F5F5;  
+}  
+  
+/*定义滑块 内阴影+圆角*/  
+::-webkit-scrollbar-thumb  
+{  
+    border-radius: 10px;  
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
+    background-color: #555;  
+}  
+ 
+
+html,body{
+    min-height: 100%;
+    width: 100%;
+}
+
+
+.clear:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.clear{
+    zoom:1;
+}
+.flex{
+    display: flex;
+}
+.left{
+    float: left;
+}
+
+.right{
+    float: right;
+}
+
+.hide{
+    display: none;
+}
+.hidden{
+    visibility:hidden;
+}
+.show{
+    display: block;
+}
+@font-face {
+  font-family: 'iconfont';  /* project id 366743 */
+  src: url('//at.alicdn.com/t/font_366743_q7j73jfwl2kb7qfr.eot');
+  src: url('//at.alicdn.com/t/font_366743_q7j73jfwl2kb7qfr.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_366743_q7j73jfwl2kb7qfr.woff') format('woff'),
+  url('//at.alicdn.com/t/font_366743_q7j73jfwl2kb7qfr.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_366743_q7j73jfwl2kb7qfr.svg#iconfont') format('svg');
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 12px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*muse.ui部分组件样式重置*/
+//开关颜色重置
+.mu-switch input[type=checkbox]:checked+.mu-switch-wrapper .mu-switch-thumb{
+    background: #00b4ff;
+}
+.mu-switch input[type=checkbox]:checked+.mu-switch-wrapper .mu-switch-track{
+    background: #00b4ff;
+}
+.mu-switch input[type=checkbox]:checked+.mu-switch-wrapper .mu-switch-thumb{
+    background: #00b4ff;
+}
+//复选框颜色重置
+.mu-checkbox-icon-checked{
+    color:#00b4ff;
+}
+.mu-checkbox-icon-uncheck{
+    color:#999;
+}
+.mu-checkbox-icon-checked{
+    color:#00b4ff;
+}
