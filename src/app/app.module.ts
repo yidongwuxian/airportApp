@@ -15,6 +15,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { CalendarPage } from '../pages/calendar/calendar';
 import { SearchPage } from '../pages/search/search';
 import { CityselPage } from '../pages/citysel/citysel';
+import { FlightqueryPage } from '../pages/flightquery/flightquery';
 //component
 import { ContactItemComponent } from '../component/contactList/contactList.component';
 import { CountComponent } from '../component/counter/counter.component';
@@ -42,6 +43,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     CalendarPage,
     SearchPage,
     CityselPage,
+    FlightqueryPage,
 
     ContactItemComponent,
     CountComponent,
@@ -71,6 +73,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     CalendarPage,
     SearchPage,
     CityselPage,
+    FlightqueryPage,
+    
     ContactItemComponent,
     CountComponent
   ],

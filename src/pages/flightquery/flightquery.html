@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>航班搜索</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+ <div>  
+		<div class="list">			
+			<ul>
+				<li *ngFor="let flight of flightData; index as i; trackBy:trackByFlightData;" (click)="selectTheFlight(flight)">
+					<div class="flightTop">
+						<div class="topLeft">
+							<div><span class="iconfont">&#xe601;</span></div>
+							<div>
+								<div class="time">{{flight.segments[0].fromDate|date:HH:mm }}</div>
+								<div class="airport">
+									<p>{{flight.segments[0].fromAirportCn}}</p>
+									<p>{{flight.segments[0].fromTower}}</p>									
+								</div>
+							</div>
+							<div class="midmess">
+								<div>
+									<p class="type">转</p>
+									<p class="tranformCity">{{flight.segments[0].toCityCn}}</p>
+								</div>
+								<div>
+									<p class="type">经停</p>
+									<p class="stopoverCity">无数据</p>
+								</div>
+							</div>
+							<div>
+								<div class="time">{{(flight).toDate|date:HH:mm }}</div>
+								<div class="airport">
+									<p>{{(flight).toAirportCn}}</p>
+									<p>{{(flight).toTower}}</p>									
+								</div>
+							</div>
+						</div>
+						<div class="money">￥ <span class="count">{{flight.minAdultFacePrice}}</span></div>
+					</div>
+					<div class="flightBottom">
+						<span class="sign">
+							
+						</span>						
+						<span>{{flight.segments[0].flightNo}} | 机型{{flight.segments[0].planeModel}} </span>
+					</div>
+				</li>
+			</ul>			
+		</div>
+		<div class="footer">
+			<!--<div @click="screen">
+				<div><span class="iconfont">&#xe689;</span></div>
+				<div><mu-flat-button label="筛选" class="filterType"/></div>
+			</div>-->
+			<div (click)="filterAsTime()">
+				<div><span class="iconfont">&#xe68e;</span></div>
+				<div class="filterType">从早到晚</div>
+			</div>
+			<div (click)="filterAsPrice()">
+				<div><span class="iconfont">&#xe679;</span></div>
+				<div class="filterType">价格</div>
+			</div>
+		</div> 	
+  </div> 
+</ion-content>

@@ -1,13 +1,13 @@
 import { Component,ViewChild,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams,ModalController,AlertController } from 'ionic-angular';
 import { CalendarModal, CalendarModalOptions, DayConfig } from "ion2-calendar";
-import { HttpService } from '../../service/http.service';
 import { ContactPage } from '../contact/contact'; 
+import { FlightqueryPage } from '../flightquery/flightquery';
+
 @IonicPage()
 @Component({
   selector: 'page-search',
-  templateUrl: 'search.html',
-  providers:[HttpService]
+  templateUrl: 'search.html'
 })
 export class SearchPage {
   depCity: string = '出发城市';
@@ -15,7 +15,7 @@ export class SearchPage {
   isEx: boolean = true;
   dependentColumns: any[];
   currentDate: String;
-  rountingType:string;
+  rountingType:string ='OW';
   depCityCode:string;
   arrCityCode:string;
   isRT: Boolean;
@@ -26,7 +26,6 @@ export class SearchPage {
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public modalCtrl: ModalController,
-              private _HttpService: HttpService,
               public alertCtrl: AlertController) {
     //cabin start
     // Independent columns
@@ -272,36 +271,47 @@ export class SearchPage {
    //sumbit search start
    searchbtn(){
     if(this.rountingType == 'OW'){
-        sessionStorage.setItem('routingType','OW');
-        const QUERY_URL = 'http://192.168.1.252:3000/shopping/query?routingType='+this.rountingType+'&deptCity='+this.depCityCode+'&arrCity='+this.arrCityCode+'&deptStartDate='+
-      this.dep.nativeElement.innerText+'&deptEndDate='+'&seatClass='+this.cabin+'&adtCnt=1'+'&chdCnt=0&infCnt=0&deptCityName='+
-      this.depCity+'&arrCityName='+this.arrCity+'&temp='+Math.random().toString();
-      console.log(QUERY_URL);
-      this._HttpService.get(QUERY_URL)
-      .subscribe(
-        (res) => console.log('res:'+res),
-        (err) => console.log('err:'+err)
-      );
+        sessionStorage.setItem('routingType','OW'); 
+        this.navCtrl.push(FlightqueryPage,{
+            'routingType':   this.rountingType,
+            'deptCity':      this.depCityCode,
+            'arrCity':       this.arrCityCode,
+            'deptStartDate': this.dep.nativeElement.innerText,
+            'seatClass':     this.cabin,
+            'adtCnt':        1,
+            'chdCnt':        0,
+            'infCnt':        0,
+            'deptCityName':  this.depCity,
+            'arrCityName':   this.arrCity
+          });
     }else{
-      if(this.arr.nativeElement.innerText =='请选择返回日期'){
+        sessionStorage.setItem('routingType','RT');
+        if(this.arr.nativeElement.innerText =='请选择返回日期'){
          let msgAlert = this.alertCtrl.create({
            title: '请填写完整信息!',
            buttons: ['确定']
          });
          msgAlert.present();
-      }else{
-         sessionStorage.setItem('routingType','RT');
-          const QUERY_URL = 'http://192.168.1.252:3000/shopping/query?routingType='+this.rountingType+'&deptCity='+this.depCityCode+'&arrCity='+this.arrCityCode+'&deptStartDate='+
-        this.dep.nativeElement.innerText+'&deptEndDate='+this.arr.nativeElement.innerText+'&seatClass='+this.cabin+'&adtCnt=1'+'&chdCnt=1&infCnt=0&deptCityName='+
-        this.depCity+'&arrCityName='+this.arrCity+'&temp='+Math.random().toString();
-        console.log(QUERY_URL);
-        this._HttpService.get(QUERY_URL)
-        .subscribe(
-          (res) => console.log('res:'+res),
-          (err) => console.log('err:'+err)
-        )
-      } 
+        }else{
+          this.navCtrl.push(FlightqueryPage,{
+            'routingType':   this.rountingType,
+            'deptCity':      this.depCityCode,
+            'arrCity':       this.arrCityCode,
+            'deptStartDate': this.dep.nativeElement.innerText,
+            'deptEndDate':   this.arr.nativeElement.innerText,
+            'seatClass':     this.cabin,
+            'adtCnt':        1,
+            'chdCnt':        1,
+            'infCnt':        1,
+            'deptCityName':  this.depCity,
+            'arrCityName':   this.arrCity
+          });
+        }
     }
+
+    
+ 
+    
     //sumbit search end
 
     

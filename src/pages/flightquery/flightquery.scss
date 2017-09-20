@@ -1,0 +1,112 @@
+page-flightquery {
+	.flightListPage {
+    background: white;
+    .list {
+        padding: 0 4%;
+        padding-bottom: 50px;
+        > ul > li {
+            height: 1rem;
+            .flightTop {
+                height: 0.75rem;
+                .topLeft {
+                    display: flex;
+                    text-align: center;
+                    .iconfont {
+                        font-size: 15px;
+                        color: red;
+                    }
+                    >div{
+                        margin-top: 0.2rem;
+                        width:20vw;
+                        overflow: hidden;
+                    }
+                    >div:first-child{
+                        width:0.2rem;  
+                        text-align: left;                     
+                    }
+                    .time{
+                        font-size: 16px;
+                        font-weight: 600;                        
+                    }
+                    .midmess{                        
+                        width:20vw;
+                        margin:0.2rem 0 0;
+                        text-align: center;
+                        p{
+                            font-size: 10px;
+                        }
+                        .interval{
+                            color:gray;
+                        }
+                        .type{
+                            margin-top:5px;
+                            color: blue;
+                        }
+                        .tranformCity,.stopoverCity{
+                            color: blue;
+                        }
+                    }
+                    .airport{
+                        color:gray;
+                        display: flex;                       
+                        >p{
+                            font-size: 10px;
+                            &:first-child{
+                                width:15vw;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                            }
+                            &:last-child{
+                                width:3vw;
+                            }
+                        }
+                    }
+                }
+                .money {
+                    color: red;
+                    font-size: 8px;
+                    margin-top: 0.2rem;
+                }
+                .count {
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+            }
+            .flightBottom{
+                .sign{
+                    img{
+                        width:12px;
+                        height:12px;
+                        margin-right: 10px;
+                        position: relative;
+                        top:2px;
+                    }
+                }
+            }
+        }
+    }
+    .footer {
+        background: blue;
+        height: 0.5rem;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        align-items: center;
+        > div {
+            text-align: center;
+        }
+        .iconfont {
+            font-size: 18px;
+            color: white;
+        }
+        .filterType {
+            color: white;
+            height: 0.2rem;
+            line-height: 0.2rem;
+            font-size: 12px;
+            border-radius: 25px;
+        }
+    }
+}
+}
