@@ -1,12 +1,13 @@
 import { Component,ViewChild,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams,ModalController } from 'ionic-angular';
 import { CalendarModal, CalendarModalOptions, DayConfig } from "ion2-calendar";
-import { convertEnumToColumn } from 'ion-multi-picker';
+import { HttpService } from '../../service/http.service';
 import { ContactPage } from '../contact/contact'; 
 @IonicPage()
 @Component({
   selector: 'page-search',
   templateUrl: 'search.html',
+  providers:[HttpService]
 })
 export class SearchPage {
   depCity: string = '出发城市';
@@ -16,8 +17,10 @@ export class SearchPage {
   independentColumns: any[] = ['经济舱'];
   currentDate: String;
   change:string = 'OW';
- 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public modalCtrl: ModalController) {
+  depCityCode:string;
+  arrCityCode:string;
+  value: string;
+  constructor(public navCtrl: NavController, public navParams: NavParams,public modalCtrl: ModalController,private _HttpService: HttpService) {
     //cabin start
     // Independent columns
     this.independentColumns = [
@@ -133,12 +136,14 @@ export class SearchPage {
   @ViewChild('cityBack') cityBack: ElementRef;
   @ViewChild('dep') dep: ElementRef;
   @ViewChild('arr') arr: ElementRef;
+  @ViewChild('cabin') cabin: ElementRef;
   ionViewDidLoad() {
     const fromCity = JSON.parse(localStorage.getItem('fromCity'));
     const toCity   = JSON.parse(localStorage.getItem('toCity'));
     if(fromCity){
       if(fromCity.cityName){
          this.depCity = fromCity.cityName;
+         this.depCityCode = fromCity.cityCode;
       }else{
          this.depCity = '出发城市';
       }
@@ -146,6 +151,7 @@ export class SearchPage {
     if(toCity){
       if(toCity.cityName){
          this.arrCity = toCity.cityName;
+         this.arrCityCode = toCity.cityCode;
       }else{
          this.arrCity = '到达城市';
       }
@@ -231,7 +237,7 @@ export class SearchPage {
       weekdays: ['日', '一', '二', '三', '四', '五', '六'],
       weekStart: 1,
       defaultDate: new Date(),
-      title: '到达时间',
+      title: '返回时间',
       closeLabel: '取消',
       doneLabel: '确定',
       daysConfig: _daysConfig1
@@ -245,9 +251,45 @@ export class SearchPage {
       if(date){
          this.arr.nativeElement.innerText = date.string;
       }else{
-         this.arr.nativeElement.innerText = '到达时间';
+         this.arr.nativeElement.innerText = '请选择返回日期';
       }
     })
+  }
+
+   inlandorinter(){
+
+   }
+
+   //sumbit search start
+   searchbtn(){
+     if(this.arr.nativeElement.innerText =='请选择返回日期')
+
+    if(this.change == 'OW'){
+        sessionStorage.setItem('routingType','OW');
+        const QUERY_URL = 'http://192.168.1.252:3000/shopping/query?routingType='+this.change+'&deptCity='+this.depCityCode+'&arrCity='+this.arrCityCode+'&deptStartDate='+
+      this.dep.nativeElement.innerText+'&deptEndDate='+'&seatClass=Y'+'&adtCnt=1'+'&chdCnt=0&infCnt=0&deptCityName='+
+      this.depCity+'&arrCityName='+this.arrCity+'&temp='+Math.random().toString();
+      console.log(QUERY_URL);
+      this._HttpService.get(QUERY_URL)
+      .subscribe(
+        (res) => console.log('res:'+res),
+        (err) => console.log('err:'+err)
+      );
+    }else{
+        sessionStorage.setItem('routingType','RT');
+        const QUERY_URL = 'http://192.168.1.252:3000/shopping/query?routingType='+this.change+'&deptCity='+this.depCityCode+'&arrCity='+this.arrCityCode+'&deptStartDate='+
+      this.dep.nativeElement.innerText+'&deptEndDate='+this.arr.nativeElement.innerText+'&seatClass=Y'+'&adtCnt=1'+'&chdCnt=1&infCnt=0&deptCityName='+
+      this.depCity+'&arrCityName='+this.arrCity+'&temp='+Math.random().toString();
+      console.log(QUERY_URL);
+      this._HttpService.get(QUERY_URL)
+      .subscribe(
+        (res) => console.log('res:'+res),
+        (err) => console.log('err:'+err)
+      )
+    }
+    //sumbit search end
+
+    
   }
 
 }

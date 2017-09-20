@@ -16,18 +16,18 @@ import { CalendarPage } from '../pages/calendar/calendar';
 import { SearchPage } from '../pages/search/search';
 import { CityselPage } from '../pages/citysel/citysel';
 //component
-import { ContactItemComponent } from './component/contactList/contactList.component';
-import { CountComponent } from './component/counter/counter.component';
+import { ContactItemComponent } from '../component/contactList/contactList.component';
+import { CountComponent } from '../component/counter/counter.component';
 
 //pipe
-import { SexReformPipe } from './pipe/sexReform.pipe';
+import { SexReformPipe } from '../pipe/sexReform.pipe';
 //import { OrdinalPipe } from './pipe/ordinal.pipe';
-import { ToNullPipe } from './pipe/toNull.pipe';
+import { ToNullPipe } from '../pipe/toNull.pipe';
 //import { WeekPipe } from './pipe/week.pipe';
 
-import { CabinPipe } from './pipe/cabin.pipe';
-import { OrderStatusPipe } from './pipe/orderStatus.pipe';
-import { OtherStatusPipe } from './pipe/otherStatus.pipe';
+import { CabinPipe } from '../pipe/cabin.pipe';
+import { OrderStatusPipe } from '../pipe/orderStatus.pipe';
+import { OtherStatusPipe } from '../pipe/otherStatus.pipe';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -77,7 +77,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, 
+      useClass: IonicErrorHandler
+    }
   ]
 })
 export class AppModule {}

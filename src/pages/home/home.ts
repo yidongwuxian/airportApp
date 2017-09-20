@@ -28,7 +28,7 @@ export class HomePage implements OnInit {
     //   console.log(res);
     // });
 
-    // this._HttpService.create(OrderConfirm_URL,{})
+    // this._HttpService.post(OrderConfirm_URL,{})
     // .then(res => {
     //   console.log(res);
     // });

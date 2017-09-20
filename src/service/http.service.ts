@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';   
 import { Http, Headers } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 @Injectable()  
 
@@ -8,37 +9,28 @@ export class HttpService{
   constructor(private http:Http){}
   private headers = new Headers({'Content-type': 'application/x-www-form-urlencoded'}); 
     //获取(get)数据  
-    get(url){   
+    get(url): Observable<any> {   
 	    return this.http.get(url)   
-	         .toPromise()   
-	         .then(response => response.json() )   
-	         .catch(this.handleError); 
+	         .map(response => response.json())
+	         .catch(this.handleError);
 	    }     
     //新增(POST)数据
-    create(url,params){   
+    post(url,params): Observable<any> {   
         return this.http.post(url, JSON.stringify(params), {headers: this.headers})   
-            .toPromise()   
-            .then(response => response.json())   
-            .catch(this.handleError);      
+            .map(response => response.json())
+            .catch(this.handleError);     
     }
     //更新(update)数据
-    update(url,params){   
+    update(url,params): Observable<any>{   
 	    return this.http.put(url, JSON.stringify(params), {headers: this.headers})   
-	         .toPromise()   
-	         .then(response => response.json())   
-	         .catch(this.handleError);  
-	}
-	//删除(DELETE)数据
-	delete(url) {   
-	    return this.http.delete(url, {headers: this.headers})   
-	        .toPromise()   
-	        .then(() => null)   
-	        .catch(this.handleError);  
+	         .map(response => response.json())
+	         .catch(this.handleError);
 	}
 
-	private handleError(error: any): Promise<any> {   
-	  	console.error('An error occurred', error);   
-	  	return Promise.reject(error.message || error);  
+	private handleError(error: any) {   
+	  	let errMsg = (error.message) ? error.message : error.status ? `${error.status} -${error.statusText}`:'Server error';
+	  	console.error(errMsg);   
+	  	return Observable.throw(errMsg);  
 	}
 }
 

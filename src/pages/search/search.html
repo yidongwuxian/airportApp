@@ -29,7 +29,7 @@
 					<div class="dateItem">
 						<div class="dateBox">
 							<span class="iconfont">&#xe6bd;</span>
-							<span (click)="fromDate()" class="riqi" #dep>出发日期</span>
+							<span (click)="fromDate()" class="riqi" #dep>请选择出发日期</span>
 							<span class="week"></span>
 						</div>							
 					</div>
@@ -37,32 +37,29 @@
 			  </div>
 			  </ion-item>
 			  <ion-item>
-		        <ion-label>舱位</ion-label>
-		        <ion-multi-picker item-content [(ngModel)]="cabin" [multiPickerColumns]="independentColumns"></ion-multi-picker>
+		        <ion-label #cabin><ion-multi-picker item-content  [placeholder]="'经济舱'" [multiPickerColumns]="independentColumns" [cancelText]="'取消'" [doneText]="'确定'"></ion-multi-picker></ion-label>
 		      </ion-item>
+		      <ion-item>
+	    	    <ion-label>成人</ion-label>
+	    	    <ion-radio checked="true"></ion-radio>
+			  </ion-item>
+			  <button ion-button large full (click)="searchbtn()">搜索</button>
 	    </ion-list>
 	    <ion-list *ngSwitchCase="'RT'">
-	    	 <ion-item>
-	         <div class="city">
-			      <div #cityGo>{{depCity}}</div>
-			      <div (click)="exchange()" [ngClass]="{rotateEx:isEx}" class="exchange"><span class="iconfont ex">&#xe603;</span></div>
-			      <div #cityBack>{{arrCity}}</div>
-			  </div>
-			  </ion-item>
 			  <ion-item>
 			  <div class="date">
 				<div>
 					<div class="dateItem">
 						<div class="dateBox">
 							<span class="iconfont">&#xe6bd;</span>
-							<span (click)="fromDate()" class="riqi" #dep>出发日期</span>
+							<span (click)="fromDate()" class="riqi" #dep>请选择出发日期</span>
 							<span class="week"></span>
 						</div>							
 					</div>
 					<div class="dateItem">
 						<div class="dateBox">
 							<span class="iconfont back">&#xe6eb;</span>
-							<span (click)="toDate()" class="riqi" #arr>到达日期</span>
+							<span (click)="toDate()" class="riqi" #arr>请选择返回日期</span>
 							<span class="week"></span>
 						</div>								
 					</div>
@@ -70,13 +67,13 @@
 			  </div>
 			  </ion-item>
 			  <ion-item>
-		        <ion-label>舱位</ion-label>
-		       <ion-multi-picker item-content [multiPickerColumns]="independentColumns"></ion-multi-picker>
+		       <ion-label><ion-multi-picker item-content #cabin [placeholder]="'经济舱'" [multiPickerColumns]="independentColumns" [cancelText]="'取消'" [doneText]="'确定'"></ion-multi-picker></ion-label>
 		      </ion-item>
 		      <ion-item>
 		        <ion-label>成人儿童选择</ion-label>
 		        <ion-multi-picker id='advanced' item-content [multiPickerColumns]="dependentColumns" [cancelText]="'取消'" [doneText]="'确定'"></ion-multi-picker>
-		      </ion-item>	
+		      </ion-item>
+		      <button ion-button large full (click)="searchbtn()">搜索</button>	
 	    </ion-list>
 	</div>
 </ion-content>
