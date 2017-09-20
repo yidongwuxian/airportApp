@@ -1,5 +1,5 @@
 import { Component,ViewChild,ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams,ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ModalController,AlertController } from 'ionic-angular';
 import { CalendarModal, CalendarModalOptions, DayConfig } from "ion2-calendar";
 import { HttpService } from '../../service/http.service';
 import { ContactPage } from '../contact/contact'; 
@@ -14,23 +14,23 @@ export class SearchPage {
   arrCity: string = '到达城市';	
   isEx: boolean = true;
   dependentColumns: any[];
-  independentColumns: any[] = ['经济舱'];
   currentDate: String;
-  change:string = 'OW';
+  rountingType:string;
   depCityCode:string;
   arrCityCode:string;
-  value: string;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public modalCtrl: ModalController,private _HttpService: HttpService) {
+  isRT: Boolean;
+  isShow: Boolean = false;
+  isAdult: Boolean = true;
+  isChd: Boolean = false;
+  cabin: string = 'Y';
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              public modalCtrl: ModalController,
+              private _HttpService: HttpService,
+              public alertCtrl: AlertController) {
     //cabin start
     // Independent columns
-    this.independentColumns = [
-      {
-        options: 
-       [{ text: '经济舱', value: 'Y' },
-        { text: '头等舱', value: 'F' },
-        { text: '商务舱', value: 'C' }]
-      }
-    ];
+    
     //cabin end
     //time start
     this.currentDate = (new Date()).toISOString();
@@ -136,7 +136,6 @@ export class SearchPage {
   @ViewChild('cityBack') cityBack: ElementRef;
   @ViewChild('dep') dep: ElementRef;
   @ViewChild('arr') arr: ElementRef;
-  @ViewChild('cabin') cabin: ElementRef;
   ionViewDidLoad() {
     const fromCity = JSON.parse(localStorage.getItem('fromCity'));
     const toCity   = JSON.parse(localStorage.getItem('toCity'));
@@ -256,18 +255,26 @@ export class SearchPage {
     })
   }
 
-   inlandorinter(){
-
-   }
-
+  updateRT(){
+    if(this.isRT == true){
+      this.isShow = true;
+      this.isAdult = false;
+      this.isChd  = true;
+      this.rountingType = 'RT';
+    }else{
+      this.isShow = false;
+      this.isAdult = true;
+      this.isChd  = false;
+      this.rountingType = 'OW';
+    }
+  }
+   
    //sumbit search start
    searchbtn(){
-     if(this.arr.nativeElement.innerText =='请选择返回日期')
-
-    if(this.change == 'OW'){
+    if(this.rountingType == 'OW'){
         sessionStorage.setItem('routingType','OW');
-        const QUERY_URL = 'http://192.168.1.252:3000/shopping/query?routingType='+this.change+'&deptCity='+this.depCityCode+'&arrCity='+this.arrCityCode+'&deptStartDate='+
-      this.dep.nativeElement.innerText+'&deptEndDate='+'&seatClass=Y'+'&adtCnt=1'+'&chdCnt=0&infCnt=0&deptCityName='+
+        const QUERY_URL = 'http://192.168.1.252:3000/shopping/query?routingType='+this.rountingType+'&deptCity='+this.depCityCode+'&arrCity='+this.arrCityCode+'&deptStartDate='+
+      this.dep.nativeElement.innerText+'&deptEndDate='+'&seatClass='+this.cabin+'&adtCnt=1'+'&chdCnt=0&infCnt=0&deptCityName='+
       this.depCity+'&arrCityName='+this.arrCity+'&temp='+Math.random().toString();
       console.log(QUERY_URL);
       this._HttpService.get(QUERY_URL)
@@ -276,16 +283,24 @@ export class SearchPage {
         (err) => console.log('err:'+err)
       );
     }else{
-        sessionStorage.setItem('routingType','RT');
-        const QUERY_URL = 'http://192.168.1.252:3000/shopping/query?routingType='+this.change+'&deptCity='+this.depCityCode+'&arrCity='+this.arrCityCode+'&deptStartDate='+
-      this.dep.nativeElement.innerText+'&deptEndDate='+this.arr.nativeElement.innerText+'&seatClass=Y'+'&adtCnt=1'+'&chdCnt=1&infCnt=0&deptCityName='+
-      this.depCity+'&arrCityName='+this.arrCity+'&temp='+Math.random().toString();
-      console.log(QUERY_URL);
-      this._HttpService.get(QUERY_URL)
-      .subscribe(
-        (res) => console.log('res:'+res),
-        (err) => console.log('err:'+err)
-      )
+      if(this.arr.nativeElement.innerText =='请选择返回日期'){
+         let msgAlert = this.alertCtrl.create({
+           title: '请填写完整信息!',
+           buttons: ['确定']
+         });
+         msgAlert.present();
+      }else{
+         sessionStorage.setItem('routingType','RT');
+          const QUERY_URL = 'http://192.168.1.252:3000/shopping/query?routingType='+this.rountingType+'&deptCity='+this.depCityCode+'&arrCity='+this.arrCityCode+'&deptStartDate='+
+        this.dep.nativeElement.innerText+'&deptEndDate='+this.arr.nativeElement.innerText+'&seatClass='+this.cabin+'&adtCnt=1'+'&chdCnt=1&infCnt=0&deptCityName='+
+        this.depCity+'&arrCityName='+this.arrCity+'&temp='+Math.random().toString();
+        console.log(QUERY_URL);
+        this._HttpService.get(QUERY_URL)
+        .subscribe(
+          (res) => console.log('res:'+res),
+          (err) => console.log('err:'+err)
+        )
+      } 
     }
     //sumbit search end
 
