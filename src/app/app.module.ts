@@ -17,7 +17,6 @@ import { SearchPage } from '../pages/search/search';
 import { CityselPage } from '../pages/citysel/citysel';
 import { FlightqueryPage } from '../pages/flightquery/flightquery';
 //component
-import { ContactItemComponent } from '../component/contactList/contactList.component';
 import { CountComponent } from '../component/counter/counter.component';
 
 //pipe
@@ -45,7 +44,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     CityselPage,
     FlightqueryPage,
 
-    ContactItemComponent,
     CountComponent,
     SexReformPipe,
     //OrdinalPipe
@@ -74,8 +72,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SearchPage,
     CityselPage,
     FlightqueryPage,
-    
-    ContactItemComponent,
+
     CountComponent
   ],
   providers: [
