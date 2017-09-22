@@ -14,7 +14,7 @@
     { "match": "包头|二里半机场   |BAV|BAOTOU|BT", "name": "包头", "pinyin": "BAOTOU", "sanzima": "BAV" },
     { "match": "巴彦淖尔|巴彦淖尔天吉泰机场|RLK|BAYANNAOER|BYNE", "name": "巴彦淖尔", "pinyin": "BAYANNAOER", "sanzima": "RLK" },
     { "match": "北海|福城机场|BHY|BEIHAI|BH", "name": "北海", "pinyin": "BEIHAI", "sanzima": "BHY" },
-    { "match": "北京|南苑机场|NAY|BEIJING|BJ", "name": "北京", "pinyin": "BEIJING", "sanzima": "BJS" },
+    { "match": "北京|南苑机场|NAY|BEIJING|BJ", "name": "北京", "pinyin": "BEIJING", "sanzima": "PEK" },
     { "match": "毕节|毕节飞雄机场|BFJ|BIJIE|BJ", "name": "毕节", "pinyin": "BIJIE", "sanzima": "BFJ" },
     { "match": "博乐|博乐阿拉山口机场|BPL|BOLE|BL", "name": "博乐", "pinyin": "BOLE", "sanzima": "BPL" },
     { "match": "长白山|长白山机场|NBS|CHANGBAISHAN|CBS", "name": "长白山", "pinyin": "CHANGBAISHAN", "sanzima": "NBS" },

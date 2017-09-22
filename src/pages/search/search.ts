@@ -1,13 +1,18 @@
 import { Component,ViewChild,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams,ModalController,AlertController } from 'ionic-angular';
+import { HttpService } from '../../service/http.service';
+import { AirportService } from '../../service/airport.service';
+import { GetDateDiffService } from '../../service/getdatediff.service';
 import { CalendarModal, CalendarModalOptions, DayConfig } from "ion2-calendar";
 import { ContactPage } from '../contact/contact'; 
 import { FlightqueryPage } from '../flightquery/flightquery';
+import 'rxjs/add/operator/toPromise';
 
 @IonicPage()
 @Component({
   selector: 'page-search',
-  templateUrl: 'search.html'
+  templateUrl: 'search.html',
+  providers:[HttpService,AirportService,GetDateDiffService]
 })
 export class SearchPage {
   depCity: string = '出发城市';
@@ -18,18 +23,25 @@ export class SearchPage {
   rountingType:string ='OW';
   depCityCode:string;
   arrCityCode:string;
+  depCityNameEn: any;
   isRT: Boolean;
   isShow: Boolean = false;
   isAdult: Boolean = true;
   isChd: Boolean = false;
   cabin: string = 'Y';
+  countryEn: string;
+  formCityCode: any;
+  toCityCode: any;
+  diffType: string;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public modalCtrl: ModalController,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController,
+              private _HttpService: HttpService,
+              private _AirportService: AirportService,
+              private _GetDateDiffService: GetDateDiffService) {
     //cabin start
     // Independent columns
-    
     //cabin end
     //time start
     this.currentDate = (new Date()).toISOString();
@@ -155,7 +167,6 @@ export class SearchPage {
       }
     }
   }
-  
 
   exchange() {  
   	this.depCity = this.cityBack.nativeElement.innerText;
@@ -267,54 +278,98 @@ export class SearchPage {
       this.rountingType = 'OW';
     }
   }
-   
-   //sumbit search start
-   searchbtn(){
+  
+  judgeGnorGj(){
+    this._AirportService.getAirData()
+        .then(
+          (res)=>{
+                 let formCityCode = '';
+                 let toCityCode   = '';
+                 for(let i=0; i<res.length; i++){
+                    if(res[i].cityCode === this.depCityCode || res[i].cityCode === this.arrCityCode){
+                      formCityCode = res[i].countryEn;
+                      toCityCode = res[i].countryEn;
+                    }
+                 } 
+                 if(formCityCode !="CHINA" || toCityCode !="CHINA"){
+                   const count = {
+                     'adtCnt': 1,
+                     'chdCnt': 0
+                   }
+                   sessionStorage.setItem('internaCount',JSON.stringify(count));
+                   sessionStorage.setItem('countryType','international');
+                 }else{
+                   sessionStorage.setItem('countryType','inland');
+                 }
+                 
+          },
+          (err) => console.log('err:'+err)
+        ); 
+  }
+
+  searchbtn(){ 
     if(this.rountingType == 'OW'){
-        sessionStorage.setItem('routingType','OW'); 
-        this.navCtrl.push(FlightqueryPage,{
-            'routingType':   this.rountingType,
-            'deptCity':      this.depCityCode,
-            'arrCity':       this.arrCityCode,
-            'deptStartDate': this.dep.nativeElement.innerText,
-            'seatClass':     this.cabin,
-            'adtCnt':        1,
-            'chdCnt':        0,
-            'infCnt':        0,
-            'deptCityName':  this.depCity,
-            'arrCityName':   this.arrCity
-          });
-    }else{
-        sessionStorage.setItem('routingType','RT');
-        if(this.arr.nativeElement.innerText =='请选择返回日期'){
-         let msgAlert = this.alertCtrl.create({
-           title: '请填写完整信息!',
-           buttons: ['确定']
-         });
-         msgAlert.present();
-        }else{
-          this.navCtrl.push(FlightqueryPage,{
-            'routingType':   this.rountingType,
-            'deptCity':      this.depCityCode,
-            'arrCity':       this.arrCityCode,
-            'deptStartDate': this.dep.nativeElement.innerText,
-            'deptEndDate':   this.arr.nativeElement.innerText,
-            'seatClass':     this.cabin,
-            'adtCnt':        1,
-            'chdCnt':        1,
-            'infCnt':        1,
-            'deptCityName':  this.depCity,
-            'arrCityName':   this.arrCity
-          });
-        }
-    }
-
-    
- 
-    
-    //sumbit search end
-
-    
+          this.judgeGnorGj();
+          sessionStorage.setItem('routingType','OW'); 
+          if(this.depCity === '出发城市' || this.arrCity === '到达城市' || this.depCityCode === '' || this.arrCityCode === '' || 
+          this.cabin === undefined || this.dep.nativeElement.innerText === '出发时间'){
+            let msgAlert = this.alertCtrl.create({
+               title: '请填写完整信息!',
+               buttons: ['确定']
+             });
+             msgAlert.present();
+          }else if(this.depCity === this.arrCity){
+            let msgAlert = this.alertCtrl.create({
+               title: '出发到达城市不能相同!',
+               buttons: ['确定']
+             });
+             msgAlert.present();
+          }else{
+            this.navCtrl.push(FlightqueryPage,{
+              'routingType':   this.rountingType,
+              'deptCity':      this.depCityCode,
+              'arrCity':       this.arrCityCode,
+              'deptStartDate': this.dep.nativeElement.innerText,
+              'seatClass':     this.cabin,
+              'adtCnt':        1,
+              'chdCnt':        0,
+              'infCnt':        0,
+              'deptCityName':  this.depCity,
+              'arrCityName':   this.arrCity
+            });
+          }
+          
+      }else{
+          this.judgeGnorGj();
+          sessionStorage.setItem('routingType','RT');
+          if(this.arr.nativeElement.innerText =='请选择返回日期'){
+           let msgAlert = this.alertCtrl.create({
+               title: '请填写完整信息!',
+               buttons: ['确定']
+             });
+             msgAlert.present();
+          }else if(this._GetDateDiffService.datediff(this.dep.nativeElement.innerText,this.arr.nativeElement.innerText, "day") < 0 ){
+            let msgAlert = this.alertCtrl.create({
+               title: '到达时间应大于出发时间!',
+               buttons: ['确定']
+             });
+             msgAlert.present();
+          }else{
+            this.navCtrl.push(FlightqueryPage,{
+              'routingType':   this.rountingType,
+              'deptCity':      this.depCityCode,
+              'arrCity':       this.arrCityCode,
+              'deptStartDate': this.dep.nativeElement.innerText,
+              'deptEndDate':   this.arr.nativeElement.innerText,
+              'seatClass':     this.cabin,
+              'adtCnt':        1,
+              'chdCnt':        1,
+              'infCnt':        1,
+              'deptCityName':  this.depCity,
+              'arrCityName':   this.arrCity
+            });
+          }
+      }
   }
 
 }

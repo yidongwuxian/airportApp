@@ -1,6 +1,6 @@
 import { Component} from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { CalendarComponentOptions, CalendarController, DayConfig } from 'ion2-calendar'
+import { CalendarController } from 'ion2-calendar'
 @Component({
   selector: 'page-calendar',
   templateUrl: 'calendar.html'

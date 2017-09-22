@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';   
 import { Http, Headers } from '@angular/http';
+import { LoadingController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 @Injectable()  
 
-export class HttpService{    
-  constructor(private http:Http){}
-  private headers = new Headers({'Content-type': 'application/x-www-form-urlencoded'}); 
+export class HttpService{  
+  private headers = new Headers({'Content-type': 'application/x-www-form-urlencoded'});   
+  constructor(private http:Http,
+  	          public loadingCtrl:LoadingController){}
+  
     //获取(get)数据  
-    get(url): Observable<any> {   
-	    return this.http.get(url)   
+    get(url): Observable<any> { 
+	    return this.http.get(url)  
 	         .map(response => response.json())
 	         .catch(this.handleError);
 	    }     

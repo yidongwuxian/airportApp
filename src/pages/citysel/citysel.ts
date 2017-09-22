@@ -1,6 +1,6 @@
 import { Component,ViewChildren, ViewChild, ChangeDetectorRef, ElementRef} from '@angular/core';
 import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
-import {Contacts} from '../../service/contacts.service';
+import { Contacts } from '../../service/contacts.service';
 import { SearchPage } from '../search/search';
 
 @IonicPage()
@@ -8,16 +8,9 @@ import { SearchPage } from '../search/search';
   selector: 'citysel',
   template: `
       <ion-content (ionScroll)="onScroll()">
-      <ion-segment [(ngModel)]="change">
-          <ion-segment-button value="internal">
-              国内
-          </ion-segment-button>
-          <ion-segment-button value="international">
-              国际
-          </ion-segment-button>
-      </ion-segment>
       <div [ngSwitch]="change">
           <div *ngSwitchCase="'internal'">
+                <ion-searchbar (ionInput)="getItems($event)" style="margin-top:46px"></ion-searchbar>
                 <div #IndexedMenu class="indexed-menu">
                     <div class="indexed-item"
                          [class.activate]="item === index"  *ngFor="let item of indexes;index as i; trackBy:trackByIndexes" (click)='selectIndex(i)'>
@@ -44,6 +37,7 @@ import { SearchPage } from '../search/search';
                 </div>
           </div>
           <div *ngSwitchCase="'international'">
+                <ion-searchbar (ionInput)="getItems($event)" style="margin-top:46px"></ion-searchbar>
                 <div #IndexedMenu class="indexed-menu">
                     <div class="indexed-item"
                          [class.activate]="item === index"  *ngFor="let item of indexes;index as i; trackBy:trackByIndexes" (click)='selectIndex(i)'>
@@ -75,7 +69,7 @@ import { SearchPage } from '../search/search';
   providers:[Contacts]
 })
 export class CityselPage {
-  change: string = 'internal';
+  change: string = 'internal';  
   index: string = 'A';
   showModal: boolean = false;
   timeout: any;
@@ -85,7 +79,6 @@ export class CityselPage {
   contactsData: Array<any> =[];
   tempData:Array<any> = [];
   cityParam: Object = {};
-
   @ViewChildren('IonItemGroup') ionItemGroup;
   @ViewChild(Content) content: Content;	
   @ViewChild('mydiv') mydiv: ElementRef;
@@ -116,13 +109,11 @@ export class CityselPage {
 	    this.initializeItems();
 	    let val = ev.target.value;
 	    if (val && val.trim() != '') { 
-        this.tempData = [];
          for(let i=0; i<this.contactsData.length; i++){
-           if(this.contactsData[i].name.toLowerCase().indexOf(val.toLowerCase()) > -1){
+           if(this.contactsData[i].name.indexOf(val) > -1){
              console.log(this.contactsData[i].name);
              this.tempData.push(this.contactsData[i]);
            }
-           //return (this.contactsData[i].name.toLowerCase().indexOf(val.toLowerCase()) > -1);
          }
          this.contacts = this.tempData;
 	      // this.contacts = this.contacts.filter((item) => {
@@ -132,8 +123,6 @@ export class CityselPage {
 	  }
 
     calling(contactItem){
-      // console.log(contactItem.name);
-      // console.log(contactItem.sanzima);
       this.cityParam = {
           'cityName': contactItem.name,
           'cityCode': contactItem.sanzima
