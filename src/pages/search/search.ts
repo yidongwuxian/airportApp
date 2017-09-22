@@ -280,7 +280,8 @@ export class SearchPage {
   }
   
   judgeGnorGj(){
-    this._AirportService.getAirData()
+    let AIRPORT_URL = '../assets/data/airport.json';
+    this._AirportService.getAirData(AIRPORT_URL)
         .then(
           (res)=>{
                  let formCityCode = '';

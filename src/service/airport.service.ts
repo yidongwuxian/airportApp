@@ -6,10 +6,9 @@ import 'rxjs/add/operator/toPromise';
 
 export class AirportService{
   constructor(private _HttpService: HttpService){}
-    getAirData(): Promise<any[]> {  
+    getAirData(url): Promise<any[]> {  
         let countryEn = '';
-        let AIRPORT_URL = '../assets/data/airport.json';
-	    return this._HttpService.get(AIRPORT_URL)
+	    return this._HttpService.get(url)
 	       .toPromise()
 	       .then(this.extractData)
            .catch(this.handleError)

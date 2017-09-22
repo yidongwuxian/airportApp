@@ -106,19 +106,14 @@ export class CityselPage {
     }
 
     getItems(ev: any) {
-	    this.initializeItems();
 	    let val = ev.target.value;
 	    if (val && val.trim() != '') { 
          for(let i=0; i<this.contactsData.length; i++){
-           if(this.contactsData[i].name.indexOf(val) > -1){
-             console.log(this.contactsData[i].name);
+           if(this.contactsData[i].match.indexOf(val) > -1){
              this.tempData.push(this.contactsData[i]);
            }
          }
-         this.contacts = this.tempData;
-	      // this.contacts = this.contacts.filter((item) => {
-	      //   return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
-	      // })
+         this.contacts = this.contactsSev.grouping(this.tempData);
 	    }
 	  }
 

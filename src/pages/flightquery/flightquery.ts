@@ -1,6 +1,8 @@
 import { Component,OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HttpService } from '../../service/http.service';
+import { AirportService } from '../../service/airport.service';
+
 /**
  * Generated class for the FlightqueryPage page.
  *
@@ -12,14 +14,16 @@ import { HttpService } from '../../service/http.service';
 @Component({
   selector: 'page-flightquery',
   templateUrl: 'flightquery.html',
-  providers:[HttpService]
+  providers:[HttpService,AirportService]
 })
 export class FlightqueryPage implements OnInit{
   flightData: Array<any>  = [];
   loadingSpnner: Boolean = true;
+  imagePath: any;
   constructor(public navCtrl: NavController, 
   	          public navParams: NavParams,
-  	          private _HttpService: HttpService) {
+  	          private _HttpService: HttpService,
+              private _AirportService: AirportService) {
   }
 
   ionViewDidLoad() {
@@ -46,10 +50,12 @@ export class FlightqueryPage implements OnInit{
     	let OW_QUERY_URL = 'http://192.168.1.252:3000/shopping/query?routingType='+routingType+'&deptCity='+deptCity+'&arrCity='+arrCity+'&deptStartDate='+
       deptStartDate+'&seatClass='+seatClass+'&adtCnt='+adtCnt+'&chdCnt='+chdCnt+'&infCnt='+infCnt+'&deptCityName='+
       deptCityName+'&arrCityName='+arrCityName+'&temp='+Math.random().toString();
+      
+      
       this._HttpService.get(OW_QUERY_URL)
       .subscribe(
         (res) => { 
-          this.flightData = res.data;
+          this.flightData = res.data;              
         },
         (err) => console.log('err:'+err)
       );

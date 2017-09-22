@@ -50,10 +50,15 @@ export class Contacts {
                     groupContacts[groupContacts.length - 1].contacts.push(i)
                 }
             }
-
         });
-
-        return groupContacts;
+        
+        let tempContacts: Group[]=[];
+        groupContacts.forEach((item) => {
+            if(item.contacts.length != 0){
+                tempContacts.push(item);
+            }
+        });
+        return tempContacts;
 
     }
 
