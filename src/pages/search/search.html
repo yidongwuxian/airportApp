@@ -41,8 +41,7 @@
 	    	    <ion-radio checked="true"></ion-radio>
 			  </ion-item>
 			  <ion-item [hidden]="!isChd">
-		        <ion-label>成人儿童选择</ion-label>
-		        <ion-multi-picker id='advanced' item-content [multiPickerColumns]="dependentColumns" [cancelText]="'取消'" [doneText]="'确定'"></ion-multi-picker>
+		        <ex-counter [count]="ct"></ex-counter>
 		      </ion-item>
 		      <ion-segment [(ngModel)]="cabin" color="primary">
 		        <ion-segment-button value='Y'>经济舱</ion-segment-button>

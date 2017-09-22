@@ -2,15 +2,4 @@
   <button (click)="decrement()">-</button>
   <p>当前值：{{count}}</p>
   <button (click)="increment()">+</button>
-  <div>{{ 2 | sexReform }}</div>
-  <div>{{ name }}</div>
-  <div>{{ today | date:"yyyy-MM-dd" }}</div>
-  <ul>
-    <li *ngFor="let num of numbers">
-      {{num}}
-    </li>
-  </ul>
-  <div>舱位:{{cabins | cabin}}</div>
-  <div>状态:{{ '1' | orderStatus }}</div>
-  <div>外部状态:{{ 'waiting_for_review' | otherStatus }}</div>
 </div>
