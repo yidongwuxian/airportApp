@@ -1,0 +1,22 @@
+.counter{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .count{
+        width:30px;
+        text-align: center;                       
+    }
+    .counterLeft,.counterRight{
+        color:#00b4ff;
+		font-size:1.4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background:transparent;
+    }
+    .unused{
+        border-color:gray;
+        color:gray;
+    }
+}
+
