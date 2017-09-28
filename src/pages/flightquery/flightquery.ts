@@ -20,6 +20,11 @@ export class FlightqueryPage implements OnInit, OnDestroy{
   imagePath: any;
   tagState: Observable<Url>;
   Url: Url;
+  stopOver: Array<any> = [];
+  istranCity: boolean = false;
+  isstopCity: boolean = false;
+  isShareIco: boolean = false;
+  stopoverCityName: string;
   private tagStateSubscription: Subscription;
   constructor(public navCtrl: NavController, 
   	          public navParams: NavParams,
@@ -58,7 +63,6 @@ export class FlightqueryPage implements OnInit, OnDestroy{
     loader.present();
 
     if(routingType == 'OW'){
-      console.log('se1');
       let OW_QUERY_URL = this.Url.baseurl+this.Url.shoppingurl+'?routingType='+routingType+'&deptCity='+deptCity+'&arrCity='+arrCity+'&deptStartDate='+
       deptStartDate+'&seatClass='+seatClass+'&adtCnt='+adtCnt+'&chdCnt='+chdCnt+'&infCnt='+infCnt+'&sortType=price_asc&temp='+Math.random().toString();
 
@@ -69,7 +73,24 @@ export class FlightqueryPage implements OnInit, OnDestroy{
             setTimeout(() => {
               loader.dismiss();
             }, 2000);
-            this.flightData = res.data;    
+            this.flightData = res.data;
+            for (let value of this.flightData) {
+              this.stopOver = value.segments[0].stopOver;
+              if(value.segments[0].shareFlightNo != ''){
+                this.isShareIco = true;
+              }else{
+                this.isShareIco = false;
+              }  
+            }
+            
+            if(this.stopOver && this.stopOver.length !=0 ){
+              let stopoverCity = '';
+              for (let value of this.stopOver) {
+                stopoverCity += value.stopAirport;
+              }
+              this.stopoverCityName = stopoverCity;
+              this.isstopCity = true;
+            }    
           }else{
             let msgAlert = this.alertCtrl.create({
                title: res.message,
@@ -82,7 +103,7 @@ export class FlightqueryPage implements OnInit, OnDestroy{
       );
     }
     if(routingType == 'RT'){
-      console.log('se2');
+
       let QT_QUERY_URL = this.Url.baseurl+this.Url.shoppingurl+'?routingType='+routingType+'&deptCity='+deptCity+'&arrCity='+arrCity+'&deptStartDate='+
         deptStartDate+'&deptEndDate='+deptEndDate+'&seatClass='+seatClass+'&adtCnt='+adtCnt+'&chdCnt='+chdCnt+'&infCnt='+infCnt+'&sortType=price_asc&temp='+Math.random().toString();
 

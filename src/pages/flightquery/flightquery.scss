@@ -55,7 +55,6 @@ page-flightquery {
                 }
             }
             .flightTop {
-                height: 2rem;
                 display: flex;
                 justify-content: space-between;
                 .topLeft {
@@ -67,12 +66,6 @@ page-flightquery {
                     }
                     >div{
                         margin-top: 0.2rem;
-                        width:20vw;
-                        overflow: hidden;
-                    }
-                    >div:first-child{
-                        width:0.2rem;  
-                        text-align: left;                     
                     }
                     .time{
                         font-size: 16px;
@@ -81,6 +74,7 @@ page-flightquery {
                     .midmess{                        
                         width:20vw;
                         margin:0.2rem 0 0;
+                        background: url(../../assets/img/flightquery/line.png) no-repeat center 20%;
                         text-align: center;
                         p{
                             font-size: 10px;
@@ -89,7 +83,6 @@ page-flightquery {
                             color:gray;
                         }
                         .type{
-                            margin-top:5px;
                             color: blue;
                         }
                         .tranformCity,.stopoverCity{
@@ -102,13 +95,9 @@ page-flightquery {
                         >p{
                             font-size: 10px;
                             &:first-child{
-                                width:15vw;
                                 overflow: hidden;
                                 text-overflow: ellipsis;
                                 white-space: nowrap;
-                            }
-                            &:last-child{
-                                width:3vw;
                             }
                         }
                     }
@@ -128,7 +117,6 @@ page-flightquery {
                     img{
                         width:12px;
                         height:12px;
-                        margin-right: 10px;
                         position: relative;
                         top:2px;
                     }
