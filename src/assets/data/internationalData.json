@@ -1,5 +1,4 @@
 [
-        { "match": "阿尔山|阿尔山机场|YIE|AERSHAN|AES", "name": "阿尔山", "pinyin": "AERSHAN", "sanzima": "YIE" },
         {
             "match":"澳门|澳门国际机场|MFM|MFM",
             "name":"澳门",

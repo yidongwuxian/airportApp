@@ -29,7 +29,7 @@ export class Contacts {
      */
     grouping(array: Contact[]): Group[] {
         let groupContacts: Group[] = [];
-        const letterStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#";
+        const letterStr = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         if (array.length <= 0) return [];
 
         // Create a parent container

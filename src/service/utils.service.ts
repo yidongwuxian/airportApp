@@ -29,20 +29,37 @@ export class UtilsService{
         return (eTime.getTime() - sTime.getTime()) / divNum;       
     }
 
-    addDate(days){
+    addDate(days,type){
         let d = new Date();
             d.setDate(d.getDate() + days);
             let month: any = d.getMonth() + 1;
             let day: any = d.getDate();
+            let val: string;
             if (month < 10) {
                 month = "0" + month;
             }
             if (day < 10) {
                 day = "0" + day;
             }
-            let val = d.getFullYear() + "年" + month + "月" + day +"日";
+            if(type === 'str'){
+                val = d.getFullYear() + "年" + month + "月" + day +"日";
+            }
+            else if(type === 'months'){
+                val = month + "月" + day +"日";
+            }
+            else{
+                val = d.getFullYear() + "-" + month + "-" + day;
+            }
             return val;
     }
+
+    getWeek(d){
+        let date = d.replace(/-/g, '/');   
+        let day = new Date(date).getDay();   
+        const today = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+        const week = today[day];
+        return week;
+    };
 }
 
 	

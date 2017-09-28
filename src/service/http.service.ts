@@ -10,7 +10,7 @@ export class HttpService{
   private headers = new Headers({'Content-type': 'application/x-www-form-urlencoded'});   
   constructor(private http:Http,
   	          public loadingCtrl:LoadingController){}
-  
+  	          	   
     //获取(get)数据  
     get(url): Observable<any> { 
 	    return this.http.get(url)  

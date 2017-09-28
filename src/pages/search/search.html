@@ -1,52 +1,99 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>search</ion-title>
-  </ion-navbar> 
-</ion-header>
 <ion-content>
-	    <ion-list>
-	         <ion-item>
-	         <div class="city">
-			      <div (click)="depCityGo()" #cityGo>{{depCity}}</div>
-			      <div (click)="exchange()" [ngClass]="{rotateEx:isEx}" class="exchange"><span class="iconfont ex">&#xe603;</span></div>
-			      <div (click)="arrCityGo()" #cityBack>{{arrCity}}</div>
-			  </div>
-			  </ion-item>
-			  <ion-item>
-			  <div class="date">
-				<div>
-					<div class="dateItem">
-						<div class="dateBox">
-							<span class="iconfont">&#xe6bd;</span>
-							<span (click)="fromDate()" class="riqi" #dep>请选择出发日期</span>
-							<span class="week"></span>
-						</div>							
+    <div>
+        <div class="index_swiper">
+            <div class="msgTip">
+            	<p [hidden]="!isMsg">2</p>
+            	<i class="iconfont">&#xe671;</i>
+            	<s></s>
+            </div>
+        	<ion-slides pager autoplay="2000" loop="true" autoplayDisableOnInteration="true">
+				  <ion-slide>
+				    <img class="swiper_img" src="../assets/img/search/banner1.jpg">
+				  </ion-slide>
+			</ion-slides>
+			<div class="kuai"></div>
+        </div>
+		<div class="content">
+			<div class="main">
+			    <div class="main_bd">
+			     	  <div class="city">
+					      <div (click)="depCityGo()" #cityGo>{{depCity}}</div>
+					      <div (click)="exchange()" [ngClass]="{rotateEx:isEx}" class="exchange"><span class="iconfont ex">&#xe639;</span></div>
+					      <div (click)="arrCityGo()" #cityBack>{{arrCity}}</div>
+					  </div>
+					  <div class="date">
+						<div>
+							<div class="dateItem">
+							    <span class="iconfont">&#xe6bd;</span>
+								<div class="dateBox">
+									<input type="text" (click)="fromDate()" class="riqi" #dep placeholder="请选择出发日期" readonly="readonly" />
+									<span class="week" #depWeek></span>
+								</div>							
+							</div>
+							<div [hidden]="!isShow">
+								<div class="dateItem1">
+									<span class="iconfont">&#xe7d1;</span>
+								</div>
+								<div class="dateItem">
+							    	<span class="iconfont">&#xe6eb;</span>
+									<div class="dateBox">
+										<input type="text" (click)="toDate()" class="riqi" #arr placeholder="请选择返回日期" readonly="readonly" />
+										<span class="week" #arrWeek></span>
+									</div>							
+								</div>
+							</div>
+						</div>
+						<div class="routeType">
+							<div class="label-left">
+								<label class="rt_tx">往返</label>
+								<ion-checkbox [(ngModel)]="isRT" (ionChange)="updateRT()"></ion-checkbox>
+							</div>
+						</div>
 					</div>
-					<div class="dateItem" [hidden]="!isShow">
-						<div class="dateBox">
-							<span class="iconfont back">&#xe6eb;</span>
-							<span (click)="toDate()" class="riqi" #arr>请选择返回日期</span>
-							<span class="week"></span>
-						</div>								
+			    </div> 
+				<div class="ps_bd">
+					<div class="passenger" [hidden]="!isAdult">
+						<div class="ps_item">
+							<div class="flex_1">
+								<span class="iconfont adultSign">&#xe696;</span>
+								<span class="adultText">成人</span>
+							</div>
+							<ion-checkbox color="dark" checked="true" [(ngModel)]="singleAduNum" disabled="true"></ion-checkbox>
+						</div>
+					</div>
+					<div class="passenger" [hidden]="!isChd">
+						<div class="ps_item">
+							<div class="flex_1">
+								<span class="iconfont adultSign">&#xe696;</span>
+								<span class="adultText">成人</span>
+							</div>
+							<ex-counter [count]="adultcount" (change)="aduChange($event)"></ex-counter>
+						</div>
+						<div class="ps_item">
+							<div class="flex_1">
+								<span class="iconfont adultSign">&#xe636;</span>
+								<span class="adultText">儿童</span>
+								<span class="adultTextSmall">2-12岁</span>
+							</div>
+							<ex-counter [count]="count" (change)="chdChange($event)"></ex-counter>
+						</div>
+						<div class="flex_item">
+							<div class="flex_1"></div>
+							<div class="flex_item_tx">儿童婴儿预定说明</div>
+							<div class="iconfont flex_item_blue">&#xe61d;</div>
+						</div>
 					</div>
 				</div>
-			  </div>
-			  </ion-item>
-			  <ion-item>
-			  	<ion-label>往返</ion-label>
-			  	<ion-checkbox [(ngModel)]="isRT" (ionChange)="updateRT()"></ion-checkbox>
-		      </ion-item>
-		      <ion-item [hidden]="!isAdult">
-	    	    <ion-label>成人</ion-label>
-	    	    <ion-radio checked="true"></ion-radio>
-			  </ion-item>
-			  <ion-item [hidden]="!isChd">
-		        <ex-counter [count]="ct"></ex-counter>
-		      </ion-item>
-		      <ion-segment [(ngModel)]="cabin" color="primary">
-		        <ion-segment-button value='Y'>经济舱</ion-segment-button>
-		        <ion-segment-button value='F/C'>头等舱/商务舱</ion-segment-button>
-		      </ion-segment>
-			  <button ion-button large full (click)="searchbtn()">搜索</button>
-	    </ion-list>
+				<div class="cabinType">
+					<ion-segment [(ngModel)]="cabin" color="primary">
+				        <ion-segment-button value='Y'><div class="cabin_box">经济舱<p class="cabin_tip"></p><span class="iconfont">&#xe620;</span></div></ion-segment-button>
+				        <ion-segment-button value='F/C'><div class="cabin_box">头等舱/商务舱<p class="cabin_tip"></p><span class="iconfont">&#xe620;</span></div></ion-segment-button>
+				    </ion-segment>
+				</div>
+			</div>
+			<div class="searchbtn">
+				<span class="search" (click)="searchbtn()">搜索</span>
+			</div>
+		</div>  			 
+	</div>
 </ion-content>

@@ -80,11 +80,11 @@ html,body{
 }
 @font-face {
   font-family: 'iconfont';  /* project id 366743 */
-  src: url('//at.alicdn.com/t/font_366743_q7j73jfwl2kb7qfr.eot');
-  src: url('//at.alicdn.com/t/font_366743_q7j73jfwl2kb7qfr.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_366743_q7j73jfwl2kb7qfr.woff') format('woff'),
-  url('//at.alicdn.com/t/font_366743_q7j73jfwl2kb7qfr.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_366743_q7j73jfwl2kb7qfr.svg#iconfont') format('svg');
+  src: url('../fonts/iconfont.eot');
+  src: url('../fonts/iconfont.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/iconfont.woff') format('woff'),
+  url('../fonts/iconfont.ttf') format('truetype'),
+  url('../fonts/iconfont.svg#iconfont') format('svg');
 }
 .iconfont {
   font-family: "iconfont" !important;
@@ -95,24 +95,10 @@ html,body{
   -moz-osx-font-smoothing: grayscale;
 }
 
-/*muse.ui部分组件样式重置*/
-//开关颜色重置
-.mu-switch input[type=checkbox]:checked+.mu-switch-wrapper .mu-switch-thumb{
-    background: #00b4ff;
-}
-.mu-switch input[type=checkbox]:checked+.mu-switch-wrapper .mu-switch-track{
-    background: #00b4ff;
-}
-.mu-switch input[type=checkbox]:checked+.mu-switch-wrapper .mu-switch-thumb{
-    background: #00b4ff;
-}
-//复选框颜色重置
-.mu-checkbox-icon-checked{
-    color:#00b4ff;
-}
-.mu-checkbox-icon-uncheck{
-    color:#999;
-}
-.mu-checkbox-icon-checked{
-    color:#00b4ff;
-}
+.ion-md-searchbar:before { content: "\e664"; }
+
+.ion-md-order:before { content: "\e66f"; }
+
+.ion-md-dynamic:before { content: "\e645"; }
+
+.ion-md-usercenter:before { content: "\e608"; } 

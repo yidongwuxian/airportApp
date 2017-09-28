@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';   
+import { Injectable } from '@angular/core'; 
 import { HttpService } from './http.service';
 import 'rxjs/add/operator/toPromise';
 @Injectable()  
@@ -7,7 +6,6 @@ import 'rxjs/add/operator/toPromise';
 export class AirportService{
   constructor(private _HttpService: HttpService){}
     getAirData(url): Promise<any[]> {  
-        let countryEn = '';
 	    return this._HttpService.get(url)
 	       .toPromise()
 	       .then(this.extractData)

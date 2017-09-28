@@ -1,22 +1,25 @@
 import { Component,ViewChild,ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams,ModalController,AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ModalController,AlertController,Slides } from 'ionic-angular';
 import { HttpService } from '../../service/http.service';
 import { AirportService } from '../../service/airport.service';
-import { GetDateDiffService } from '../../service/getdatediff.service';
+import { UtilsService } from '../../service/utils.service';
 import { CalendarModal, CalendarModalOptions, DayConfig } from "ion2-calendar";
 import { ContactPage } from '../contact/contact'; 
 import { FlightqueryPage } from '../flightquery/flightquery';
-import { CountComponent } from '../../component/counter/counter.component';
-import 'rxjs/add/operator/toPromise';
+import { CountComponent } from '../../components/counter/counter';
 
 @IonicPage()
 @Component({
   selector: 'page-search',
   templateUrl: 'search.html',
-  providers:[HttpService,AirportService,GetDateDiffService,CountComponent]
+  providers:[HttpService,AirportService,UtilsService,CountComponent]
 })
 export class SearchPage {
-  ct: number = 0;
+  count: number = 0;
+  adultcount: number = 1;
+  singleAduNum: number = 1;
+  aduNum: any = 1;
+  chdNum: any = 0;
   depCity: string = '出发城市';
   arrCity: string = '到达城市';	
   isEx: boolean = true;
@@ -26,39 +29,39 @@ export class SearchPage {
   depCityCode:string;
   arrCityCode:string;
   depCityNameEn: any;
-  isRT: Boolean;
-  isShow: Boolean = false;
-  isAdult: Boolean = true;
-  isChd: Boolean = false;
+  isRT: boolean;
+  isShow: boolean = false;
+  isAdult: boolean = true;
+  isChd: boolean = false;
+  isMsg: boolean = true;
   cabin: string = 'Y';
   countryEn: string;
   formCityCode: any;
   toCityCode: any;
   diffType: string;
+  undeTx:   string;
+  depTimePost: string;
+  arrTimePost: string;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public modalCtrl: ModalController,
               public alertCtrl: AlertController,
-              private _HttpService: HttpService,
               private _AirportService: AirportService,
-              private _GetDateDiffService: GetDateDiffService) {
-    //cabin start
-    // Independent columns
-    //cabin end
-    //time start
-    this.currentDate = (new Date()).toISOString();
-      //time end
-      //adult start
-        
-      //adult end
-  }
+              private _UtilsService: UtilsService) {
+}
   @ViewChild('cityGo') cityGo: ElementRef;
   @ViewChild('cityBack') cityBack: ElementRef;
   @ViewChild('dep') dep: ElementRef;
   @ViewChild('arr') arr: ElementRef;
+  @ViewChild('depWeek') depWeek: ElementRef;
+  @ViewChild('arrWeek') arrWeek: ElementRef;
+  @ViewChild(Slides) slides: Slides;
   ionViewDidLoad() {
     const fromCity = JSON.parse(localStorage.getItem('fromCity'));
     const toCity   = JSON.parse(localStorage.getItem('toCity'));
+    const countryType = sessionStorage.getItem('countryType');
+    let depTime  = sessionStorage.getItem('depTime');
+    let arrTime  = sessionStorage.getItem('arrTime');
     if(fromCity){
       if(fromCity.cityName){
          this.depCity = fromCity.cityName;
@@ -75,6 +78,48 @@ export class SearchPage {
          this.arrCity = '到达城市';
       }
     }
+    if(countryType){
+       if(countryType === 'inland'){
+          this.isAdult = true;
+          this.isChd  = false;
+       }
+       if(countryType === 'international'){
+          this.isAdult = false;
+          this.isChd  = true;
+       }
+    }
+    if(depTime){
+      let depTimeStr = JSON.parse(depTime);
+      this.dep.nativeElement.value = depTimeStr.string.substr(5,2)+'月'+depTimeStr.string.substr(8,2) +'日';
+      this.depTimePost = depTimeStr.string;
+      this.depWeek.nativeElement.innerHTML = this._UtilsService.getWeek(depTimeStr.string);
+    }else{
+      this.undeTx = this._UtilsService.addDate(1,'');
+      this.dep.nativeElement.value = this._UtilsService.addDate(1,'months');
+      this.depTimePost = this._UtilsService.addDate(1,'');
+      this.depWeek.nativeElement.innerHTML = this._UtilsService.getWeek(this.undeTx);
+    }
+    if(arrTime){
+      let arrTimeStr = JSON.parse(arrTime);
+      this.arr.nativeElement.value = arrTimeStr.string.substr(5,2)+'月'+arrTimeStr.string.substr(8,2) +'日';
+      this.arrTimePost = arrTimeStr.string;
+      this.arrWeek.nativeElement.innerHTML = this._UtilsService.getWeek(arrTimeStr.string);
+    }
+   
+    const type = this.navParams.get('type');
+      if(type == 'depback'){
+         this.judgeGnorGj();
+      }  
+      if(type == 'arrback'){
+         this.judgeGnorGj();
+      }
+  }
+
+  ionViewWillEnter(){
+    this.slides.startAutoplay();
+  }
+  ionViewWillLeave(){
+    this.slides.stopAutoplay();
   }
 
   exchange() {  
@@ -99,7 +144,11 @@ export class SearchPage {
     for (let i = 0; i < 31; i++) {
       _daysConfig.push(
       {
-        date: new Date(2017, 9, 15),
+        date: new Date(),
+        title: `今天`
+      },
+      {
+        date: new Date(2017, 11, 15),
         subTitle: `¥500`
       },
       {
@@ -109,7 +158,6 @@ export class SearchPage {
       )
     }
     const options: CalendarModalOptions = {
-      canBackwardsSelected: true,
       monthFormat: 'yyyy 年 MM 月 ',
       weekdays: ['日', '一', '二', '三', '四', '五', '六'],
       weekStart: 1,
@@ -117,6 +165,7 @@ export class SearchPage {
       title: '出发时间',
       closeLabel: '取消',
       doneLabel: '确定',
+      autoDone: true,
       daysConfig: _daysConfig
     };
 
@@ -128,9 +177,13 @@ export class SearchPage {
 
     myCalendar.onDidDismiss(date => {
       if(date){
-         this.dep.nativeElement.innerText = date.string;
+         this.dep.nativeElement.value = date.string.substr(5,2)+'月'+date.string.substr(8,2) +'日';
+         this.depWeek.nativeElement.innerHTML = this._UtilsService.getWeek(date.string);
+         this.depTimePost = date.string;
+         sessionStorage.setItem('depTime',  JSON.stringify(date));
       }else{
-         this.dep.nativeElement.innerText ='出发时间';
+         this.dep.nativeElement.value ='出发时间';
+         this.depWeek.nativeElement.innerHTML = '';
       }
     })
 
@@ -141,16 +194,21 @@ export class SearchPage {
     for (let i = 0; i < 31; i++) {
       _daysConfig1.push(
       {
+        date: new Date(),
+        title: `今天`
+      },
+      {
         date: new Date(2017, 12, 15),
         subTitle: `¥800`
       },
       {
-        date: new Date(2017, 8, 25),
+        date: new Date(2017, 11, 5),
         subTitle: `¥730`
       }
       )
     }
     const options1: CalendarModalOptions = {
+      from: new Date(),
       monthFormat: 'yyyy 年 MM 月 ',
       weekdays: ['日', '一', '二', '三', '四', '五', '六'],
       weekStart: 1,
@@ -158,6 +216,7 @@ export class SearchPage {
       title: '返回时间',
       closeLabel: '取消',
       doneLabel: '确定',
+      autoDone: true,
       daysConfig: _daysConfig1
     };
     let myCalendar =  this.modalCtrl.create(CalendarModal, {
@@ -167,9 +226,12 @@ export class SearchPage {
 
     myCalendar.onDidDismiss(date => {
       if(date){
-         this.arr.nativeElement.innerText = date.string;
+         this.arr.nativeElement.value = date.string.substr(5,2)+'月'+date.string.substr(8,2) +'日';
+         this.arrWeek.nativeElement.innerHTML = this._UtilsService.getWeek(date.string);
+         this.arrTimePost = date.string;
+         sessionStorage.setItem('arrTime', JSON.stringify(date));
       }else{
-         this.arr.nativeElement.innerText = '请选择返回日期';
+         this.arr.nativeElement.value = '请选择返回日期';
       }
     })
   }
@@ -177,13 +239,9 @@ export class SearchPage {
   updateRT(){
     if(this.isRT == true){
       this.isShow = true;
-      this.isAdult = false;
-      this.isChd  = true;
       this.rountingType = 'RT';
     }else{
       this.isShow = false;
-      this.isAdult = true;
-      this.isChd  = false;
       this.rountingType = 'OW';
     }
   }
@@ -201,28 +259,57 @@ export class SearchPage {
                       toCityCode = res[i].countryEn;
                     }
                  } 
-                 if(formCityCode !="CHINA" || toCityCode !="CHINA"){
+                 if(formCityCode !="CHINA"){
                    const count = {
                      'adtCnt': 1,
                      'chdCnt': 0
                    }
                    sessionStorage.setItem('internaCount',JSON.stringify(count));
                    sessionStorage.setItem('countryType','international');
+                   this.isAdult = false;
+                   this.isChd  = true;
                  }else{
                    sessionStorage.setItem('countryType','inland');
-                 }
-                 
-          },
+                   this.isAdult = true;
+                   this.isChd  = false;
+                 } 
+                 if(toCityCode !="CHINA"){
+                   const count = {
+                     'adtCnt': 1,
+                     'chdCnt': 0
+                   }
+                   sessionStorage.setItem('internaCount',JSON.stringify(count));
+                   sessionStorage.setItem('countryType','international');
+                   this.isAdult = false;
+                   this.isChd  = true;
+                 }else{
+                   sessionStorage.removeItem('internaCount');
+                   sessionStorage.setItem('countryType','inland');
+                   this.isAdult = true;
+                   this.isChd  = false;
+                 }   
+          },  
           (err) => console.log('err:'+err)
         ); 
   }
 
+
+  aduChange(event: number) {
+    this.aduNum = `${event}`;
+  }
+
+  chdChange(event:number){
+    this.chdNum = `${event}`
+    if(this.chdNum > this.aduNum){
+      console.log('一成人最多能携带两名儿童！请重新选择');
+    }
+  }
+
   searchbtn(){ 
     if(this.rountingType == 'OW'){
-          this.judgeGnorGj();
           sessionStorage.setItem('routingType','OW'); 
           if(this.depCity === '出发城市' || this.arrCity === '到达城市' || this.depCityCode === '' || this.arrCityCode === '' || 
-          this.cabin === undefined || this.dep.nativeElement.innerText === '出发时间'){
+          this.cabin === undefined || this.dep.nativeElement.value === '出发时间'){
             let msgAlert = this.alertCtrl.create({
                title: '请填写完整信息!',
                buttons: ['确定']
@@ -239,9 +326,9 @@ export class SearchPage {
               'routingType':   this.rountingType,
               'deptCity':      this.depCityCode,
               'arrCity':       this.arrCityCode,
-              'deptStartDate': this.dep.nativeElement.innerText,
+              'deptStartDate': this.depTimePost,
               'seatClass':     this.cabin,
-              'adtCnt':        1,
+              'adtCnt':        this.singleAduNum,
               'chdCnt':        0,
               'infCnt':        0,
               'deptCityName':  this.depCity,
@@ -250,15 +337,14 @@ export class SearchPage {
           }
           
       }else{
-          this.judgeGnorGj();
           sessionStorage.setItem('routingType','RT');
-          if(this.arr.nativeElement.innerText =='请选择返回日期'){
+          if(this.arr.nativeElement.value =='请选择返回日期'){
            let msgAlert = this.alertCtrl.create({
                title: '请填写完整信息!',
                buttons: ['确定']
              });
              msgAlert.present();
-          }else if(this._GetDateDiffService.datediff(this.dep.nativeElement.innerText,this.arr.nativeElement.innerText, "day") < 0 ){
+          }else if(this._UtilsService.datediff(this.depTimePost,this.arrTimePost, "day") < 0 ){
             let msgAlert = this.alertCtrl.create({
                title: '到达时间应大于出发时间!',
                buttons: ['确定']
@@ -269,12 +355,12 @@ export class SearchPage {
               'routingType':   this.rountingType,
               'deptCity':      this.depCityCode,
               'arrCity':       this.arrCityCode,
-              'deptStartDate': this.dep.nativeElement.innerText,
-              'deptEndDate':   this.arr.nativeElement.innerText,
+              'deptStartDate': this.depTimePost,
+              'deptEndDate':   this.arrTimePost,
               'seatClass':     this.cabin,
-              'adtCnt':        1,
-              'chdCnt':        1,
-              'infCnt':        1,
+              'adtCnt':        this.aduNum,
+              'chdCnt':        this.chdNum,
+              'infCnt':        0,
               'deptCityName':  this.depCity,
               'arrCityName':   this.arrCity
             });

@@ -1,29 +1,33 @@
-import { Component,OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component,OnInit,OnDestroy } from '@angular/core';
+import { IonicPage, NavController, NavParams, LoadingController,AlertController } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { Store } from '@ngrx/store';
+import { INITIAL_URL } from '../../store/root/root.actions';
+import { Url, initialUrl } from '../../store/root/root.model';
 import { HttpService } from '../../service/http.service';
-import { AirportService } from '../../service/airport.service';
-
-/**
- * Generated class for the FlightqueryPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
   selector: 'page-flightquery',
   templateUrl: 'flightquery.html',
-  providers:[HttpService,AirportService]
+  providers:[HttpService]
 })
-export class FlightqueryPage implements OnInit{
+
+export class FlightqueryPage implements OnInit, OnDestroy{
   flightData: Array<any>  = [];
   loadingSpnner: Boolean = true;
   imagePath: any;
+  tagState: Observable<Url>;
+  Url: Url;
+  private tagStateSubscription: Subscription;
   constructor(public navCtrl: NavController, 
   	          public navParams: NavParams,
+              public alertCtrl: AlertController,
   	          private _HttpService: HttpService,
-              private _AirportService: AirportService) {
+              public loadingCtrl: LoadingController,
+              private store: Store<Url>) {
+    this.tagState = store.select('Url');
   }
 
   ionViewDidLoad() {
@@ -31,6 +35,9 @@ export class FlightqueryPage implements OnInit{
   }
 
   ngOnInit(){
+    this.tagStateSubscription = this.tagState.subscribe((state) => {
+      this.Url = state;
+    });
   	let routingType = this.navParams.get('routingType');
     let deptCity = this.navParams.get('deptCity');
 	  let arrCity = this.navParams.get('arrCity');
@@ -39,44 +46,69 @@ export class FlightqueryPage implements OnInit{
     let seatClass = this.navParams.get('seatClass');
 	  let adtCnt = this.navParams.get('adtCnt');
     let chdCnt = this.navParams.get('chdCnt');
-    let infCnt = this.navParams.get('infCnt');
-    let deptCityName = this.navParams.get('deptCityName');
-	  let arrCityName = this.navParams.get('arrCityName');
-    
-    const countryType = sessionStorage.getItem('countryType');
-    console.log('countryType:'+countryType);
+    let infCnt = 0;
+ 
 
-    if(routingType = 'OW'){
-    	let OW_QUERY_URL = 'http://192.168.1.252:3000/shopping/query?routingType='+routingType+'&deptCity='+deptCity+'&arrCity='+arrCity+'&deptStartDate='+
-      deptStartDate+'&seatClass='+seatClass+'&adtCnt='+adtCnt+'&chdCnt='+chdCnt+'&infCnt='+infCnt+'&deptCityName='+
-      deptCityName+'&arrCityName='+arrCityName+'&temp='+Math.random().toString();
-      
-      
+
+    let loader = this.loadingCtrl.create({
+      spinner: 'hide',
+      content: `<img src='../assets/img/loading/loading.gif'>`,
+      duration: 1000
+    });
+    loader.present();
+
+    if(routingType == 'OW'){
+      console.log('se1');
+      let OW_QUERY_URL = this.Url.baseurl+this.Url.shoppingurl+'?routingType='+routingType+'&deptCity='+deptCity+'&arrCity='+arrCity+'&deptStartDate='+
+      deptStartDate+'&seatClass='+seatClass+'&adtCnt='+adtCnt+'&chdCnt='+chdCnt+'&infCnt='+infCnt+'&sortType=price_asc&temp='+Math.random().toString();
+
       this._HttpService.get(OW_QUERY_URL)
       .subscribe(
         (res) => { 
-          this.flightData = res.data;              
+          if(res.status == '1001'){
+            setTimeout(() => {
+              loader.dismiss();
+            }, 2000);
+            this.flightData = res.data;    
+          }else{
+            let msgAlert = this.alertCtrl.create({
+               title: res.message,
+               buttons: ['确定']
+             });
+             msgAlert.present();
+          }           
         },
         (err) => console.log('err:'+err)
       );
-    }else{
-    	let QT_QUERY_URL = 'http://192.168.1.252:3000/shopping/query?routingType='+routingType+'&deptCity='+deptCity+'&arrCity='+arrCity+'&deptStartDate='+
-        deptStartDate+'&deptEndDate='+deptEndDate+'&seatClass='+seatClass+'&adtCnt='+adtCnt+'&chdCnt='+chdCnt+'&infCnt='+infCnt+'&deptCityName='+
-        deptCityName+'&arrCityName='+arrCityName+'&temp='+Math.random().toString();
+    }
+    if(routingType == 'RT'){
+      console.log('se2');
+      let QT_QUERY_URL = this.Url.baseurl+this.Url.shoppingurl+'?routingType='+routingType+'&deptCity='+deptCity+'&arrCity='+arrCity+'&deptStartDate='+
+        deptStartDate+'&deptEndDate='+deptEndDate+'&seatClass='+seatClass+'&adtCnt='+adtCnt+'&chdCnt='+chdCnt+'&infCnt='+infCnt+'&sortType=price_asc&temp='+Math.random().toString();
+
         this._HttpService.get(QT_QUERY_URL)
         .subscribe(
           (res) => {
-            this.flightData = res.data;
+            if(res.status == '1001'){
+              setTimeout(() => {
+                loader.dismiss();
+              }, 2000);
+              this.flightData = res.data;    
+            }else{
+              let msgAlert = this.alertCtrl.create({
+                 title: res.message,
+                 buttons: ['确定']
+               });
+               msgAlert.present();
+            }           
           },
           (err) => console.log('err:'+err)
         )
-
     }
-    
-
-
   }
 
-  
+  ngOnDestroy() {
+    this.tagStateSubscription.unsubscribe();
+  }
 
 }
