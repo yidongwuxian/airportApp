@@ -6,12 +6,13 @@ import { Store } from '@ngrx/store';
 import { INITIAL_URL } from '../../store/root/root.actions';
 import { Url, initialUrl } from '../../store/root/root.model';
 import { HttpService } from '../../service/http.service';
+import { FlightTabComponent } from '../../components/flighttab/flighttab';
 
 @IonicPage()
 @Component({
   selector: 'page-flightquery',
   templateUrl: 'flightquery.html',
-  providers:[HttpService]
+  providers:[HttpService,FlightTabComponent]
 })
 
 export class FlightqueryPage implements OnInit, OnDestroy{

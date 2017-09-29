@@ -1,0 +1,22 @@
+.datePanel {
+    .main{
+        height:50px;
+        padding:0 4%;
+        background: blue;
+        color:white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        >div{
+            font-size: 14px;
+        }
+        .date{
+            background: white;
+            padding:6px 25px 3px;
+            border-radius: 4px;
+            color:blue;
+        }
+    }
+}
+
+

@@ -1,0 +1,22 @@
+[
+        { "match": "香港|香港国际机场|HKG|HKG", "name": "香港", "pinyin": "XIANGGANG", "sanzima": "HKG" },
+        { "match": "首尔|首尔金浦机场|SEL|GMP", "name": "首尔", "pinyin": "SHOUER", "sanzima": "SEL" },
+        { "match": "台北|桃园机场|TPE|TPE",     "name": "台北", "pinyin": "TAIBEI", "sanzima": "TPE" },
+        { "match": "东京|东京羽田机场|TYO|HND", "name": "东京", "pinyin": "DONGJING", "sanzima": "TYO" },
+        { "match": "新加坡|樟宜国际机场|SIN|SIN", "name": "新加坡", "pinyin": "XINJIAPO", "sanzima": "SIN" },
+        { "match": "澳门|澳门国际机场|MFM|MFM", "name": "澳门", "pinyin": "AOMEN", "sanzima": "MFM" },
+        { "match": "曼谷|素万那普国际机场|BKK|BKK", "name": "曼谷", "pinyin": "MANGU", "sanzima": "BKK" },
+        { "match": "大阪|伊丹机场|OSA|ITM", "name": "大阪", "pinyin": "DABAN", "sanzima": "OSA" },
+        { "match": "胡志明市|新山机场|SGN|SGN", "name": "胡志明市", "pinyin": "HUZHIMINGSHI", "sanzima": "SGN" },
+        { "match": "马尼拉|尼诺依阿基诺国际机场|MNL|MNL", "name": "马尼拉", "pinyin": "MANILA", "sanzima": "MNL" },
+        { "match": "伦敦|比金希尔机场|LON|BQH", "name": "伦敦", "pinyin": "LUNDUN", "sanzima": "LON" },
+        { "match": "吉隆坡|吉隆坡国际机场|KUL|KUL", "name": "吉隆坡", "pinyin": "JILONGPO", "sanzima": "KUL" },
+        { "match": "釜山|金海国际机场|PUS|PUS", "name": "釜山", "pinyin": "FUSHAN", "sanzima": "PUS" },
+        { "match": "悉尼|金斯福德－史密斯机场|SYD|SYD", "name": "悉尼", "pinyin": "XINI", "sanzima": "SYD" },
+        { "match": "法兰克福|法兰克福机场|FRA|FRA", "name": "法兰克福", "pinyin": "FALANKEFU", "sanzima": "FRA" },
+        { "match": "温哥华|温哥华国际机场|YVR|YVR", "name": "温哥华", "pinyin": "WENGEHUA", "sanzima": "YVR" },
+        { "match": "巴黎|查尔斯-戴高乐国际机场|PAR|CDG", "name": "巴黎", "pinyin": "BALI", "sanzima": "PAR" },
+        { "match": "纽约|纽瓦克国际机场|NYC|EWR", "name": "纽约", "pinyin": "NIUYUE", "sanzima": "NYC" },
+        { "match": "洛杉矶|洛杉矶国际机场|LAX|LAX", "name": "洛杉矶", "pinyin": "LUOSHANJI", "sanzima": "LAX" },
+        { "match": "夏威夷|HNL", "name": "夏威夷", "pinyin": "XIAWEIYI", "sanzima": "HNL" }
+]

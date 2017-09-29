@@ -1,0 +1,22 @@
+[
+        { "match": "北京|南苑机场|NAY|BEIJING|BJ", "name": "北京", "pinyin": "BEIJING", "sanzima": "PEK" },
+        { "match": "上海|浦东国际机场|PVG|PUDONG|SH", "name": "上海", "pinyin": "PUDONG", "sanzima": "SHA" }, 
+        { "match": "广州|白云国际机场|CAN|GUANGZHOU|GZ", "name": "广州", "pinyin": "GUANGZHOU", "sanzima": "CAN" }, 
+        { "match": "深圳|宝安国际机场|SZX|SHENZHEN|SZ", "name": "深圳", "pinyin": "SHENZHEN", "sanzima": "SZX" }, 
+        { "match": "成都|双流国际机场|CTU|CHENGDU|CD", "name": "成都", "pinyin": "CHENGDU", "sanzima": "CTU" },
+        { "match": "杭州|萧山国际机场|HGH|HANGZHOU|HZ", "name": "杭州", "pinyin": "HANGZHOU", "sanzima": "HGH" }, 
+        { "match": "武汉|天河国际机场|WUH|WUHAN|WH", "name": "武汉", "pinyin": "WUHAN", "sanzima": "WUH" },
+        { "match": "西安|咸阳国际机场|XIY|XIAN|XA", "name": "西安", "pinyin": "XIAN", "sanzima": "XIY" }, 
+        { "match": "重庆|江北国际机场|CKG|CHONGQING|CQ", "name": "重庆", "pinyin": "CHONGQING", "sanzima": "CKG" },
+        { "match": "青岛|流亭国际机场|TAO|QINGDAO|QD", "name": "青岛", "pinyin": "QINGDAO", "sanzima": "TAO" }, 
+        { "match": "长沙|黄花国际机场|CSX|CHANGSHA|CS", "name": "长沙", "pinyin": "CHANGSHA", "sanzima": "CSX" },
+        { "match": "南京|禄口国际机场|NKG|NANJING|NJ", "name": "南京", "pinyin": "NANJING", "sanzima": "NKG" }, 
+        { "match": "厦门|高崎国际机场|XMN|XIAMEN|XM", "name": "厦门", "pinyin": "XIAMEN", "sanzima": "XMN" }, 
+        { "match": "昆明|长水机场|KMG|KUNMING|KM", "name": "昆明", "pinyin": "KUNMING", "sanzima": "KMG" },
+        { "match": "大连|周水子机场|DLC|DALIAN|DL", "name": "大连", "pinyin": "DALIAN", "sanzima": "DLC" },
+        { "match": "天津|滨海国际机场|TSN|TIANJIN|TJ", "name": "天津", "pinyin": "TIANJIN", "sanzima": "TSN" }, 
+        { "match": "郑州|新郑国际机场|CGO|ZHENGZHOU|ZZ", "name": "郑州", "pinyin": "ZHENGZHOU", "sanzima": "CGO" }, 
+        { "match": "三亚|凤凰国际机场|SYX|SANYA|SY", "name": "三亚", "pinyin": "SANYA", "sanzima": "SYX" }, 
+        { "match": "济南|遥墙国际机场|TNA|JINAN|JN", "name": "济南", "pinyin": "JINAN", "sanzima": "TNA" }, 
+        { "match": "福州|长乐国际机场|FOC|FUZHOU|FZ", "name": "福州", "pinyin": "FUZHOU", "sanzima": "FOC" }
+]

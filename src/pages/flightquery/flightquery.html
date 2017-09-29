@@ -5,6 +5,7 @@
 </ion-header>
 <ion-content>
  <div>  
+        <flightTab></flightTab>
 		<div class="list">			
 			<ul>
 				<li *ngFor="let flight of flightData; index as i; trackBy:trackByFlightData;" (click)="selectTheFlight(flight)">

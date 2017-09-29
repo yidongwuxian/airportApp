@@ -29,7 +29,7 @@ export class Contacts {
      */
     grouping(array: Contact[]): Group[] {
         let groupContacts: Group[] = [];
-        const letterStr = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const letterStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         if (array.length <= 0) return [];
 
         // Create a parent container
@@ -53,6 +53,16 @@ export class Contacts {
         });
         
         let tempContacts: Group[]=[];
+        tempContacts.push(
+        {
+             groupName: '#',
+             contacts: []
+        },
+        {
+             groupName: '热门',
+             contacts: []
+        }
+        ) 
         groupContacts.forEach((item) => {
             if(item.contacts.length != 0){
                 tempContacts.push(item);

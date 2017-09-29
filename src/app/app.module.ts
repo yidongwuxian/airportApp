@@ -20,7 +20,7 @@ import { CityselPage } from '../pages/citysel/citysel';
 import { FlightqueryPage } from '../pages/flightquery/flightquery';
 //component
 import { CountComponent } from '../components/counter/counter';
-
+import { FlightTabComponent } from '../components/flighttab/flighttab';
 //pipe
 import { SexReformPipe } from '../pipe/sexReform.pipe';
 import { ToNullPipe } from '../pipe/toNull.pipe';
@@ -42,6 +42,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     CityselPage,
     FlightqueryPage,
     CountComponent,
+    FlightTabComponent,
     SexReformPipe,
     ToNullPipe,
     CabinPipe,
@@ -71,7 +72,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SearchPage,
     CityselPage,
     FlightqueryPage,
-    CountComponent
+    CountComponent,
+    FlightTabComponent
   ],
   providers: [
     StatusBar,
