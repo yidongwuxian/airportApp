@@ -1,0 +1,207 @@
+[
+    { "match": "阿根廷|Argentina", "name": "阿根廷", "pinyin": "AGENTING", "sanzima": "AR" },
+    { "match": "奥地利|Austria", "name": "奥地利", "pinyin": "AODILI", "sanzima": "AT" },
+    { "match": "阿鲁巴|Aruba_Country", "name": "阿鲁巴", "pinyin": "ALUBA", "sanzima": "AW" },
+    { "match": "阿尔巴尼亚|Albania", "name": "阿尔巴尼亚", "pinyin": "AERBANIYA", "sanzima": "AL" },
+    { "match": "澳大利亚|Australia", "name": "澳大利亚", "pinyin": "AODALIYA", "sanzima": "AU" },
+    { "match": "阿曼|Oman", "name": "阿曼", "pinyin": "HAMAN", "sanzima": "OM" },
+    { "match": "安哥拉|Angola", "name": "安哥拉", "pinyin": "ANGELA", "sanzima": "AO" },
+    { "match": "阿富汗|Afghanistan", "name": "阿富汗", "pinyin": "AFUHAN", "sanzima": "AF" },
+    { "match": "亚美尼亚|Armenia", "name": "亚美尼亚", "pinyin": "YAMEINIYA", "sanzima": "AM" },
+    { "match": "安提瓜和巴布达|Antigua_And_Barbuda", "name": "安提瓜和巴布达", "pinyin": "ANTIGUAHEBABUDA", "sanzima": "AG" },
+    { "match": "阿尔及利亚|Algeria", "name": "阿尔及利亚", "pinyin": "AERJINIYA", "sanzima": "DZ" },
+    { "match": "阿联酋|UAE", "name": "阿联酋", "pinyin": "ALIANQIU", "sanzima": "AE" },
+    { "match": "阿塞拜疆|Azerbaijan", "name": "阿塞拜疆", "pinyin": "ASAIBAIJIANG", "sanzima": "AZ" },
+    { "match": "安圭拉|Anguilla_Country", "name": "安圭拉", "pinyin": "ANGUILA", "sanzima": "AI" },
+    { "match": "埃及|Egypt", "name": "埃及", "pinyin": "AIJI", "sanzima": "EG" },
+    { "match": "爱尔兰|Ireland", "name": "爱尔兰", "pinyin": "AIERLAN", "sanzima": "IE" },
+    { "match": "埃塞俄比亚|Ethiopia", "name": "埃塞俄比亚", "pinyin": "AISAIEBIYA", "sanzima": "ET" },
+    { "match": "哈萨克斯坦|Kazakstan", "name": "哈萨克斯坦", "pinyin": "HASAKESITAN", "sanzima": "KZ" },
+    { "match": "爱沙尼亚|Estonia", "name": "爱沙尼亚", "pinyin": "AISHANIYA", "sanzima": "EE" },
+    { "match": "巴西|Brazil", "name": "巴西", "pinyin": "BAXI", "sanzima": "BR" },
+    { "match": "布隆迪|Burundi", "name": "布隆迪", "pinyin": "BULONGDI", "sanzima": "BI" },
+    { "match": "贝宁|Benin", "name": "贝宁", "pinyin": "BEINING", "sanzima": "BJ" },
+    { "match": "巴林|Bahrain", "name": "巴林", "pinyin": "BALIN", "sanzima": "BH" },
+    { "match": "比利时|Belgium", "name": "比利时", "pinyin": "BILISHI", "sanzima": "BE" },
+    { "match": "巴巴多斯|Barbados", "name": "巴巴多斯", "pinyin": "BABADUOSI", "sanzima": "BB" },
+    { "match": "百慕大|Bermuda_Country", "name": "百慕大", "pinyin": "BAIMUDA", "sanzima": "BM" },
+    { "match": "保加利亚|Bulgaria", "name": "保加利亚", "pinyin": "BAOJIALIYA", "sanzima": "BG" },
+    { "match": "伯利兹|Belize", "name": "伯利兹", "pinyin": "BOLIZI", "sanzima": "BZ" },
+    { "match": "巴哈马|Bahamas", "name": "巴哈马", "pinyin": "BAHAMA", "sanzima": "BS" },
+    { "match": "博茨瓦纳|Botswana", "name": "博茨瓦纳", "pinyin": "BOZIWANA", "sanzima": "BW" },
+    { "match": "冰岛|Iceland", "name": "冰岛", "pinyin": "BINGDAO", "sanzima": "IS" },
+    { "match": "北马里亚纳群岛|Northern_Mariana_Islands", "name": "北马里亚纳群岛", "pinyin": "BEIMALIYANAQUNDAO", "sanzima": "MP" },
+    { "match": "巴勒斯坦|Palestine", "name": "巴勒斯坦", "pinyin": "BALESITAN", "sanzima": "PS" },
+    { "match": "巴基斯坦|Pakistan", "name": "巴基斯坦", "pinyin": "BAJISITAN", "sanzima": "PK" },
+    { "match": "波兰|Poland", "name": "波兰", "pinyin": "BOLAN", "sanzima": "PL" },
+    { "match": "巴布亚新几内亚|Papua_New_Guinea", "name": "巴布亚新几内亚", "pinyin": "BABUYAXINJINEIYA", "sanzima": "PG" },
+    { "match": "巴拉圭|Paraguay", "name": "巴拉圭", "pinyin": "BALAGUI", "sanzima": "PY" },
+    { "match": "巴拿马|Panama_Country", "name": "巴拿马", "pinyin": "BANAMA", "sanzima": "PA" },
+    { "match": "白俄罗斯|Belarus", "name": "白俄罗斯", "pinyin": "BAIELUOSI", "sanzima": "BY" },
+    { "match": "波斯尼亚和黑塞哥维那|Bosnia_And_Herzegowina", "name": "波斯尼亚和黑塞哥维那", "pinyin": "BOSINIYAHEHEISAIGEWEIYA", "sanzima": "" },
+    { "match": "波多黎各|Puerio_Rico", "name": "波多黎各", "pinyin": "BODUOLIDI", "sanzima": "PR" },
+    { "match": "布基纳法索|Burkina_Faso", "name":"布基纳法索", "pinyin":"BUJINAFASUO", "sanzima":"BF"  },
+    { "match": "玻利维亚|Bolivia","name":"玻利维亚", "pinyin":"BULIWEIYA", "sanzima":"BO"}
+    { "match": "朝鲜|Korea","name":"朝鲜", "pinyin":"CHAOXIAN", "sanzima":"KP"}
+    { "match": "赤道几内亚|Equatorial_Guinea","name":"赤道几内亚", "pinyin":"CHIDAOJINEIYA", "sanzima":"GQ"}
+    { "match": "德国|Germany","name":"德国", "pinyin":"DEGUO", "sanzima":"DE"}
+    { "match": "多米尼加共和国|Dominican_Republic","name":"多米尼加共和国", "pinyin":"DUOMINIJIAGONGHEGUO", "sanzima":"DO"}
+    { "match": "多哥|Togo","name":"多哥", "pinyin":"DUOGE","sanzima":"TG"}
+    { "match": "丹麦|Denmark","name":"丹麦", "pinyin":"DANMAI","sanzima":"DK"}
+    { "match": "荷属安的列斯群岛|Netherlands_Antilles","name":"荷属安的列斯群岛", "pinyin":"ESHUANDELIESIQUNDAO","sanzima":""}
+    { "match": "俄罗斯|Russia","name":"俄罗斯", "pinyin":"ELUOSI","sanzima":"RU"}
+    { "match": "厄立特里亚|Eritrea","name":"厄立特里亚", "pinyin":"ELITELIYA","sanzima":"ER"}
+    { "match": "厄瓜多尔|Ecuador","name":"厄瓜多尔", "pinyin":"EGUADUOER","sanzima":"EC"}
+    { "match": "芬兰|Finland","name":"芬兰", "pinyin":"FENLAN","sanzima":"FI"}
+    { "match": "佛得角|Cape_Verde","name":"佛得角", "pinyin":"FUDEJIAO","sanzima":"CV"}
+    { "match": "法属圭亚那|French_Guiana","name":"法属圭亚那", "pinyin":"FASHUGUIYANA","sanzima":"GF"}
+    { "match": "法国|France","name":"法国", "pinyin":"FAGUO","sanzima":"FR"}
+    { "match": "菲律宾|Philippines","name":"菲律宾", "pinyin":"FEILVBIN","sanzima":"PH"}
+    { "match": "福克兰群島|FalklandIslands","name":"福克兰群島", "pinyin":"FUKELANQUNDAO","sanzima":"FK"}
+    { "match": "法属玻利尼西亚|French_Polynesia","name":"法属玻利尼西亚", "pinyin":"FASHUBOLINIXIYA","sanzima":"PF"}
+    { "match": "斐济|Fiji","name":"斐济", "pinyin":"FEIJI","sanzima":"FJ"}
+    { "match": "哥伦比亚|Colombia","name":"哥伦比亚", "pinyin":"GELUNBIYA","sanzima":"CO"}
+    { "match": "圭亚那|Guyana","name":"圭亚那", "pinyin":"GUIYANA","sanzima":"GY"}
+    { "match": "古巴|Cuba","name":"古巴", "pinyin":"GUBA","sanzima":"CU"}
+    { "match": "哥斯达黎加|Costa_Rica","name":"哥斯达黎加", "pinyin":"GESIDALIJIA","sanzima":"CR"}
+    { "match": "刚果(布)|Congo","name":"刚果(布)", "pinyin":"GANGGUO","sanzima":"CG"}
+    { "match": "刚果(金)|DRCongo","name":"刚果(金)", "pinyin":"GANGGUO","sanzima":"CD"}
+    { "match": "瓜德罗普|Guadeloupe","name":"瓜德罗普", "pinyin":"GUADELUOPU","sanzima":"GP"}
+    { "match": "格陵兰|Greenland","name":"格陵兰", "pinyin":"GELINGLAN","sanzima":"GL"}
+    { "match": "格林纳达|Grenada","name":"格林纳达", "pinyin":"GELINNADA","sanzima":"GD"}
+    { "match": "格鲁吉亚|Georgia","name":"格鲁吉亚", "pinyin":"GELUJIYA","sanzima":"GE"}
+    { "match": "冈比亚|Gambia","name":"冈比亚", "pinyin":"GANGBIYA","sanzima":"GM"}
+    { "match": "韩国|South_Korea","name":"韩国", "pinyin":"HANGUO","sanzima":"KR"}
+    { "match": "海地|Haiti","name":"海地", "pinyin":"HAIDI","sanzima":"HT"}
+    { "match": "荷兰|Netherlands","name":"荷兰", "pinyin":"HELAN","sanzima":"NL"}
+    { "match": "洪都拉斯|Honduras","name":"洪都拉斯", "pinyin":"HONGDULASI","sanzima":"HN"}
+    { "match": "加纳|Ghana","name":"加纳", "pinyin":"JIANA","sanzima":"GH"}
+    { "match": "柬埔寨|Cambodia","name":"柬埔寨", "pinyin":"JIPUSAI","sanzima":"KH"}
+    { "match": "几内亚|Guinea","name":"几内亚", "pinyin":"JINEIYA","sanzima":"GN"}
+    { "match": "加蓬|Gabon","name":"加蓬", "pinyin":"JIAPENG","sanzima":"GA"}
+    { "match": "吉布提|Djibouti_Country","name":"吉布提", "pinyin":"JIBUTI","sanzima":"DJ"}
+    { "match": "捷克|Czech_Republic","name":"捷克", "pinyin":"JIEKE","sanzima":"CZ"}
+    { "match": "基里巴斯|Kiribati","name":"基里巴斯", "pinyin":"JILIBASI","sanzima":"KI"}
+    { "match": "津巴布韦|Zimbabwe","name":"津巴布韦", "pinyin":"JINBABUWEI","sanzima":"ZW"}
+    { "match": "吉尔吉斯斯坦|Kyrgyzstan","name":"吉尔吉斯斯坦", "pinyin":"JIERJISISITAN","sanzima":"KG"}
+    { "match": "加拿大|Canada","name":"加拿大", "pinyin":"JIANADA","sanzima":"CA"}
+    { "match": "科特迪瓦|Cote_d_ivoire","name":"科特迪瓦", "pinyin":"KETEDIWA","sanzima":"CI"}
+    { "match": "卡塔尔|Qatar","name":"卡塔尔", "pinyin":"KATAER","sanzima":"QA"}
+    { "match": "开曼群岛|Cayman_Islands","name":"开曼群岛", "pinyin":"KAIMANQUNDAO","sanzima":"KY"}
+    { "match": "库克群岛|Cook_Islands","name":"库克群岛", "pinyin":"KUKEQUNDAO","sanzima":"CK"}
+    { "match": "科摩罗|Comoros","name":"科摩罗", "pinyin":"KEMOLUO","sanzima":"KM"}
+    { "match": "特克斯科斯群岛|Turks_And_Caicos_Islands","name":"特克斯科斯群岛", "pinyin":"TEKESIKESIQUNDAO","sanzima":"TC"}
+    { "match": "克罗地亚|Croatia","name":"克罗地亚", "pinyin":"KELUODIYA","sanzima":""}
+    { "match": "肯尼亚|Kenya","name":"肯尼亚", "pinyin":"KENNIYA","sanzima":"KE"}
+    { "match": "喀麦隆|Cameroon","name":"喀麦隆", "pinyin":"KEMAILONG","sanzima":"CM"}
+    { "match": "科威特|Kuwait","name":"科威特", "pinyin":"KEWEITE","sanzima":"KW"}
+    { "match": "立陶宛|Lithuania","name":"立陶宛", "pinyin":"LITAOWAN","sanzima":"LT"}
+    { "match": "卢旺达|Rwanda","name":"卢旺达", "pinyin":"LUWANGDA","sanzima":"RW"}
+    { "match": "罗马尼亚|Romania","name":"罗马尼亚", "pinyin":"LUMANIYA","sanzima":"RO"}
+    { "match": "利比亚|Libya_Arab_Jamahiriya","name":"利比亚", "pinyin":"LIBIYA","sanzima":"LY"}
+    { "match": "黎巴嫩|Lebanon","name":"黎巴嫩", "pinyin":"LIBANEN","sanzima":"LB"}
+    { "match": "留尼汪|Reunion","name":"留尼汪", "pinyin":"LIUNIWANG","sanzima":"RE"}
+    { "match": "莱索托|Lesotho","name":"莱索托", "pinyin":"LAISUOTUO","sanzima":"LS"}
+    { "match": "老挝|Laos","name":"老挝", "pinyin":"LAOWO","sanzima":"LA"}
+    { "match": "拉脱维亚|Latvia","name":"拉脱维亚", "pinyin":"LATUOWEIYA","sanzima":"LV"}
+    { "match": "卢森堡公国|Luxembourg","name":"卢森堡公国", "pinyin":"LUSENBAOGONGYUAN","sanzima":""}
+    { "match": "马绍尔群岛|Marshall_Islands","name":"马绍尔群岛", "pinyin":"MAZHAOERQUNDAO","sanzima":"MH"}
+    { "match": "摩尔多瓦|Moldova","name":"摩尔多瓦", "pinyin":"MOERDUOWA","sanzima":"MD"}
+    { "match": "马耳他|Malta","name":"马耳他", "pinyin":"MAERTA","sanzima":"MT"}
+    { "match": "马尔代夫|Maldives","name":"马尔代夫", "pinyin":"MAERDAIFU","sanzima":"MV"}
+    { "match": "蒙古|Mongolia","name":"蒙古", "pinyin":"MENGGU","sanzima":"MN"}
+    { "match": "墨西哥|Mexico_Country","name":"墨西哥", "pinyin":"MOXIGE","sanzima":"MX"}
+    { "match": "摩洛哥|Morocco","name":"摩洛哥", "pinyin":"MOLUOGE","sanzima":"MA"}
+    { "match": "缅甸|Myanmar","name":"缅甸", "pinyin":"MIANDIAN","sanzima":"MM"}
+    { "match": "马拉维|Malawi","name":"马拉维", "pinyin":"MALAWEI","sanzima":"MW"}
+    { "match": "马来西亚|Malaysia","name":"马来西亚", "pinyin":"MALAIXIYA","sanzima":"MY"}
+    { "match": "马里|Mali","name":"马里", "pinyin":"MALI","sanzima":"ML"}
+    { "match": "密克罗尼西亚|Micronesia","name":"密克罗尼西亚", "pinyin":"MIKELUONIXIYA","sanzima":"FM"}
+    { "match": "孟加拉国|Bangladesh","name":"孟加拉国", "pinyin":"MENGJIALAGUO","sanzima":"BD"}
+    { "match": "莫桑比克|Mozambique","name":"莫桑比克", "pinyin":"MOSANGBIKE","sanzima":"MZ"}
+    { "match": "美国|USA","name":"美国", "pinyin":"MEIGUO","sanzima":"US"}
+    { "match": "毛里塔尼亚|Mauritania","name":"毛里塔尼亚", "pinyin":"MAOLITANIYA","sanzima":"MR"}
+    { "match": "蒙特塞拉特|Montserrat","name":"蒙特塞拉特", "pinyin":"MENGTESAILATE","sanzima":"MS"}
+    { "match": "毛里求斯|Mauritius","name":"毛里求斯", "pinyin":"MAOLIQIUSI","sanzima":"MU"}
+    { "match": "美属萨摩亚|American_Samoa","name":"美属萨摩亚", "pinyin":"MEISHUSAMOYA","sanzima":"AS"}
+    { "match": "秘鲁|Peru","name":"秘鲁", "pinyin":"MILU","sanzima":"PE"}
+    { "match": "马其顿王国|Macedonia","name":"马其顿王国", "pinyin":"MAQIDUNWANGGUO","sanzima":"MK"}
+    { "match": "马提尼克|Martinique","name":"马提尼克", "pinyin":"MATINIKE","sanzima":"MQ"}
+    { "match": "马达加斯加|Madagascar","name":"马达加斯加", "pinyin":"MADAJIASIJIA","sanzima":"MG"}
+    { "match": "纳米比亚|Namibia","name":"纳米比亚", "pinyin":"NAMIBIYA","sanzima":"NA"}
+    { "match": "挪威|Norway","name":"挪威", "pinyin":"NUOWEI","sanzima":"NO"}
+    { "match": "尼泊尔|Nepal","name":"尼泊尔", "pinyin":"NIBOER","sanzima":"NP"}
+    { "match": "南非|South_Africa","name":"南非", "pinyin":"NANFEI","sanzima":"ZA"}
+    { "match": "尼日利亚|Nigeria","name":"尼日利亚", "pinyin":"NIRILIYA","sanzima":"NG"}
+    { "match": "尼加拉瓜|Nicaragua","name":"尼加拉瓜", "pinyin":"NIJIALAGUA","sanzima":"NI"}
+    { "match": "瑙鲁|Nauru","name":"瑙鲁", "pinyin":"NAOLU","sanzima":"NR"}
+    { "match": "纽埃岛|NiueIsland","name":"纽埃岛", "pinyin":"NIUAIDAO","sanzima":""}
+    { "match": "尼日尔|Niger","name":"尼日尔", "pinyin":"NIRIER","sanzima":"NE"}
+    { "match": "南斯拉夫|Yugoslavia","name":"南斯拉夫", "pinyin":"NANSILAFU","sanzima":""}
+    { "match": "葡萄牙|Portugal","name":"葡萄牙", "pinyin":"PUTAOYA","sanzima":"PT"}
+    { "match": "帕劳群岛|Palau","name":"帕劳群岛", "pinyin":"PALAOQUNDAO","sanzima":"PW"}
+    { "match": "瑞士|Switzerland","name":"瑞士", "pinyin":"RUISHI","sanzima":"CH"}
+    { "match": "瑞典|Sweden","name":"瑞典", "pinyin":"RUIDIAN","sanzima":"SE"}
+    { "match": "日本|Japan","name":"日本", "pinyin":"RIBEN","sanzima":"JP"}
+    { "match": "塞拉利昂共和国|Sierra_Leone","name":"塞拉利昂共和国", "pinyin":"SAILAKEANGGONGHEGUO","sanzima":"SL"}
+    { "match": "圣文森特和格林纳丁斯|St_Vincent_And_The_Grenadines","name":"圣文森特和格林纳丁斯", "pinyin":"SHENGWENSENTEHEGELINNADINGSI","sanzima":"VC"}
+    { "match": "所罗门群岛|SolomonIslands","name":"所罗门群岛", "pinyin":"SUOLUOMENQUNDAO","sanzima":"SB"}
+    { "match": "索马里|Somalia","name":"索马里", "pinyin":"SUOMALI","sanzima":"SO"}
+    { "match": "塞舌尔共和国|Seychelles","name":"塞舌尔共和国", "pinyin":"SAISHEERGONGHEGUO","sanzima":"SC"}
+    { "match": "斯里兰卡|Sri_Lanka","name":"斯里兰卡", "pinyin":"SILILANKA","sanzima":"LK"}
+    { "match": "斯洛文尼亚|Slovenia","name":"斯洛文尼亚", "pinyin":"SILUOWENNIYA","sanzima":"SI"}
+    { "match": "圣基茨和尼维斯|Saint_Kitts_And_Nevis","name":"圣基茨和尼维斯", "pinyin":"SHENGJICIHENIWEISI","sanzima":"KN"}
+    { "match": "苏丹|Sudan","name":"苏丹", "pinyin":"SUDAN","sanzima":"SD"}
+    { "match": "斯洛伐克|Slovakia","name":"斯洛伐克", "pinyin":"SILUOFAKE","sanzima":"SK"}
+    { "match": "萨尔瓦多|El_Salvador","name":"萨尔瓦多", "pinyin":"SAERWADUO","sanzima":"SV"}
+    { "match": "萨摩亚群岛|Samoa","name":"萨摩亚群岛", "pinyin":"SAMOYAQUNDAO","sanzima":"WS"}
+    { "match": "沙特阿拉伯|Saudi_Arabia","name":"沙特阿拉伯", "pinyin":"SHATEALABO","sanzima":"SA"}
+    { "match": "塞浦路斯|Cyprus","name":"塞浦路斯", "pinyin":"SAIPULUSI","sanzima":"CY"}
+    { "match": "苏里南|Suriname","name":"苏里南", "pinyin":"SULINA","sanzima":"SR"}
+    { "match": "塞内加尔|Senegal","name":"塞内加尔", "pinyin":"SAINEIJIAER","sanzima":"SN"}
+    { "match": "特立尼达和多巴哥|Trinidad_And_Tobago","name":"特立尼达和多巴哥", "pinyin":"TELINIDAHEDUOBAGE","sanzima":"TT"}
+    { "match": "泰国|Thailand","name":"泰国", "pinyin":"TAIGUO","sanzima":"TH"}
+    { "match": "土耳其|Turkey","name":"土耳其", "pinyin":"TUERQI","sanzima":"TR"}
+    { "match": "汤加|Tonga","name":"汤加", "pinyin":"TANGJIA","sanzima":"TO"}
+    { "match": "突尼斯|Tunisia","name":"突尼斯", "pinyin":"TUNISI","sanzima":"TN"}
+    { "match": "土库曼斯坦|Turkmenistan","name":"土库曼斯坦", "pinyin":"TUKUMANSITAN","sanzima":"TM"}
+    { "match": "坦桑尼亚|Tanzania","name":"坦桑尼亚", "pinyin":"TANSANGNIYA","sanzima":"TZ"}
+    { "match": "塔吉克斯坦|Tajikistan","name":"塔吉克斯坦", "pinyin":"TAJIKESITAN","sanzima":"TJ"}
+    { "match": "图瓦卢|Tuvalu","name":"图瓦卢", "pinyin":"TUWALU","sanzima":"TV"}
+    { "match": "委内瑞拉|Venezuela","name":"委内瑞拉", "pinyin":"WEINIRUILA","sanzima":"VE"}
+    { "match": "乌兹别克斯坦|Uzbekistan","name":"乌兹别克斯坦", "pinyin":"WUSIBIEKESITAN","sanzima":"UZ"}
+    { "match": "瓦努阿图|Vanuatu","name":"瓦努阿图", "pinyin":"WANUATU","sanzima":""}
+    { "match": "文莱|Brunei_Darussalam","name":"文莱", "pinyin":"WENLAI","sanzima":"BN"}
+    { "match": "乌克兰|Ukraine","name":"乌克兰", "pinyin":"WUKELAN","sanzima":"UA"}
+    { "match": "乌拉圭|Uruguay","name":"乌拉圭", "pinyin":"WULAGUI","sanzima":"UY"}
+    { "match": "乌干达|Uganda","name":"乌干达", "pinyin":"WUGANDA","sanzima":"UG"}
+    { "match": "新西兰|New_Zealand","name":"新西兰", "pinyin":"XINXILAN","sanzima":"NZ"}
+    { "match": "叙利亚|Syria","name":"叙利亚", "pinyin":"XULIYA","sanzima":"SY"}
+    { "match": "希腊|Greece","name":"希腊", "pinyin":"XILA","sanzima":"GR"}
+    { "match": "新喀里多尼亚|New_Caledonia","name":"新喀里多尼亚", "pinyin":"XINKELIDUONIYA","sanzima":"NC"}
+    { "match": "匈牙利|Hungary","name":"匈牙利", "pinyin":"XIONGYALI","sanzima":"HU"}
+    { "match": "西班牙|Spain","name":"西班牙", "pinyin":"XIBANYA","sanzima":"ES"}
+    { "match": "新加坡|Singapore_Country","name":"新加坡", "pinyin":"XINJIAPO","sanzima":"SG"}
+    { "match": "英国|United_Kingdom","name":"英国", "pinyin":"YINGGUO","sanzima":"GB"}
+    { "match": "约旦|Jordan","name":"约旦", "pinyin":"YUEDAN","sanzima":"JO"}
+    { "match": "意大利|Italy","name":"意大利", "pinyin":"YIDALI","sanzima":"IT"}
+    { "match": "以色列|Israel","name":"以色列", "pinyin":"YISILIE","sanzima":"IL"}
+    { "match": "亚美尼亚|Armenia","name":"亚美尼亚", "pinyin":"YAMEINIYA","sanzima":"AM"}
+    { "match": "伊拉克|Iraq","name":"伊拉克", "pinyin":"YILAKE","sanzima":"IQ"}
+    { "match": "越南|Vietnam","name":"越南", "pinyin":"YUENAN","sanzima":"VN"}
+    { "match": "英属维尔京群岛|Virgin_Islands_(British)","name":"英属维尔京群岛", "pinyin":"YINGSHUWEIERJINGQUNDAO","sanzima":"VG"}
+    { "match": "印度|India","name":"印度", "pinyin":"YINDU","sanzima":"IN"}
+    { "match": "伊朗|Iran","name":"伊朗", "pinyin":"YILANG","sanzima":"IR"}
+    { "match": "也门|Yemen","name":"也门", "pinyin":"YEMEN","sanzima":"YE"}
+    { "match": "印度尼西亚|Indonesia","name":"印度尼西亚", "pinyin":"YINDUNIXIYA","sanzima":"ID"}
+    { "match": "牙买加|Jamaica","name":"牙买加", "pinyin":"YAMAIJIA","sanzima":""}
+    { "match": "直布罗陀|Gibraltar","name":"直布罗陀", "pinyin":"ZHIBULUOTUO","sanzima":"GI"}
+    { "match": "中国|CHINA","name":"中国", "pinyin":"ZHONGGUO","sanzima":"CN"}
+    { "match": "中国台湾|ROC","name":"中国台湾", "pinyin":"TAIWAN","sanzima":"TW"}
+    { "match": "中国香港|Hong_Kong_Country","name":"中国香港", "pinyin":"XIANGGANG","sanzima":"HK"}
+    { "match": "中国澳门|Macao_country","name":"中国澳门", "pinyin":"AOMEN","sanzima":"MO"}
+    { "match": "智利|Chile","name":"智利", "pinyin":"ZHILI","sanzima":"CL"}
+    { "match": "乍得|Chad","name":"乍得", "pinyin":"ZHADE","sanzima":"TD"}
+    { "match": "赞比亚|Zambia","name":"赞比亚", "pinyin":"ZANBIYA","sanzima":"ZM"}
+    { "match": "中非共和国|Central_African_Republic","name":"中非共和国", "pinyin":"ZHONGFEIGONGHEGUO","sanzima":"CF"}
+]

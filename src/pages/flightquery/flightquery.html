@@ -1,69 +1,103 @@
 <ion-header>
   <ion-navbar>
     <ion-title>航班搜索</ion-title>
+    <div class="query_tab_msg">
+    	<msgicon [msg]="isMsg"></msgicon>
+    	<msgtip></msgtip>
+    </div>
   </ion-navbar>
 </ion-header>
-<ion-content>
- <div>  
-        <flightTab></flightTab>
+<ion-content>  
+        <flightTab [date]="flightDate" [week]="flightWeek" (switchFlight)="tabData($event)"></flightTab>
 		<div class="list">			
 			<ul>
-				<li *ngFor="let flight of flightData; index as i; trackBy:trackByFlightData;" (click)="selectTheFlight(flight)">
-					<div class="flightTop">
-						<div class="topLeft">
-							<div>
-								<div class="time">{{flight.segments[0].fromDate.substr(5,2)}}:{{flight.segments[0].fromDate.substr(8,2)}}</div>
-								<div class="airport">
-									<p>{{flight.segments[0].fromAirportCn}}</p>
-									<p>{{flight.segments[0].fromTower}}</p>									
-								</div>
-							</div>
-							<div class="midmess">
-								<div *ngIf="istranCity">
-									<p class="type">转</p>
-									<p class="tranformCity">{{flight.segments[0].toCityCn}}</p>
-								</div>
-								<div *ngIf="isstopCity">
-									<p class="type">经停</p>
-									<p class="stopoverCity">{{stopoverCityName}}</p>
-								</div>
-							</div>
-							<div>
-								<div class="time">{{flight.segments[0].toDate.substr(5,2)}}:{{flight.segments[0].toDate.substr(8,2)}}</div>
-								<div class="airport">
-									<p>{{flight.segments[0].toAirportCn}}{{flight.segments[0].toTower}}</p>
-								</div>
+				<li *ngFor="let flight of flightData; index as i; trackBy:trackByFlightData;" (click)="selectTheFlight(flight)" #promptInfo>
+					<div class="list_bd">
+						<div class="flightTop">
+							<div class="topLeft">
+								<div>
+									<div class="time">
+										<span>{{flight.segments[0].fromDate.substr(-5,5)}}</span>
+									</div>
+									<div class="airport">
+										<p class="flight_lightgray_color" [hidden]="!isTrans">{{flight.segments[flight.segments.length-1].toAirportCn}}{{flight.segments[flight.segments.length-1].toTower}}</p>
+										<p class="flight_lightgray_color" [hidden]="!isNoTrans">{{flight.segments[0].fromAirportCn}}{{flight.segments[0].fromTower}}</p>	
 
+									</div>
+								</div>
+								<div class="midmess">
+									<div *ngIf="flight.rangeSegmentCount.substr(2,1) > 1">
+										<p class="type">转</p>
+										<p class="tranformCity">{{flight.segments[flightNum].fromCityCn}}</p>
+									</div>
+									<div *ngFor="let item of flight.segments; index as m;">
+										<div  *ngIf="item.stopOver.length >0">
+											<p class="type">经停</p>
+											<p class="stopoverCity">{{item.stopOver[0].stopAirport}}</p>
+										</div>
+									</div>
+									
+								</div>
+								<div>
+									<div class="time">
+										<span>{{flight.segments[flight.segments.length-1].toDate.substr(-5,5)}}</span>
+									</div>
+									<div class="airport">
+										<p>
+											<span [hidden]="!isTrans">{{flight.segments[flight.segments.length-1].toAirportCn}}{{flight.segments[flight.segments.length-1].toTower}}</span>
+											<span [hidden]="!isNoTrans">{{flight.segments[0].toAirportCn}}{{flight.segments[0].toTower}}</span>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="money">
+								<p>
+									￥<span class="count se1" *ngIf="countryType == 'international' ">{{(flight.minAdultFacePrice+flight.minAdultAllTax)}}</span>
+							    	  <span class="count se2" *ngIf="countryType == 'inland' ">{{flight.minAdultFacePrice}}</span>
+								</p>
+								<div class="ss" [hidden]="!isSupplierId">
+									 <p class="travelTypeYellow directSell">{{supplierIdIcon}}</p>
+								</div>
+							    <div [hidden]="!isMinus">
+							    	<p class="travelTypeYellow minusBox">
+								    	<span class="minus_type">{{minusType}}</span>
+								    	<span class="minus_amount">¥{{minusAmount}}</span>
+								    </p>
+							    </div>
 							</div>
 						</div>
-						<div class="money">￥ <span class="count">{{flight.minAdultFacePrice}}</span></div>
-					</div>
-					<div class="flightBottom">
-						<span class="sign">
-						    <img src="../assets/img/airlines/{{flight.segments[0].flightNo.substr(0,2)}}.PNG" />
-						</span>						
-						<span>{{flight.segments[0].airlineChn}}{{flight.segments[0].flightNo}}<span *ngIf="isShareIco">共享</span> | 机型{{flight.segments[0].planeModel}} </span>
-					</div>
-					<div class="flightBottom">
-						<span class="sign iconfont">&#xe66b;</span>
-						<span>总{{flight.segments[0].flightDuration}}m</span>
+						<div class="flightBottom">
+							<span class="sign">
+							    <img src="../assets/img/airlines/{{flight.segments[0].flightNo.substr(0,2)}}.PNG" />
+							</span>						
+							<span class="flight_blue_color">{{flight.segments[0].airlineChn}}{{flight.segments[0].flightNo}}
+								<span *ngFor="let item of flight.segments; index as m;">
+									<span class="flight_blue m_5" *ngIf="item.shareFlightNo">共享</span>
+								</span> 
+							| 机型{{flight.segments[0].planeModel}}</span>
+						</div>
+						<div class="flightBottom">
+							<span class="sign iconfont">&#xe66b;</span>
+							<span class="flight_lightgray_color">总{{flight.segments[0].flightDuration}}m</span>
+						</div>
 					</div>
 				</li>
 			</ul>			
 		</div>
 		<div class="footer">
-			<div (click)=="screen()">
-				<div><span class="iconfont">&#xe689;</span></div>
+			<div (click)="filterBox()">
+				<span class="iconfont">&#xe617;</span>
 				<div class="filterType">筛选</div>
 			</div>
-			<div (click)="filterAsTime()">
-				<div><span class="iconfont">&#xe68e;</span></div>
-				<div class="filterType">从早到晚</div>
+			<div (click)="filterAsDate()">
+				<span class="iconfont">&#xe67c;</span>
+				<div class="filterType" #dateTx></div>
 			</div>
 			<div (click)="filterAsPrice()">
-				<div><span class="iconfont">&#xe679;</span></div>
-				<div class="filterType">价格</div>
+				<span class="iconfont">&#xe612;</span>
+				<div class="filterType" #priceTx></div>
 			</div>
-
-  		</div> 
+  		</div>
 </ion-content>
+<ex-filter [hidden]="!isFilter" (filterChange)="filterResult($event)"></ex-filter> 
+<ex-modal  [hidden]="!isModal"></ex-modal>

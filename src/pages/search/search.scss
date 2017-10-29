@@ -1,44 +1,12 @@
 page-search {
+    .search_tab_msg{
+        position:absolute;
+        top:23px;
+        right:15px;
+        z-index: 111;
+    }
     .index_swiper{ 
         position: relative; 
-        .msgTip{
-            position:absolute;
-            top:23px;
-            right:15px;
-            z-index: 111;
-            >s{
-            display:block;
-            width:2.7rem;
-            height:2.7rem;
-            background:#000;
-            opacity:0.2;
-            border-radius:90px;
-            }
-            >p{
-            position:absolute;
-            top:3px;
-            right:2px;
-            font-size:0.2rem;
-            font-family:Arial;
-            color:#fff;
-            width:1rem;
-            height:1rem;
-            vertical-align: middle;
-            text-align: center;
-            background:#ff3030;
-            border-radius:90px;
-            z-index:113;
-            }
-            >i{
-                display:block;
-                position:absolute;
-                top:8px;
-                left:9px;
-                z-index: 112;
-                font-size:16px;
-                color: #fff;
-            }
-        }
         .swiper_img{
             display:block;
             border:0;
@@ -50,10 +18,31 @@ page-search {
             background: white;
             margin:0 4%;
             position: absolute;
-            bottom:0;
+            bottom:-1px;
             width:92%;
             z-index: 10;
             border-radius:5px 5px 0 0;
+        }
+    }
+    .counter{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .count{
+            width:30px;
+            text-align: center;                       
+        }
+        .counterLeft,.counterRight{
+            color:#00b4ff;
+            font-size:1.4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background:transparent;
+        }
+        .unused{
+            border-color:gray;
+            color:gray;
         }
     }
 	.content{  
@@ -91,8 +80,10 @@ page-search {
                     justify-content: space-between;
                     .mu-checkbox-icon{
                         margin-left:5px;
-                    }            
+                    }
+                    .date_flex{ flex:3; }            
                     .dateItem{
+                        position:relative;
                         display: flex;
                         height: 4rem;
                         align-items: center;
@@ -111,20 +102,25 @@ page-search {
                             background:transparent;
                         }
                         .week{
+                            position: absolute;
+                            left:40%;
+                            top:0;
                             color:gray;
                             margin-left:5px;
                         }                   
                     }
                     .dataItem1{
+                        position:relative;
                         display: flex;
                         height: 1rem;
                         align-items: center; 
                         .iconfont{
                             color:#c4c4c4;                    
                         }
+                          
                     }
                     .routeType{
-                        display: flex;
+                        display:flex;
                         align-items: center; 
                         .label-left{
                             position:relative;

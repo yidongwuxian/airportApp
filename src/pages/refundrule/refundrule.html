@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>退改签规则</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+<div class="rules">
+	<p class="tit">以下退改签规则仅供参考，请以航空公司官网为准！</p>
+	<ul>
+		<li class="flex" v-for="item in text">
+			<p class="title"><span class="bg">{{item.title}}</span></p>
+			<p>{{item.content}}</p>
+		</li>
+	</ul>
+</div>
+</ion-content>

@@ -1,0 +1,167 @@
+.filterBox{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    z-index:11;
+    .hd{
+        display:flex;
+        align-items: center;
+        justify-content: space-between;
+        text-align:center;
+        height:44px;
+        background:#00b4ff;
+        >button{
+            display:inline-block;
+            width:20%;
+            height:30px;
+            padding:5px;
+            color:white;
+            background:none;
+            &:first-child{
+                border-right:1px solid #92dbfb;
+            }
+            &:last-child{
+                border-left:1px solid #92dbfb;
+            }
+        }
+        >span{
+            flex:1;
+            padding:20px;
+            color:white;
+            text-align:center;
+        }
+    }
+    .cn{
+        .nav{
+            background:white;
+            padding:0 4%;
+            max-height:88px;
+            overflow-x:hidden;
+            overflow-y:scroll;
+            >p{
+                display:inline-block;
+                margin:5px;
+                .selectedItem{
+                    display:inline-block;
+                    padding:3px 11px;
+                    background:#00b4ff;
+                    color:white;
+                    border-radius:15px;
+                }
+                .selctedIco{
+                    display:inline-block;
+                    width:5px;
+                    height:5px;
+                    margin-left:3px;
+                    font-style:normal;
+                }
+            }
+        }
+        .filter_tab{
+            background:#f3f5f7;
+            .filter_tab_nav{
+                display:flex;
+                align-items: center;
+                justify-content: space-between;
+                text-align:center;
+                height:42px;
+                line-height:42px;
+                border-top:1px solid #e2e0e0;
+                border-bottom:1px solid #e2e0e0;
+                >div{
+                 flex:1;
+                 >label{
+                    color:#434d63;
+                    font-size:1.4rem;
+                 }   
+                }
+                .tab_option_left{
+                    text-align:left;
+                    margin-left:3%;
+                }
+                .tab_option_right{
+                    text-align:right;
+                    margin-right:3%;
+                }
+            }
+            .filter_tab_box{
+                display:flex;
+                align-items: center;
+                justify-content: space-between;
+                text-align:center;
+                height:14.1rem;
+                overflow:hidden;
+                .filter_tab_ul{
+                    width:30%;
+                    >li{
+                        height:43px;
+                        line-height:43px;
+                        border-bottom:1px solid #e2e0e0;
+                        text-align:left;
+                        padding-left:5%;
+                        &.active{
+                            background:white
+                        }
+                        .dot{
+                            display:inline-block;
+                            width:5px;
+                            height:5px;
+                            background:#00b4ff;
+                            border-radius:45px;
+                        }
+                        >span{
+                            display:inline-block;
+                            text-align:center;
+                            margin-left:5px;
+                        }
+                        &:last-child{
+                            border:none;
+                        }
+                    }
+                }
+                .filter_tab_cn{
+                    width:70%;
+                    background:white;
+                    height:14rem;
+                    overflow-x:hidden;
+                    overflow-y:scroll;
+                    >ul{
+                        background:white;
+                        >li{
+                            position:relative;
+                            left:5%;
+                            height:43px;
+                            line-height:43px;
+                            border-bottom:1px solid #e2e0e0;
+                            .filter_left{
+                                width:95%;
+                                text-align:left;
+                                >img{
+                                    width:12px;
+                                    height:12px;
+                                    margin-right:3%;
+                                }
+                                >s{
+                                    display:inline-block;
+                                    width:12px;
+                                    height:12px;
+                                    margin-right:3%;
+                                }
+                            }
+                            .filter_right{
+                                position:absolute;
+                                right:10%;
+                                top:34%;
+                                width:10%;
+                            }
+                            
+                            &:last-child{
+                                border:none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

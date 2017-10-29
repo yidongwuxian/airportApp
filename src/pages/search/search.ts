@@ -1,54 +1,59 @@
-import { Component,ViewChild,ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams,ModalController,AlertController,Slides } from 'ionic-angular';
+import { Component,ViewChild,ElementRef,OnInit } from '@angular/core';
+import { NavController, NavParams,ModalController,AlertController,Slides } from 'ionic-angular';
 import { HttpService } from '../../service/http.service';
 import { AirportService } from '../../service/airport.service';
 import { UtilsService } from '../../service/utils.service';
 import { CalendarModal, CalendarModalOptions, DayConfig } from "ion2-calendar";
-import { ContactPage } from '../contact/contact'; 
+import { CityselComponent } from '../../components/citysel/citysel'; 
+import { MsgTipComponent } from '../../components/msgtip/msgtip';
+import { MsgTipBdComponent } from '../../components/msgtipbd/msgtipbd';
+import { MsgIconComponent } from '../../components/msgicon/msgicon';
 import { FlightqueryPage } from '../flightquery/flightquery';
-import { CountComponent } from '../../components/counter/counter';
-
-@IonicPage()
+import { SearchClass } from '../../models/search.model';
 @Component({
   selector: 'page-search',
   templateUrl: 'search.html',
-  providers:[HttpService,AirportService,UtilsService,CountComponent]
+  providers:[HttpService,AirportService,UtilsService,MsgTipComponent,MsgTipBdComponent,MsgIconComponent]
 })
-export class SearchPage {
-  count: number = 0;
-  adultcount: number = 1;
-  singleAduNum: number = 1;
-  aduNum: any = 1;
-  chdNum: any = 0;
-  depCity: string = '出发城市';
-  arrCity: string = '到达城市';	
-  isEx: boolean = true;
-  dependentColumns: any[];
-  currentDate: String;
-  rountingType:string ='OW';
-  depCityCode:string;
-  arrCityCode:string;
-  depCityNameEn: any;
-  isRT: boolean;
-  isShow: boolean = false;
-  isAdult: boolean = true;
-  isChd: boolean = false;
-  isMsg: boolean = true;
-  cabin: string = 'Y';
-  countryEn: string;
-  formCityCode: any;
-  toCityCode: any;
-  diffType: string;
-  undeTx:   string;
-  depTimePost: string;
-  arrTimePost: string;
+export class SearchPage implements OnInit{
+  searchView: SearchClass = {
+    msg: 0,
+    aducount: 1,
+    chdcount: 0,
+    singleAduNum: 1,
+    aduNum: 1,
+    chdNum: 0,
+    depCity:'出发城市',
+    arrCity:'到达城市',  
+    isEx: true,
+    dependentColumns: [],
+    currentDate: '',
+    rountingType:'OW',
+    depCityCode:'',
+    arrCityCode:'',
+    depCityNameEn: null,
+    isRT: false,
+    isShow: false,
+    isAdult: false,
+    isChd: true,
+    cabin: 'Y',
+    countryEn: '',
+    formCityCode: '',
+    toCityCode: null,
+    diffType: '',
+    undeTx:   '',
+    depTimePost: '',
+    arrTimePost: '',
+    calNumber: {}
+  }
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public modalCtrl: ModalController,
               public alertCtrl: AlertController,
               private _AirportService: AirportService,
               private _UtilsService: UtilsService) {
-}
+    this.judgeGnorGj();
+  }
   @ViewChild('cityGo') cityGo: ElementRef;
   @ViewChild('cityBack') cityBack: ElementRef;
   @ViewChild('dep') dep: ElementRef;
@@ -57,53 +62,87 @@ export class SearchPage {
   @ViewChild('arrWeek') arrWeek: ElementRef;
   @ViewChild(Slides) slides: Slides;
   ionViewDidLoad() {
+    
+  }
+
+  ionViewWillEnter(){
+    this.slides.startAutoplay();
+  }
+  ionViewWillLeave(){
+    this.slides.stopAutoplay();
+  }
+
+  ngOnInit(){
+    this.searchView.msg = 2;
     const fromCity = JSON.parse(localStorage.getItem('fromCity'));
     const toCity   = JSON.parse(localStorage.getItem('toCity'));
+
+    // const historyDep = JSON.parse(localStorage.getItem('historyDep'));
+    // const historyArr   = JSON.parse(localStorage.getItem('historyArr'));
+
     const countryType = sessionStorage.getItem('countryType');
     let depTime  = sessionStorage.getItem('depTime');
     let arrTime  = sessionStorage.getItem('arrTime');
+
+    
     if(fromCity){
       if(fromCity.cityName){
-         this.depCity = fromCity.cityName;
-         this.depCityCode = fromCity.cityCode;
+         this.searchView.depCity = fromCity.cityName;
+         this.searchView.depCityCode = fromCity.cityCode;
       }else{
-         this.depCity = '出发城市';
+         this.searchView.depCity = '出发城市';
       }
     }
+    // else if(historyDep){
+    //   if(historyDep.cityName){
+    //      this.searchView.depCity = historyDep.cityName;
+    //      this.searchView.depCityCode = historyDep.cityCode;
+    //   }else{
+    //      this.searchView.depCity = '出发城市';
+    //   }
+    // }
     if(toCity){
       if(toCity.cityName){
-         this.arrCity = toCity.cityName;
-         this.arrCityCode = toCity.cityCode;
+         this.searchView.arrCity = toCity.cityName;
+         this.searchView.arrCityCode = toCity.cityCode;
       }else{
-         this.arrCity = '到达城市';
+         this.searchView.arrCity = '到达城市';
       }
     }
+    // else if(historyArr){
+    //   if(historyArr.cityName){
+    //      this.searchView.arrCity = historyArr.cityName;
+    //      this.searchView.arrCityCode = historyArr.cityCode;
+    //   }else{
+    //      this.searchView.arrCity = '到达城市';
+    //   }
+    // }
     if(countryType){
        if(countryType === 'inland'){
-          this.isAdult = true;
-          this.isChd  = false;
+          this.searchView.isAdult = false;
+          this.searchView.isChd  = true;
        }
        if(countryType === 'international'){
-          this.isAdult = false;
-          this.isChd  = true;
+          this.searchView.isAdult = true;
+          this.searchView.isChd  = false;
        }
     }
     if(depTime){
       let depTimeStr = JSON.parse(depTime);
       this.dep.nativeElement.value = depTimeStr.string.substr(5,2)+'月'+depTimeStr.string.substr(8,2) +'日';
-      this.depTimePost = depTimeStr.string;
-      this.depWeek.nativeElement.innerHTML = this._UtilsService.getWeek(depTimeStr.string);
+      this.searchView.depTimePost = depTimeStr.string;
+      this.depWeek.nativeElement.innerHTML = this._UtilsService.getWeek(depTimeStr.string,'');
     }else{
-      this.undeTx = this._UtilsService.addDate(1,'');
+      this.searchView.undeTx = this._UtilsService.addDate(1,'');
       this.dep.nativeElement.value = this._UtilsService.addDate(1,'months');
-      this.depTimePost = this._UtilsService.addDate(1,'');
-      this.depWeek.nativeElement.innerHTML = this._UtilsService.getWeek(this.undeTx);
+      this.searchView.depTimePost = this._UtilsService.addDate(1,'');
+      this.depWeek.nativeElement.innerHTML = this._UtilsService.getWeek(this.searchView.undeTx,'');
     }
     if(arrTime){
       let arrTimeStr = JSON.parse(arrTime);
       this.arr.nativeElement.value = arrTimeStr.string.substr(5,2)+'月'+arrTimeStr.string.substr(8,2) +'日';
-      this.arrTimePost = arrTimeStr.string;
-      this.arrWeek.nativeElement.innerHTML = this._UtilsService.getWeek(arrTimeStr.string);
+      this.searchView.arrTimePost = arrTimeStr.string;
+      this.arrWeek.nativeElement.innerHTML = this._UtilsService.getWeek(arrTimeStr.string,'');
     }
    
     const type = this.navParams.get('type');
@@ -115,26 +154,19 @@ export class SearchPage {
       }
   }
 
-  ionViewWillEnter(){
-    this.slides.startAutoplay();
-  }
-  ionViewWillLeave(){
-    this.slides.stopAutoplay();
-  }
-
   exchange() {  
-  	this.depCity = this.cityBack.nativeElement.innerText;
-  	this.arrCity = this.cityGo.nativeElement.innerText;
-    this.isEx = !this.isEx;
+  	this.searchView.depCity = this.cityBack.nativeElement.innerText;
+  	this.searchView.arrCity = this.cityGo.nativeElement.innerText;
+    this.searchView.isEx = !this.searchView.isEx;
   }
 
   depCityGo(){
-    this.navCtrl.push(ContactPage,{
+    this.navCtrl.push(CityselComponent,{
       'type':'dep'
     });
   }
   arrCityGo(){
-    this.navCtrl.push(ContactPage,{
+    this.navCtrl.push(CityselComponent,{
       'type':'arr'
     });
   }
@@ -178,8 +210,8 @@ export class SearchPage {
     myCalendar.onDidDismiss(date => {
       if(date){
          this.dep.nativeElement.value = date.string.substr(5,2)+'月'+date.string.substr(8,2) +'日';
-         this.depWeek.nativeElement.innerHTML = this._UtilsService.getWeek(date.string);
-         this.depTimePost = date.string;
+         this.depWeek.nativeElement.innerHTML = this._UtilsService.getWeek(date.string,'');
+         this.searchView.depTimePost = date.string;
          sessionStorage.setItem('depTime',  JSON.stringify(date));
       }else{
          this.dep.nativeElement.value ='出发时间';
@@ -227,8 +259,8 @@ export class SearchPage {
     myCalendar.onDidDismiss(date => {
       if(date){
          this.arr.nativeElement.value = date.string.substr(5,2)+'月'+date.string.substr(8,2) +'日';
-         this.arrWeek.nativeElement.innerHTML = this._UtilsService.getWeek(date.string);
-         this.arrTimePost = date.string;
+         this.arrWeek.nativeElement.innerHTML = this._UtilsService.getWeek(date.string,'');
+         this.searchView.arrTimePost = date.string;
          sessionStorage.setItem('arrTime', JSON.stringify(date));
       }else{
          this.arr.nativeElement.value = '请选择返回日期';
@@ -237,12 +269,12 @@ export class SearchPage {
   }
 
   updateRT(){
-    if(this.isRT == true){
-      this.isShow = true;
-      this.rountingType = 'RT';
+    if(this.searchView.isRT == true){
+      this.searchView.isShow = true;
+      this.searchView.rountingType = 'RT';
     }else{
-      this.isShow = false;
-      this.rountingType = 'OW';
+      this.searchView.isShow = false;
+      this.searchView.rountingType = 'OW';
     }
   }
   
@@ -254,68 +286,104 @@ export class SearchPage {
                  let formCityCode = '';
                  let toCityCode   = '';
                  for(let i=0; i<res.length; i++){
-                    if(res[i].cityCode === this.depCityCode || res[i].cityCode === this.arrCityCode){
+                    if(res[i].cityCode === this.searchView.depCityCode || res[i].cityCode === this.searchView.arrCityCode){
                       formCityCode = res[i].countryEn;
                       toCityCode = res[i].countryEn;
                     }
                  } 
                  if(formCityCode !="CHINA"){
-                   const count = {
-                     'adtCnt': 1,
-                     'chdCnt': 0
+                   if(this.searchView.rountingType == 'OW'){
+                     this.searchView.calNumber = {
+                       'adtCnt': this.searchView.singleAduNum,
+                       'chdCnt': 0,
+                       'infCnt': 0
+                     }
+                   }else{
+                     this.searchView.calNumber = {
+                       'adtCnt': this.searchView.aduNum,
+                       'chdCnt': this.searchView.chdNum,
+                       'infCnt': 0
+                     }
                    }
-                   sessionStorage.setItem('internaCount',JSON.stringify(count));
+                   localStorage.removeItem('inlandCount');
+                   localStorage.setItem('internaCount',JSON.stringify(this.searchView.calNumber));
                    sessionStorage.setItem('countryType','international');
-                   this.isAdult = false;
-                   this.isChd  = true;
+                   this.searchView.isAdult = false;
+                   this.searchView.isChd  = true;
                  }else{
+                   this.searchView.calNumber = {
+                     'adtCnt': this.searchView.singleAduNum,
+                     'chdCnt': 0,
+                     'infCnt': 0
+                   }
+                   localStorage.removeItem('internaCount');
+                   localStorage.setItem('inlandCount',JSON.stringify(this.searchView.calNumber));
                    sessionStorage.setItem('countryType','inland');
-                   this.isAdult = true;
-                   this.isChd  = false;
+                   this.searchView.isAdult = true;
+                   this.searchView.isChd  = false;
                  } 
                  if(toCityCode !="CHINA"){
-                   const count = {
-                     'adtCnt': 1,
-                     'chdCnt': 0
+                   if(this.searchView.rountingType == 'OW'){
+                     this.searchView.calNumber = {
+                       'adtCnt': this.searchView.singleAduNum,
+                       'chdCnt': 0,
+                       'infCnt': 0
+                     }
+                   }else{
+                     this.searchView.calNumber = {
+                       'adtCnt': this.searchView.aduNum,
+                       'chdCnt': this.searchView.chdNum,
+                       'infCnt': 0
+                     }
                    }
-                   sessionStorage.setItem('internaCount',JSON.stringify(count));
+                   localStorage.removeItem('inlandCount');
+                   localStorage.setItem('internaCount',JSON.stringify(this.searchView.calNumber));
                    sessionStorage.setItem('countryType','international');
-                   this.isAdult = false;
-                   this.isChd  = true;
+                   this.searchView.isAdult = false;
+                   this.searchView.isChd  = true;
                  }else{
-                   sessionStorage.removeItem('internaCount');
+                   this.searchView.calNumber = {
+                     'adtCnt': this.searchView.singleAduNum,
+                     'chdCnt': 0,
+                     'infCnt': 0
+                   }
+                   localStorage.removeItem('internaCount');
+                   localStorage.setItem('inlandCount',JSON.stringify(this.searchView.calNumber));
                    sessionStorage.setItem('countryType','inland');
-                   this.isAdult = true;
-                   this.isChd  = false;
+                   this.searchView.isAdult = true;
+                   this.searchView.isChd  = false;
                  }   
           },  
           (err) => console.log('err:'+err)
         ); 
   }
 
-
   aduChange(event: number) {
-    this.aduNum = `${event}`;
+    this.searchView.aduNum = `${event}`;
   }
 
   chdChange(event:number){
-    this.chdNum = `${event}`
-    if(this.chdNum > this.aduNum){
-      console.log('一成人最多能携带两名儿童！请重新选择');
+    this.searchView.chdNum = `${event}`
+    if(this.searchView.chdNum > this.searchView.aduNum){
+      let tipAlert = this.alertCtrl.create({
+         title: '一成人最多能携带两名儿童！请重新选择!',
+         buttons: ['确定']
+      });
+      tipAlert.present();
     }
   }
 
   searchbtn(){ 
-    if(this.rountingType == 'OW'){
+    if(this.searchView.rountingType == 'OW'){
           sessionStorage.setItem('routingType','OW'); 
-          if(this.depCity === '出发城市' || this.arrCity === '到达城市' || this.depCityCode === '' || this.arrCityCode === '' || 
-          this.cabin === undefined || this.dep.nativeElement.value === '出发时间'){
+          if(this.searchView.depCity === '出发城市' || this.searchView.arrCity === '到达城市' || this.searchView.depCityCode === '' || this.searchView.arrCityCode === '' || 
+          this.searchView.cabin === undefined || this.dep.nativeElement.value === '出发时间'){
             let msgAlert = this.alertCtrl.create({
                title: '请填写完整信息!',
                buttons: ['确定']
              });
              msgAlert.present();
-          }else if(this.depCity === this.arrCity){
+          }else if(this.searchView.depCity === this.searchView.arrCity){
             let msgAlert = this.alertCtrl.create({
                title: '出发到达城市不能相同!',
                buttons: ['确定']
@@ -323,16 +391,16 @@ export class SearchPage {
              msgAlert.present();
           }else{
             this.navCtrl.push(FlightqueryPage,{
-              'routingType':   this.rountingType,
-              'deptCity':      this.depCityCode,
-              'arrCity':       this.arrCityCode,
-              'deptStartDate': this.depTimePost,
-              'seatClass':     this.cabin,
-              'adtCnt':        this.singleAduNum,
+              'routingType':   this.searchView.rountingType,
+              'deptCity':      this.searchView.depCityCode,
+              'arrCity':       this.searchView.arrCityCode,
+              'deptStartDate': this.searchView.depTimePost,
+              'seatClass':     this.searchView.cabin,
+              'adtCnt':        this.searchView.singleAduNum,
               'chdCnt':        0,
               'infCnt':        0,
-              'deptCityName':  this.depCity,
-              'arrCityName':   this.arrCity
+              'deptCityName':  this.searchView.depCity,
+              'arrCityName':   this.searchView.arrCity
             });
           }
           
@@ -344,7 +412,7 @@ export class SearchPage {
                buttons: ['确定']
              });
              msgAlert.present();
-          }else if(this._UtilsService.datediff(this.depTimePost,this.arrTimePost, "day") < 0 ){
+          }else if(this._UtilsService.datediff(this.searchView.depTimePost,this.searchView.arrTimePost, "day") < 0 ){
             let msgAlert = this.alertCtrl.create({
                title: '到达时间应大于出发时间!',
                buttons: ['确定']
@@ -352,17 +420,17 @@ export class SearchPage {
              msgAlert.present();
           }else{
             this.navCtrl.push(FlightqueryPage,{
-              'routingType':   this.rountingType,
-              'deptCity':      this.depCityCode,
-              'arrCity':       this.arrCityCode,
-              'deptStartDate': this.depTimePost,
-              'deptEndDate':   this.arrTimePost,
-              'seatClass':     this.cabin,
-              'adtCnt':        this.aduNum,
-              'chdCnt':        this.chdNum,
+              'routingType':   this.searchView.rountingType,
+              'deptCity':      this.searchView.depCityCode,
+              'arrCity':       this.searchView.arrCityCode,
+              'deptStartDate': this.searchView.depTimePost,
+              'deptEndDate':   this.searchView.arrTimePost,
+              'seatClass':     this.searchView.cabin,
+              'adtCnt':        this.searchView.aduNum,
+              'chdCnt':        this.searchView.chdNum,
               'infCnt':        0,
-              'deptCityName':  this.depCity,
-              'arrCityName':   this.arrCity
+              'deptCityName':  this.searchView.depCity,
+              'arrCityName':   this.searchView.arrCity
             });
           }
       }

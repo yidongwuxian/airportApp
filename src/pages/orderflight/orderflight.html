@@ -1,0 +1,231 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>订单预定</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+<div class="content">
+	<div class="order">
+		<div *ngFor="let item of routerMess; index as i; trackBy:trackByRouterMess;">
+			<div class="route">
+				<div>
+					<span *ngIf="i==0" class="iconfont">&#xe608;</span>
+					<span *ngIf="i==1" class="iconfont">&#xe60a;</span>
+					<span>{{item.segments[0].fromCityCn}} - {{item.segments[item.segments.length-1].toCityCn}}</span>
+					<span class="depTime">{{fromDate}}</span>
+				</div>
+				<div><span class="duration">总时长{{item.segments[0].flightDuration}}m</span></div>
+			</div>
+			<div class="routeMess">
+				<div class="routeMess_top">
+					<div class="cangwei">
+						<div>
+							<!-- <span v-for="(cabin,n) in cabinDetail(i,item)">{{cabin|cabin}}
+								<label v-if="n!=(cabinDetail(i,item).length-1)">+ </label>
+							</span> -->
+						</div>
+						<div><span (click)="endorse" class="gaiqian">退改签/行李额</span></div>
+					</div>
+					<div class="shrink" (click)="shrink(item,i)">
+						<span class="iconfont" *ngIf="!item.show">&#xe6ea;</span>
+						<span class="iconfont" *ngIf="item.show">&#xe6e9;</span>
+					</div>
+				</div>
+				<div class="simpleRouterMess" *ngIf="!item.show">
+					<div>
+						<div class="time">{{item.segments[0].fromDate.substr(5,2)}} : {{item.segments[0].fromDate.substr(8,2)}}</div>
+						<div class="airport">{{item.segments[0].fromAirportCn}}{{item.segments[0].fromTower}}</div>
+					</div>
+					<div class="midmess">
+						<div v-if="item.directFlight==false">
+							<p class="type">转</p>
+							<p class="tranformCity">{{item.segments[0].toCityCn}}</p>
+						</div>
+						<div v-if="item.segments[0].stopOver.length!=0">
+							<p class="type">经停</p>
+							<p class="stopoverCity">{{item.segments[0].stopOver[0].stopAirport}}</p>
+						</div>					
+					</div>
+					<div>
+						<div class="time">{{item.segments[item.segments.length-1].toDate.substr(5,2)}} : {{item.segments[item.segments.length-1].toDate.substr(8,2)}}</div>
+						<div class="airport">{{item.segments[item.segments.length-1].toAirportCn}}{{item.segments[item.segments.length-1].toTower}}</div>
+					</div>
+				</div>
+				<div class="routeMess_bottom" *ngIf="item.show">
+					<p><span class="iconfont point top">&#xe613;</span></p>
+					<p><span class="iconfont point bottom">&#xe613;</span></p>
+					<div class="seg">
+						<div class="segLeft">
+							<div class="times">
+								<div class="time">{{seg.fromDate}}</div>
+								<div class="duration">{{seg.flightDuration}}</div>
+								<div class="time">{{seg.toDate}}</div>
+							</div>
+							<div class="airport">
+								<div class="airpt"><span class="iconfont start">&#xe605;</span>{{seg.fromAirportCn}}{{seg.fromTower}}</div>
+								<div class="airpt"><span class="iconfont end">&#xe605;</span>{{seg.toAirportCn}}{{seg.toTower}}</div>
+								<div class="transfer" *ngIf=="!(index==(item.segments.length-1))">
+									<span class="iconfont zhuan">&#xe606;</span>
+									<span class="transferCity">{{seg.toCityCn}}</span>
+									<span>停留</span>
+								</div>
+							</div>
+						</div>
+						<div class="airline">
+							<div>{{seg.airlineChn}}</div>
+							<div>{{seg.flightNo}}</div>
+							<div>{{seg.planeModel}}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="passenger">
+		<div class="title">
+			<b>请选择乘机人</b>
+			<span>成人<span class="count"> {{adultCount}} </span>人</span>
+		</div>
+		<div class="nameList">
+			<ul>
+				<li  *ngFor="let item of passengerList; index as i; trackBy:trackByPassengerList;">
+					<button ion-button (click)="checked(item,i)" class="name"></button>
+				</li>					
+				<li>
+					<button ion-button (click)="addPassenger" class="name nameChecked">新增</button>
+				</li>
+			</ul>
+		</div>
+		<div class="choosedNameList">
+			<ul>
+				<li *ngFor="let name of choosedNameList; index as i; trackBy:trackByChoosedNameList;">
+					<div class="flex">
+						<span (click)="deleteName(name)" class="iconfont delete">&#xe6e8;</span>
+						<div>
+							<p>{{name.firstNameCn}}</p>
+							<p>{{name.docId}}</p>
+						</div>
+					</div>
+					<div><span (click)="editName(name)" class="iconfont detail">&#xe600;</span></div>
+				</li>						
+			</ul>
+		</div>
+	</div>
+	<div class="otherMess">
+		<div class="same">
+			<div class="flex">
+				<div class="title">联系人</div>
+				<div class="fullWidth">
+					<input type="text" class="form-control" [(ngModel)]="contactUser_" name="contactUser_" />
+				</div>
+			</div>
+		</div>
+		<div class="same">
+			<div class="flex">
+				<div class="title">联系手机</div>
+				<div class="fullWidth">
+					<input type="text" class="form-control" [(ngModel)]="phoneNumber_" name="phoneNumber_" />
+				</div>
+			</div>
+		</div>
+		<div class="same">
+			<div class="flex">
+				<div class="title">已选保险</div>
+				<div class="baoxian">
+					<span *ngFor="let item of insurance_;" [hidden]="item.count">{{item.displayName}}x{{item.count}}</span>
+				</div>
+			</div>
+			<div (click)="toInsurance"><span class="iconfont detail">&#xe600;</span></div>
+		</div>
+		<div class="claim">
+			<div>
+				<p class="title">报销凭证</p>
+				<p class="explain">航班起飞后7天可补开报销凭证</p>
+			</div>
+			<div>
+				<ion-toggle [(ngModel)]="isReimbursement_" name="isReimbursement_"></ion-toggle>
+			</div>
+		</div>
+		<div [hidden]="isReimbursement_" class="claimMess">
+			<div class="same">
+				<div class="title">邮寄运费</div>
+				<div></div>
+				<div class="money"><span class="currencyType">￥</span><span class="count">{{postage}}</span></div>
+			</div>
+			<div class="same">
+				<div class="flex">
+					<div class="title">收件人</div>
+					<div class="fullWidth">
+						<input type="text" class="form-control" [(ngModel)]="reviceName" name="reviceName" />
+					</div>
+				</div>
+			</div>
+			<div class="same">
+				<div class="flex">
+					<div class="title">手机号码</div>
+					<div class="fullWidth">
+						<input type="text" class="form-control" [(ngModel)]="phone" name="phone" />
+					</div>
+				</div>
+			</div>
+			<div class="same">
+				<div class="flex">
+					<div class="title">邮寄地址</div>
+					<div class="fullWidth">
+						<input type="text" class="form-control" [(ngModel)]="address" name="address" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<p class="explains">点击支付表示阅读及同意 
+		<span (click)="tongzhi1()">锂电池及危险品通知</span> 和
+		<span (click)="tongzhi2()"> 机票预订须知</span>
+	</p>			
+	<!--点击明细-->
+	<div class="shade" (click)="particulars" [hidden]="isParticulars"></div>
+	<div class="bookingDetail" [hidden]="isParticulars">
+		<div class="items">
+			<div class="item">
+				<p>成人票价</p>
+				<p class="money"><span>￥{{orderMess.money}}</span> x <span>{{adultCount}}</span></p>
+			</div>
+			<div class="item"  *ngIf="orderMess.otherFee">
+				<p>基建+燃油</p>
+				<p class="money"><span>￥{{orderMess.otherFee}}</span> x <span>{{adultCount}}</span></p>
+			</div>
+			<div class="item"  *ngIf="orderMess.tax">
+				<p>税费</p>
+				<p class="money"><span>￥{{orderMess.tax}}</span> x <span>{{adultCount}}</span></p>
+			</div>
+		</div>
+		<div class="items">
+			<div class="item" *ngFor="let item of insurance_;">
+				<div *ngIf="item.count">
+					<p>{{item.displayName}}</p>
+					<p class="money"><span>￥{{item.insuranceFee}}</span> x <span>{{item.count}}</span></p>
+				</div>
+				
+			</div>
+		</div>
+		<div class="items" *ngIf="isReimbursement_">
+			<div class="item">
+				<p>邮寄费用</p>
+				<p class="money"><span>￥{{postage}}</span></p>
+			</div>
+		</div>
+	</div>
+	
+<!--底部-->
+<div class="footer">
+	<div>
+		<div class="money">￥<span class="count">{{price_}}</span></div>
+		<div class="cabin">{{cabin?'经济舱':"头等舱"}}</div>
+	</div>
+	<div class="particulars" (click)="particulars">明细 
+		<span [hidden]="isParticulars"  class="iconfont detail">&#xe6e9;</span>
+		<span [hidden]="!isParticulars" class="iconfont detail">&#xe6ea;</span>
+	</div>
+</div>
+<button (click)="toPay" class="topay">去支付</button>
+</ion-content>

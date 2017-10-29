@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>我的</ion-title>
+    <div class="user_tab_config iconfont">&#xe607;</div>
+    <div class="user_tab_msg">
+    	<msgicon [msg]="isMsg"></msgicon>
+    	<msgtip></msgtip>
+    </div>
+  </ion-navbar>
+  <div class="hd">
+  	  <div class="sculpture"></div>
+	  <ion-segment class="user_box" [(ngModel)]="userSwitch" [hidden]="!isSign">
+			<ion-segment-button value="loginTab" (click)="goLogin()">
+		      <p>登录</p>
+		      <i></i>
+		      <s></s>
+		    </ion-segment-button>
+		    <ion-segment-button value="segTab" (click)="goReg()">
+		      <p>注册</p>
+		      <i></i>
+		    </ion-segment-button>
+	   </ion-segment> 
+	   <div class="sign" [hidden]="isSign">
+	   		<p>王泽旭</p>
+	   		<span>这个家伙很懒, 什么都没留下</span>
+	   </div>
+  </div>	
+</ion-header>
+<ion-content>
+<ion-list>
+  <button ion-item>
+    <ion-avatar item-start>
+      <div class="user_icon_blue"><span class="iconfont">&#xe63f;</span></div>
+    </ion-avatar>
+    <h2>个人信息</h2>
+  </button>  
+   <button ion-item>
+    <ion-avatar item-start>
+      <div class="user_icon_orange"><span class="iconfont">&#xe63e;</span></div>
+    </ion-avatar>
+    <h2>常用联系人</h2>
+  </button>
+  <button ion-item>
+    <ion-avatar item-start>
+      <div class="user_icon_deepblue"><span class="iconfont">&#xe6ad;</span></div>
+    </ion-avatar>
+    <h2>浏览历史</h2>
+  </button>  
+   <button ion-item>
+    <ion-avatar item-start>
+      <div class="user_icon_pick">
+      	<span class="iconfont">&#xe753;</span>
+      </div>
+    </ion-avatar>
+    <h2>客服</h2>
+  </button>    
+</ion-list>
+</ion-content>

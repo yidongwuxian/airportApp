@@ -95,10 +95,4 @@ html,body{
   -moz-osx-font-smoothing: grayscale;
 }
 
-.ion-md-searchbar:before { content: "\e664"; }
-
-.ion-md-order:before { content: "\e66f"; }
-
-.ion-md-dynamic:before { content: "\e645"; }
-
-.ion-md-usercenter:before { content: "\e608"; } 
+.toolbar-title-ios { font-weight: normal !important; }

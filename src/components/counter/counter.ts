@@ -1,25 +1,38 @@
-import { Component,Input, Output, EventEmitter } from '@angular/core';
-
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'ex-counter',
   templateUrl:'./counter.html'
 })
 
 export class CountComponent{
-  constructor(){
-  }
-
   @Input()  count: number;
   @Output() change: EventEmitter<number> = new EventEmitter<number>();
-
-  increment(){
-    if(this.count > -1 && this.count <  9){
-      this.count++;
-      this.change.emit(this.count);
+  flag:boolean = false;
+  constructor(){
+    if(this.count === 1){
+      this.flag = true;
+    }else{
+      this.flag = false;
     }
   }
+
+ 
+  increment(){
+    console.log(this.flag);
+    if(this.flag === true){
+      if(this.count >0  && this.count <  9){
+        this.count++;
+      }
+    }else{
+      if(this.count > -1  && this.count <  9){
+        this.count++;
+      }
+    }
+    this.change.emit(this.count);
+  }
+  
   decrement(){
-    this.count--;
+    this.count--;   
     if(this.count < 1){
       this.count = 0; 
     }  

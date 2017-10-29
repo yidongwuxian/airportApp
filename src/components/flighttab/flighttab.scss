@@ -1,20 +1,26 @@
 .datePanel {
     .main{
-        height:50px;
+        position:fixed;
+        top:46px;
+        width:100%;
+        height:3.7rem;
         padding:0 4%;
-        background: blue;
+        background-image:-webkit-linear-gradient(to right, #3ff8ff, #00b4ff); 
+        background-image:linear-gradient(to right,#3ff8ff,#00b4ff);
         color:white;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        z-index:1113;
         >div{
             font-size: 14px;
         }
         .date{
             background: white;
-            padding:6px 25px 3px;
+            padding:6px 25px;
             border-radius: 4px;
-            color:blue;
+            color:#00b4ff;
+            font-size:1.4rem;
         }
     }
 }

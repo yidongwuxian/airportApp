@@ -1,21 +1,33 @@
 page-flightquery {
+    .query_tab_msg{
+        position:absolute;
+        top:0.7rem;
+        right:1.5rem;
+        z-index: 111;
+    }
+    ion-navbar.toolbar{
+        background-image:-webkit-linear-gradient(to right, #3ff8ff, #00b4ff); 
+        background-image:linear-gradient(to right,#3ff8ff,#00b4ff);
+        color:white;
+    }
+    .toolbar-title-ios{
+        color:white;
+    }
+    .header-ios .toolbar-ios:last-child .toolbar-background-ios { border-width: 0 0 1px; }
+    .header-ios .toolbar-background-ios, .footer-ios .toolbar-background-ios{ border-color: #4dcbff; }
+    .flight_blue{ color:#00b4ff; }
+    .flight_blue_color{ color:#111e3a; }
+    .flight_lightgray_color{ color:#4c4b58; }
+    .m_5{ margin:0 0.2rem;}
     .list {
-        padding: 0 4%;
-        padding-bottom: 50px;
-        > ul > li {
-            height: 12rem;
-            position: relative;
-            &:after {
-                display: block;
-                position: absolute;
-                left: 0;
-                bottom: 0;
-                width: 100%;
-                border-bottom: 1px solid #e2e0e0;
-                content: '';
-            }
-            @media screen and (-webkit-min-device-pixel-ratio: 1) {
+        margin-top:3.7rem;
+        padding-bottom: 4rem;
+        >ul{
+            > li {
                 position: relative;
+                .list_bd{
+                    padding:4%;
+                }
                 &:after {
                     display: block;
                     position: absolute;
@@ -25,126 +37,161 @@ page-flightquery {
                     border-bottom: 1px solid #e2e0e0;
                     content: '';
                 }
-            }
-            @media screen and (-webkit-min-device-pixel-ratio: 2) {
-                position: relative;
-                &:after {
-                    display: block;
-                    position: absolute;
-                    left: 0;
-                    bottom: 0;
-                    width: 100%;
-                    border-bottom: 1px solid #e2e0e0;
-                    content: '';
-                    -webkit-transform: scaleY(0.5);
-                    transform: scaleY(0.5);
+                @media screen and (-webkit-min-device-pixel-ratio: 1) {
+                    position: relative;
+                    &:after {
+                        display: block;
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        border-bottom: 1px solid #e2e0e0;
+                        content: '';
+                    }
                 }
-            }
-            @media screen and (-webkit-min-device-pixel-ratio: 3) {
-                position: relative;
-                &:after {
-                    display: block;
-                    position: absolute;
-                    left: 0;
-                    bottom: 0;
-                    width: 100%;
-                    border-bottom: 1px solid #e2e0e0;
-                    content: '';
-                    -webkit-transform: scaleY(0.3);
-                    transform: scaleY(0.3);
+                @media screen and (-webkit-min-device-pixel-ratio: 2) {
+                    position: relative;
+                    &:after {
+                        display: block;
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        border-bottom: 1px solid #e2e0e0;
+                        content: '';
+                        -webkit-transform: scaleY(0.5);
+                        transform: scaleY(0.5);
+                    }
                 }
-            }
-            .flightTop {
-                display: flex;
-                justify-content: space-between;
-                .topLeft {
+                @media screen and (-webkit-min-device-pixel-ratio: 3) {
+                    position: relative;
+                    &:after {
+                        display: block;
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        border-bottom: 1px solid #e2e0e0;
+                        content: '';
+                        -webkit-transform: scaleY(0.3);
+                        transform: scaleY(0.3);
+                    }
+                }
+                .flightTop {
                     display: flex;
-                    text-align: center;
-                    .iconfont {
-                        font-size: 15px;
-                        color: red;
-                    }
-                    >div{
-                        margin-top: 0.2rem;
-                    }
-                    .time{
-                        font-size: 16px;
-                        font-weight: 600;                        
-                    }
-                    .midmess{                        
-                        width:20vw;
-                        margin:0.2rem 0 0;
-                        background: url(../../assets/img/flightquery/line.png) no-repeat center 20%;
+                    justify-content: space-between;
+                    .topLeft {
+                        display: flex;
                         text-align: center;
-                        p{
-                            font-size: 10px;
+                        .iconfont {
+                            font-size: 15px;
+                            color: red;
                         }
-                        .interval{
+                        >div{
+                            margin-top: 0.2rem;
+                        }
+                        .time>span{
+                            font-size: 1.8rem;
+                            color:#111e3a;
+                            font-weight: 600;                        
+                        }
+                        .midmess{                        
+                            width:20vw;
+                            margin:0.2rem 0 0;
+                            background: url(../../assets/img/flightquery/line.png) no-repeat center 20%;
+                            text-align: center;
+                            p{
+                                font-size: 10px;
+                            }
+                            .interval{
+                                color:gray;
+                            }
+                            .type{
+                                color: blue;
+                            }
+                            .tranformCity,.stopoverCity{
+                                color: blue;
+                            }
+                        }
+                        .airport{
                             color:gray;
-                        }
-                        .type{
-                            color: blue;
-                        }
-                        .tranformCity,.stopoverCity{
-                            color: blue;
-                        }
-                    }
-                    .airport{
-                        color:gray;
-                        display: flex;                       
-                        >p{
-                            font-size: 10px;
-                            &:first-child{
-                                overflow: hidden;
-                                text-overflow: ellipsis;
-                                white-space: nowrap;
+                            display: flex;                       
+                            >p{
+                                font-size: 10px;
+                                &:first-child{
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+                                }
                             }
                         }
                     }
+                    .money {
+                        color: red;
+                        font-size: 8px;
+                        margin-top: 0.2rem;
+                        .travelTypeYellow{
+                            background-color:#ff9934;
+                            color:#fff;
+                            border-radius:0.2rem;
+                            font-size:1.2rem;
+                        }
+                        .directSell{
+                            padding:0.2rem 0.5rem;
+                        }
+                        .minusBox{
+                            padding:0.1rem 0 0.1rem 0.2rem;
+                            .minus_type{
+                                padding:0 0.2rem;
+                            }
+                            .minus_amount{
+                                display:inline-block;
+                                padding:0 0.3rem;
+                                font-size:1.2rem;
+                                color:#ff9934;
+                                background-color:white;
+                            }
+                        }   
+                    }
+                    .count {
+                        font-size: 16px;
+                        font-weight: 600;
+                    }
                 }
-                .money {
-                    color: red;
-                    font-size: 8px;
-                    margin-top: 0.2rem;
-                }
-                .count {
-                    font-size: 16px;
-                    font-weight: 600;
-                }
-            }
-            .flightBottom{
-                .sign{
-                    img{
-                        width:12px;
-                        height:12px;
-                        position: relative;
-                        top:2px;
+                .flightBottom{
+                    margin:0.7rem 0;
+                    .sign{
+                        img{
+                            width:12px;
+                            height:12px;
+                            position: relative;
+                            top:2px;
+                        }
                     }
                 }
             }
-        }
+        }        
     }
     .footer {
-        background: blue;
-        height: 0.5rem;
+        background: #00b4ff;
+        height: 4rem;
         width: 100%;
         position: fixed;
         bottom: 0;
         display: flex;
         justify-content: space-around;
         align-items: center;
+        opacity:0.9;
         >div{
-            
+            text-align: center;
             .iconfont {
-                font-size: 18px;
+                font-size: 20px;
                 color: white;
             }
         }
         
         .filterType {
             color: white;
-            height: 0.2rem;
-            line-height: 0.2rem;
             font-size: 12px;
             border-radius: 25px;
         }

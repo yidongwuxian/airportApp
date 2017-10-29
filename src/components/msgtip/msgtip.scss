@@ -1,0 +1,14 @@
+.msgTip{
+    position:absolute;
+    top:0;
+    right:0;
+    >i{
+        display:block;
+        position:absolute;
+        top:7px;
+        right:7px;
+        z-index: 112;
+        font-size:16px;
+        color: #fff;
+    }
+}

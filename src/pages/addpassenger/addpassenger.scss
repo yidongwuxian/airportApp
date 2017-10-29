@@ -1,0 +1,181 @@
+page-addpassenger {
+	background: #f6f6f6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    .top{
+        flex-grow: 1;
+        .resultTip{
+            width:100%;
+            height:45px;
+            text-align: center;
+            line-height: 45px;
+            font-size: 14px;
+            font-weight: 900;
+            color:white;
+            position: fixed;
+            top:0;
+        }
+        .success{
+            background: #04fada;
+        }
+        .failed{
+            background: pink;
+        }
+    }
+    .declaration {
+        padding: 0 4%;
+        height: 4.5rem;
+        color: #00b4ff;
+        display: flex;
+        align-items: center;
+        >p {
+            line-height: 16px;
+        }
+    }
+    .content {
+        >ul {
+            padding: 0 4%;
+            background: white;
+            >li {
+                height: 4.8rem;
+                position: relative;
+			    &:before {
+			        display: block;
+			        position: absolute;
+			        left: 0;
+			        bottom: 0;
+			        width: 100%;
+			        border-bottom: 1px solid #e2e0e0;
+			        content: '';
+			    }
+			    @media screen and (-webkit-min-device-pixel-ratio: 1) {
+			        position: relative;
+			        &:before {
+			            display: block;
+			            position: absolute;
+			            left: 0;
+			            bottom: 0;
+			            width: 100%;
+			            border-bottom: 1px solid #e2e0e0;
+			            content: '';
+			        }
+			    }
+			    @media screen and (-webkit-min-device-pixel-ratio: 2) {
+			        position: relative;
+			        &:before {
+			            display: block;
+			            position: absolute;
+			            left: 0;
+			            bottom: 0;
+			            width: 100%;
+			            border-bottom: 1px solid #e2e0e0;
+			            content: '';
+			            -webkit-transform: scaleY(0.5);
+			            transform: scaleY(0.5);
+			        }
+			    }
+			    @media screen and (-webkit-min-device-pixel-ratio: 3) {
+			        position: relative;
+			        &:before {
+			            display: block;
+			            position: absolute;
+			            left: 0;
+			            bottom: 0;
+			            width: 100%;
+			            border-bottom: 1px solid #e2e0e0;
+			            content: '';
+			            -webkit-transform: scaleY(0.3);
+			            transform: scaleY(0.3);
+			        }
+			    }
+                &:last-child:after {
+                    border: none;
+                }
+            }
+            .item {
+                display: flex;
+    			justify-content: space-between;
+                align-items: center;               
+                .iconfont{
+                    font-size: 14px;
+                    color:#999;
+                }
+                .title {
+                    display: flex;
+                    flex-direction: column;
+                    min-width: 9rem;
+                    .main_title {
+                        font-size: 16px;
+                        color: #999;
+                    }
+                    .fu_title {
+                        color: #999;
+                        line-height: 10px;
+                    }
+                }
+                .underline{
+                    background: transparent;
+                }
+                //开关颜色样式重置
+                
+                .text{
+                    flex-grow: 1;
+                    //单选按钮颜色重置
+                    .sexRadio{
+                        margin:5px 20px 0 0;
+                    }
+                    .radioIcon{
+                        color:#00b4ff;
+                    }
+                    .mu-radio-icon{
+                        margin-right:5px;
+                    }
+                    .focusline{
+                        background: #00b4ff;
+                    }
+                    .textInput,.bornDate{
+                        font-size: 14px;
+                        height:4.4rem;
+                        margin-top:18px;
+                    }
+                    //出生日期选择
+                    .bornDateBorder{
+                        background: transparent;
+                    }
+                    
+                    //下拉菜单样式
+                    .mu-dropDown-menu{
+                        width:100%;
+                    }
+                    //文本输入框样式重置
+                    .mu-text-field-line.disabled{
+                        border:none;
+                    }
+                    .mu-dropDown-menu-text-overflow{
+                        font-size: 14px;
+                    }
+                    .mu-dropDown-menu-text{
+                        height:4.5rem;
+                        padding: 0;
+                    }
+                    .mu-text-field-content{
+                        padding:0;
+                        margin-top:-10px;
+                    }
+                }
+                
+            }
+        }
+    }
+    .submit{
+        height:5rem;
+        display: flex;
+        align-items: center;
+        background: white;
+        padding:0 4%;
+        -moz-box-shadow: 0 -2px 10px #e2e0e0;
+        /* 老的 Firefox */
+        box-shadow: 0 -2px 10px #e2e0e0;
+    }
+}

@@ -1,0 +1,23 @@
+page-refundrule {
+	.rules{
+		background:white;
+		padding:3%;
+		.tit{
+			text-align:center;
+		}
+		li{
+			padding:15px 0;
+			.title{
+				min-width:70px;
+				.bg{
+					color:white;
+					border-radius:2px;
+					padding:2px;
+				}
+			}
+		}
+		li:last-child:after{
+			border:none;
+		}
+	}
+}

@@ -1,5 +1,5 @@
 [
-        { "match": "北京|南苑机场|NAY|BEIJING|BJ", "name": "北京", "pinyin": "BEIJING", "sanzima": "PEK" },
+        { "match": "北京|南苑机场|NAY|BEIJING|BJ", "name": "北京", "pinyin": "BEIJING", "sanzima": "BJS" },
         { "match": "上海|浦东国际机场|PVG|PUDONG|SH", "name": "上海", "pinyin": "PUDONG", "sanzima": "SHA" }, 
         { "match": "广州|白云国际机场|CAN|GUANGZHOU|GZ", "name": "广州", "pinyin": "GUANGZHOU", "sanzima": "CAN" }, 
         { "match": "深圳|宝安国际机场|SZX|SHENZHEN|SZ", "name": "深圳", "pinyin": "SHENZHEN", "sanzima": "SZX" }, 

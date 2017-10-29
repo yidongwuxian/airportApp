@@ -1,11 +1,10 @@
 <ion-content>
-    <div>
         <div class="index_swiper">
-            <div class="msgTip">
-            	<p [hidden]="!isMsg">2</p>
-            	<i class="iconfont">&#xe671;</i>
-            	<s></s>
-            </div>
+        	<div class="search_tab_msg">
+	        	<msgicon [msg]="searchView.msg"></msgicon>
+	            <msgtip></msgtip>
+	            <msgtipbd></msgtipbd>
+        	</div>
         	<ion-slides pager autoplay="2000" loop="true" autoplayDisableOnInteration="true">
 				  <ion-slide>
 				    <img class="swiper_img" src="../assets/img/search/banner1.jpg">
@@ -17,12 +16,12 @@
 			<div class="main">
 			    <div class="main_bd">
 			     	  <div class="city">
-					      <div (click)="depCityGo()" #cityGo>{{depCity}}</div>
-					      <div (click)="exchange()" [ngClass]="{rotateEx:isEx}" class="exchange"><span class="iconfont ex">&#xe639;</span></div>
-					      <div (click)="arrCityGo()" #cityBack>{{arrCity}}</div>
+					      <div (click)="depCityGo()" #cityGo>{{searchView.depCity}}</div>
+					      <div (click)="exchange()" [ngClass]="{rotateEx:searchView.isEx}" class="exchange"><span class="iconfont ex">&#xe639;</span></div>
+					      <div (click)="arrCityGo()" #cityBack>{{searchView.arrCity}}</div>
 					  </div>
 					  <div class="date">
-						<div>
+						<div class="date_flex">
 							<div class="dateItem">
 							    <span class="iconfont">&#xe6bd;</span>
 								<div class="dateBox">
@@ -30,7 +29,7 @@
 									<span class="week" #depWeek></span>
 								</div>							
 							</div>
-							<div [hidden]="!isShow">
+							<div [hidden]="!searchView.isShow">
 								<div class="dateItem1">
 									<span class="iconfont">&#xe7d1;</span>
 								</div>
@@ -46,28 +45,28 @@
 						<div class="routeType">
 							<div class="label-left">
 								<label class="rt_tx">往返</label>
-								<ion-checkbox [(ngModel)]="isRT" (ionChange)="updateRT()"></ion-checkbox>
+								<ion-checkbox [(ngModel)]="searchView.isRT" (ionChange)="updateRT()"></ion-checkbox>
 							</div>
 						</div>
 					</div>
 			    </div> 
 				<div class="ps_bd">
-					<div class="passenger" [hidden]="!isAdult">
+					<div class="passenger" [hidden]="!searchView.isAdult">
 						<div class="ps_item">
 							<div class="flex_1">
 								<span class="iconfont adultSign">&#xe696;</span>
 								<span class="adultText">成人</span>
 							</div>
-							<ion-checkbox color="dark" checked="true" [(ngModel)]="singleAduNum" disabled="true"></ion-checkbox>
+							<ion-checkbox color="dark" checked="true" [(ngModel)]="searchView.singleAduNum" disabled="true"></ion-checkbox>
 						</div>
 					</div>
-					<div class="passenger" [hidden]="!isChd">
+					<div class="passenger" [hidden]="!searchView.isChd">
 						<div class="ps_item">
 							<div class="flex_1">
 								<span class="iconfont adultSign">&#xe696;</span>
 								<span class="adultText">成人</span>
 							</div>
-							<ex-counter [count]="adultcount" (change)="aduChange($event)"></ex-counter>
+							<ex-counter [count]="searchView.aducount" (change)="aduChange($event)"></ex-counter>
 						</div>
 						<div class="ps_item">
 							<div class="flex_1">
@@ -75,7 +74,7 @@
 								<span class="adultText">儿童</span>
 								<span class="adultTextSmall">2-12岁</span>
 							</div>
-							<ex-counter [count]="count" (change)="chdChange($event)"></ex-counter>
+							<ex-counter [count]="searchView.chdcount" (change)="chdChange($event)"></ex-counter>
 						</div>
 						<div class="flex_item">
 							<div class="flex_1"></div>
@@ -85,7 +84,7 @@
 					</div>
 				</div>
 				<div class="cabinType">
-					<ion-segment [(ngModel)]="cabin" color="primary">
+					<ion-segment [(ngModel)]="searchView.cabin" color="primary">
 				        <ion-segment-button value='Y'><div class="cabin_box">经济舱<p class="cabin_tip"></p><span class="iconfont">&#xe620;</span></div></ion-segment-button>
 				        <ion-segment-button value='F/C'><div class="cabin_box">头等舱/商务舱<p class="cabin_tip"></p><span class="iconfont">&#xe620;</span></div></ion-segment-button>
 				    </ion-segment>
@@ -94,6 +93,5 @@
 			<div class="searchbtn">
 				<span class="search" (click)="searchbtn()">搜索</span>
 			</div>
-		</div>  			 
-	</div>
+		</div>	
 </ion-content>

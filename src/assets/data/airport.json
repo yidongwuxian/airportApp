@@ -38069,7 +38069,7 @@
             "airportEn": "Nanyuan Airport",
             "areaCn": "华北",
             "cityCn": "北京",
-            "cityCode": "PEK",
+            "cityCode": "",
             "cityEn": "Beijing",
             "continentCn": "中国",
             "countryCn": "北京",
@@ -42425,7 +42425,19 @@
             "airportEn": "beijing Airport",
             "areaCn": "华北",
             "cityCn": "北京",
-            "cityCode": "PEK",
+            "cityCode": "BJS",
+            "cityEn": "Beijing",
+            "continentCn": "中国",
+            "countryCn": "北京",
+            "countryEn": "CHINA"
+        },
+        {
+            "airportCn": "北京南苑机场",
+            "airportCode": "PEK",
+            "airportEn": "beijing Airport",
+            "areaCn": "华北",
+            "cityCn": "北京",
+            "cityCode": "BJS",
             "cityEn": "Beijing",
             "continentCn": "中国",
             "countryCn": "北京",
@@ -44818,18 +44830,6 @@
             "continentCn": "北美洲",
             "countryCn": "美国",
             "countryEn": "USA"
-        },
-        {
-            "airportCn": "上海浦东国际机场",
-            "airportCode": "PVG",
-            "airportEn": "pudong Airport",
-            "areaCn": "华东",
-            "cityCn": "上海",
-            "cityCode": "SHA",
-            "cityEn": "shanghai",
-            "continentCn": "中国",
-            "countryCn": "上海",
-            "countryEn": "CHINA"
         },
         {
             "airportCn": "贝尔蒙特机场",
@@ -48394,6 +48394,18 @@
             "continentCn": "北美洲",
             "countryCn": "美国",
             "countryEn": "USA"
+        },
+        {
+            "airportCn": "上海浦东国际机场",
+            "airportCode": "SHA",
+            "airportEn": "hongqiao Airport",
+            "areaCn": "华东",
+            "cityCn": "上海",
+            "cityCode": "SHA",
+            "cityEn": "shanghai",
+            "continentCn": "中国",
+            "countryCn": "上海",
+            "countryEn": "CHINA"
         },
         {
             "airportCn": "上海虹桥国际机场",

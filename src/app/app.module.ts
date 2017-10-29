@@ -1,32 +1,44 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { HttpModule } from '@angular/http';     //http服务
+import { HttpModule } from '@angular/http';                                                 
 import { MyApp } from './app.component';
-import 'rxjs/Rx';                                                                        //引入rxJs
-import { FormsModule } from '@angular/forms';                                              //双向绑定
+import 'rxjs/Rx';                                                                        
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';                                             
 import { MultiPickerModule } from 'ion-multi-picker';
-import { CalendarModule } from "ion2-calendar";
+import { CalendarModule } from 'ion2-calendar';
 //ngrx
 import { StoreModule } from '@ngrx/store';
-import { rootReducer } from '../store/root/root.reducer';
+import { AduCounterReducer,ChdCounterReducer } from '../store/counter/counter.reducer';
 //page
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SearchPage } from '../pages/search/search';
-import { CityselPage } from '../pages/citysel/citysel';
 import { FlightqueryPage } from '../pages/flightquery/flightquery';
+import { FlightdetailPage } from '../pages/flightdetail/flightdetail';
+import { AddpassengerPage } from '../pages/addpassenger/addpassenger';
+import { OrderflightPage } from '../pages/orderflight/orderflight';
+import { RefundrulePage } from '../pages/refundrule/refundrule';
+import { LoginPage } from '../pages/login/login';
+import { UserCenterPage } from '../pages/usercenter/usercenter';
+
 //component
 import { CountComponent } from '../components/counter/counter';
 import { FlightTabComponent } from '../components/flighttab/flighttab';
+import { CityselComponent } from '../components/citysel/citysel';
+import { FieldComponent } from '../components/field/field.component';
+import { MsgTipComponent } from '../components/msgtip/msgtip';
+import { MsgTipBdComponent } from '../components/msgtipbd/msgtipbd';
+import { MsgIconComponent } from '../components/msgicon/msgicon';
+import { FlightFilterComponent } from '../components/flightfilter/flightfilter';
+import { ModalComponent } from '../components/modal/modal';
+
 //pipe
-import { SexReformPipe } from '../pipe/sexReform.pipe';
-import { ToNullPipe } from '../pipe/toNull.pipe';
-import { CabinPipe } from '../pipe/cabin.pipe';
-import { OrderStatusPipe } from '../pipe/orderStatus.pipe';
-import { OtherStatusPipe } from '../pipe/otherStatus.pipe';
+import { AirportPipe, CabinPipe, OrderStatusPipe, OtherStatusPipe } from '../pipe/';
+//serice
+import { AirportService, Contacts, HttpService, UtilsService } from '../service/';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -39,12 +51,22 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomePage,
     TabsPage,
     SearchPage,
-    CityselPage,
     FlightqueryPage,
+    FlightdetailPage,
+    AddpassengerPage,
+    OrderflightPage,
+    RefundrulePage,
+    LoginPage,
+    UserCenterPage,
     CountComponent,
     FlightTabComponent,
-    SexReformPipe,
-    ToNullPipe,
+    CityselComponent,
+    FieldComponent,
+    MsgTipComponent,
+    MsgTipBdComponent,
+    MsgIconComponent,
+    FlightFilterComponent,
+    ModalComponent,
     CabinPipe,
     OrderStatusPipe,
     OtherStatusPipe
@@ -56,9 +78,12 @@ import { SplashScreen } from '@ionic-native/splash-screen';
       iconMode: 'ios',
       mode: 'ios',
     }),
-    StoreModule.provideStore({Url: rootReducer}),
+    StoreModule.provideStore({
+   
+    }),
     HttpModule,
     FormsModule,
+    ReactiveFormsModule,
     MultiPickerModule,
     CalendarModule
   ],
@@ -70,17 +95,32 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomePage,
     TabsPage,
     SearchPage,
-    CityselPage,
     FlightqueryPage,
+    FlightdetailPage,
+    AddpassengerPage,
+    OrderflightPage,
+    RefundrulePage,
+    LoginPage,
+    UserCenterPage,
     CountComponent,
-    FlightTabComponent
+    FlightTabComponent,
+    CityselComponent,
+    FieldComponent,
+    MsgTipComponent,
+    MsgTipBdComponent,
+    MsgIconComponent,
+    FlightFilterComponent
   ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, 
       useClass: IonicErrorHandler
-    }
+    },
+    AirportService, 
+    Contacts, 
+    HttpService, 
+    UtilsService
   ]
 })
 export class AppModule {}

@@ -1,0 +1,139 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>新增乘机人</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+<form novalidate [formGroup]="Passenger" (ngSubmit)="createPas(Passenger)">	
+<div class="top">
+	<div class="declaration">
+		<p><span class="iconfont">&#xe6e8; </span> 请正确填写各项信息</p>
+	</div>
+	<div class="content">
+		<ul>
+			<li [hidden]="!isShow">
+				<div class="item">
+					<div class="title">
+						<span class="main_title">中文姓名</span>
+						<span class="fu_title"></span>
+					</div>
+					<div class="text">
+						<input type="text" class="form-control" formControlName="chineseName" />
+						<div *ngIf="formErrors.chineseName" class="showerr alert-danger" >{{ formErrors.chineseName }}</div>
+					</div>
+				</div>
+			</li>
+			<li [hidden]="isShow">
+				<div class="item">
+					<div class="title">
+						<span class="main_title">姓(拼音)</span>
+						<span class="fu_title">Surename</span>
+					</div>
+					<div class="text">
+						<input type="text" class="form-control" formControlName="sureName" />
+					</div>
+				</div>
+				<div class="item">
+					<div class="title">
+						<span class="main_title">名(拼音)</span>
+						<span class="fu_title">Givenname</span>
+					</div>
+					<div class="text">
+						<input type="text" class="form-control" formControlName="givenName" />
+					</div>
+				</div>
+			</li>
+			<li class="item" [hidden]="isShow">
+				<div class="title">
+					<span class="main_title">性别</span>
+				</div>
+				<div class="text">
+					<input type="radio" value="男" formControlName="sex" />
+					<input type="radio" value="女" formControlName="sex" />
+				</div>
+			</li>
+			<li class="item" [hidden]="isShow">
+				<div class="title">
+					<span class="main_title">国籍</span>
+				</div>
+				<div class="text">
+					<input type="text" class="form-control" formControlName="nationality"  readonly="readonly" />
+				</div>
+				<div></div>
+			</li>
+			<li class="item" [hidden]="isShow">
+				<div class="title">
+					<span class="main_title">出生日期</span>
+				</div>
+				<div class="text">
+					<input type="text" class="form-control" formControlName="birthDate"  readonly="readonly" />
+				</div>
+				<div><span class="iconfont"></span></div>
+			</li>
+			<li class="item">
+				<div class="title">
+					<span class="main_title">旅客类型</span>
+				</div>
+				<div class="text">
+					<ion-select formControlName="passenger" (change)="passengerType" [cancelText]="'取消'" [okText]="'确认'">
+						<div [hidden]="!isShow">
+							<ion-option value="1">成人</ion-option>
+						</div>
+						<div [hidden]="isShow">
+							<ion-option value="1">成人</ion-option>
+							<ion-option value="2">儿童</ion-option>
+						</div>
+					</ion-select>
+				</div>
+				<div><span class="iconfont"></span></div>
+			</li>
+			<li class="item">
+				<div class="title">
+					<span class="main_title">证件类型</span>
+				</div>
+				<div class="text">
+					<ion-select formControlName="certificate" (change)="certificateType" [cancelText]="'取消'" [okText]="'确认'">
+						<div [hidden]="!isShow">
+							<ion-option  value="1">身份证</ion-option>
+						</div>
+						<div [hidden]="isShow">
+							<ion-option value="2">护照</ion-option>
+							<ion-option value="3">港澳通行证</ion-option>
+							<ion-option value="4">台湾证</ion-option>
+							<ion-option value="5">回乡证</ion-option>
+						</div>	
+					</ion-select>
+				</div>
+				<div><span class="iconfont"></span></div>
+			</li>
+			<li class="item">
+				<div class="title">
+					<span class="main_title">证件有效期</span>
+				</div>
+				<div class="text">
+					<input type="text" class="form-control" formControlName="docExpireDate" />
+				</div>
+				<div><span class="iconfont"></span></div>
+			</li>
+			<li class="item">
+				<div class="title">
+					<span class="main_title">证件号码</span>
+				</div>
+				<div class="text">
+					<input type="text" class="form-control" formControlName="docId" />
+				</div>
+			</li>
+			<li class="item">
+				<div class="title">
+					<span class="main_title">{{telTx}}</span>
+				</div>
+				<div class="text">
+					<input type="tel" class="form-control" formControlName="mobile" />
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+<button type="submit" class="submit">新增</button>
+</form>
+</ion-content>

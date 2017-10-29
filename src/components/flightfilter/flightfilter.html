@@ -1,0 +1,75 @@
+<div class="filterBox">
+	<div class="hd">
+		<button class="hd_left"  (click)="cancelFilter()">取消</button>
+		<span class="hd_middle">共{{resultLen}}个结果</span>
+		<button class="hd_right" (click)="updateFilter()">确定</button>
+	</div>
+	<div class="cn">
+		<div class="nav">
+			<p *ngFor="let res of result; index as k; trackBy:trackByResult;">
+				<span class="selectedItem">{{res.value}}<i class="selctedIco" (click)="delSelItem(res.value,k)">x</i></span>
+			</p>
+		</div>
+		<div class="filter_tab">
+			<div class="filter_tab_nav">
+				<div class="tab_option_left" [hidden]="isDireFlight">
+					<ion-checkbox [(ngModel)]="direFlight"  name="direFlight" (ionChange)="flightType(direFlight,0)"></ion-checkbox>
+					<label for="direFlight">只看直飞</label>
+				</div>
+				<div class="tab_option_right" [hidden]="isShareFlight">
+					<ion-checkbox [(ngModel)]="shareFlight" name="shareFlight" (ionChange)="flightShare(shareFlight,0)"></ion-checkbox>
+					<label for="shareFlight">隐藏共享航班</label>
+				</div>
+			</div>
+			<div class="filter_tab_box">
+				<ul class="filter_tab_ul">
+					<li [ngStyle]="{'background-color':selItem === 0 ? 'white' : '#f3f5f7' }" (click)="onItem(0)"><s [hidden]="!isTimeIco" class="dot"></s><span>起飞时间</span></li>
+					<li [ngStyle]="{'background-color':selItem === 1 ? 'white' : '#f3f5f7' }" (click)="onItem(1)"><s [hidden]="!isAirCompanyIco" class="dot"></s><span>机场</span></li>
+					<li [ngStyle]="{'background-color':selItem === 2 ? 'white' : '#f3f5f7' }" (click)="onItem(2)"><s [hidden]="!isCabinIco" class="dot"></s><span>舱位</span></li>
+					<li [ngStyle]="{'background-color':selItem === 3 ? 'white' : '#f3f5f7' }" (click)="onItem(3)"><s [hidden]="!isAirportIco" class="dot"></s><span>航空公司</span></li>
+				</ul>
+				<div class="filter_tab_cn">
+					<ul [style.display]="selItem==0?'block':'none'">
+						<li *ngFor="let time of timeArrs; index as i; trackBy:trackByTimeArrs;">
+							<p class="filter_left">
+								<span>{{time.timeDate}}</span>
+							</p>
+							<ion-checkbox class="filter_right" [(ngModel)]="time.timeOption" name="timeOption"    (click)="updateTime(time.timeOption,i)"></ion-checkbox>
+						</li>
+					</ul>
+					<ul [style.display]="selItem==1?'block':'none'">
+						<li *ngFor="let air of airDepArrs; index as p; trackBy:trackByAirDepArrs;">
+							<p class="filter_left">
+								<span>{{air.value}}</span>
+							</p>
+							<ion-checkbox class="filter_right" [(ngModel)]="air.airDepOption" name="airDepOption" (click)="updateDepAir(air.airDepOption,p)"></ion-checkbox>
+						</li>
+						<li *ngFor="let air of airArrArrs; index as k; trackBy:trackByAirArrArrs;">
+							<p class="filter_left">
+								<span>{{air.value}}</span>
+							</p>
+							<ion-checkbox class="filter_right" [(ngModel)]="air.airArrOption" name="airArrOption" (click)="updateArrAir(air.airArrOption,k)"></ion-checkbox>
+						</li>
+					</ul>
+					<ul [style.display]="selItem==2?'block':'none'">
+						<li *ngFor="let arr of cabinArrs; index as n; trackBy:trackByCabinArrs;">
+							<p class="filter_left">
+								<span>{{arr.value}}</span>
+							</p>
+							<ion-checkbox class="filter_right" [(ngModel)]="arr.cabinOption" name="cabinOption" (click)="getCabinCheck(arr.cabinOption,n)"></ion-checkbox>
+						</li>
+					</ul>
+					<ul [style.display]="selItem==3?'block':'none'">
+						<li *ngFor="let filter of Filters; index as i; trackBy:trackByFilters;">
+							<p class="filter_left">
+								<img src="../../assets/img/airlines/{{filter.images}}.PNG" />
+								<span>{{filter.value}}</span>
+							</p>
+							<ion-checkbox class="filter_right" [(ngModel)]="filter.airportOption" name="airportOption" (click)="getAirportCheck(filter.airportOption,i)"></ion-checkbox>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

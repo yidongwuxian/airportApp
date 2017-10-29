@@ -1,0 +1,30 @@
+export class SearchClass {
+  msg: any;
+  aducount: number;
+  chdcount: number;
+  singleAduNum: number;
+  aduNum: any;
+  chdNum: any;
+  depCity: string;
+  arrCity: string;	
+  isEx: boolean;
+  dependentColumns: any[];
+  currentDate: String;
+  rountingType:string;
+  depCityCode:string;
+  arrCityCode:string;
+  depCityNameEn: any;
+  isRT: boolean;
+  isShow: boolean = false;
+  isAdult: boolean = false;
+  isChd: boolean = true;
+  cabin: string = 'Y';
+  countryEn: string;
+  formCityCode?: string;
+  toCityCode: any;
+  diffType: string;
+  undeTx:   string;
+  depTimePost: string;
+  arrTimePost: string;
+  calNumber?: object;
+}

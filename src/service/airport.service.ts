@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 
 export class AirportService{
   constructor(private _HttpService: HttpService){}
-    getAirData(url): Promise<any[]> {  
+    getAirData(url): Promise<any> {  
 	    return this._HttpService.get(url)
 	       .toPromise()
 	       .then(this.extractData)

@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>登录</ion-title>
+    <div class="user_tab_config iconfont">&#xe607;</div>
+    <div class="user_tab_msg">
+    	<msgicon [msg]="msg"></msgicon>
+    	<msgtip></msgtip>
+    </div>
+  </ion-navbar>
+  <div class="hd">
+  	  <div class="sculpture"></div>
+	  <ion-segment class="user_box" [(ngModel)]="userSwitch">
+			<ion-segment-button value="loginTab">
+		      <p>登录</p>
+		      <i></i>
+		      <s></s>
+		    </ion-segment-button>
+		    <ion-segment-button value="segTab">
+		      <p>注册</p>
+		      <i></i>
+		    </ion-segment-button>
+		</ion-segment> 
+	</div>	
+</ion-header>
+<ion-content>
+<div class="user_cn">
+	<div [ngSwitch]="userSwitch" class="user_in">
+          <div *ngSwitchCase="'loginTab'">
+                <form>
+                	<ion-list>
+					  <ion-item>
+					    <ion-label fixed class="iconfont user_icon">&#xe608;</ion-label>
+					    <ion-input type="text" [(ngModel)]="username" name="username" placeholder="请输入用户名"></ion-input>
+					  </ion-item>
+					  <div class="pr">
+					  	   <ion-item>
+						    <ion-label fixed  class="iconfont user_icon">&#xe633;</ion-label>
+						    <ion-input type="{{pasType}}" [(ngModel)]="password" name="password" placeholder="请输入密码"></ion-input>
+						  </ion-item>
+						  <button class="user_eye_btn" (click)="switchPwd()">
+						    	<span class="iconfont" [hidden]="!isPwd">&#xe64a;</span>
+						    	<span class="iconfont" [hidden]="isPwd">&#xe64b;</span>
+						  </button>
+					  </div>
+					</ion-list>
+					<div class="user_save">
+						<div class="user_save_login">
+					  		<ion-checkbox checked="true"></ion-checkbox>
+					  		<span>下次自动登录</span>
+					  	</div>
+					  	<a class="user_forget">忘记密码?</a>
+					</div>
+					<div class="pd_25">
+					    <button class="user_btn" (click)="login()">立即登录</button>
+					</div>
+					<div class="pd_50">
+						<div class="login_server_protocol">
+							<a>服务协议</a>
+							<s></s>
+							<a>隐私政策</a>
+						</div>
+					</div>
+                </form>
+          </div>
+          <div *ngSwitchCase="'segTab'">
+           		 <form>
+                	<ion-list>
+					  <ion-item>
+					    <ion-label fixed class="iconfont user_icon">&#xe608;</ion-label>
+					    <ion-input type="text" value=""  placeholder="请输入用户名"></ion-input>
+					  </ion-item>
+					  <ion-item>
+					    <ion-label fixed  class="iconfont user_icon">&#xe633;</ion-label>
+					    <ion-input type="password"  placeholder="请输入密码"></ion-input>
+					  </ion-item>
+					</ion-list>
+					<div class="pd_25">
+					    <button class="user_btn">立即注册</button>
+					</div>
+					<div class="pd_50">
+						<div class="reg_server_protocol">
+							注册代表您同意我们的<a class="user_blue_color">服务协议</a>和<a  class="user_blue_color">隐私政策</a>
+						</div>
+					</div>
+                </form>   
+         </div>
+    </div>
+</div> 
+</ion-content>

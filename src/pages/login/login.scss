@@ -1,0 +1,204 @@
+page-login {
+	.user_tab_config{
+   	    position:absolute;
+        top:1.3rem;
+        right:5rem;
+        z-index: 111;
+        color:white;
+        font-size:13px;
+   }
+   .user_tab_msg{
+        position:absolute;
+        top:0.7rem;
+        right:1.5rem;
+        z-index: 111;
+    }
+    ion-navbar.toolbar{
+        background-image:-webkit-linear-gradient(to right, #00d2ff, #00b4ff); 
+	    background-image:linear-gradient(to right,#00d2ff,#00b4ff);
+        color:white;
+    }
+    .toolbar-title-ios{
+        color:white;
+    }
+    .header-ios .toolbar-background-ios, .footer-ios .toolbar-background-ios{ border: none !important; }
+    .hd{
+    	position:relative;
+    	height:14rem;
+	    background-image:-webkit-linear-gradient(to right, #00d2ff, #00b4ff); 
+	    background-image:linear-gradient(to right,#00d2ff,#00b4ff);
+	    .sculpture{ 
+			width:64px;
+			height:64px;
+			background-image:url('../assets/img/usercenter/sculpture.png');
+			background-size:64px;
+			margin: 0 auto;
+			position: absolute;
+		    left: 42%;
+		    top: 15%;
+		}
+		.user_box{
+			position:absolute;
+			bottom:0;
+			z-index:1023;
+		}
+	    .segment-ios .segment-button{
+		    height: auto;
+		    line-height: 1.5rem;
+		    margin:0;
+		    border:none;
+		    >p{
+		      width:130px;
+		      margin:0 auto 1.5rem;
+		      text-align:center;
+		      color:#fff;
+		      border:none;
+		      font-size:1.7rem;
+		      opacity:0.6;
+		    }
+		    >i{
+		    	display:none;
+		    	position:absolute;
+		    	bottom: -1px;
+			    left: 47%;
+			    width: 0;
+			    height: 0;
+			    border-left: 4px solid transparent;
+			    border-right: 4px solid transparent;
+			    border-bottom: 8px solid white;
+		    }
+		  }
+	}
+    
+	.segment-ios .segment-button.segment-activated{
+	    background-color:transparent;
+	    >p{
+	      color:#fff;
+	      background-color:transparent;
+	      opacity:1;
+	    }
+	    >i{
+		   display:block;
+		}
+	}
+	.segment-ios .segment-button:first-child>s{
+		display:block;
+		position: absolute;
+		right:0;
+		top:3px;
+		width:1px;
+		height:15px;
+		opacity:0.6;
+		background-color:#c2ecf9;  	
+    }
+    .pr{
+    	position:relative;
+    	.user_eye_btn{
+				position:absolute;
+				top:35%;
+				right:5%;
+				>span{
+					background:white;
+				}
+			}
+    }
+	.user_cn{
+		margin-top:10px;
+		.user_in{
+			margin:40px;
+			.user_icon{
+				font-size:16px;
+			}
+		}
+	}
+	.item-ios{ padding:0;}
+	.list-ios > .item-block:first-child{
+		padding:0;
+		border:none;
+	}
+	.list-ios .item-block .item-inner{
+		border-bottom:0.55px solid #e2e0e0;
+	}
+	ion-label[fixed] {
+	    -webkit-box-flex: 0;
+	    -webkit-flex: 0 0 20px;
+	    -ms-flex: 0 0 20px;
+	    flex: 0 0 20px;
+	    width: 20px;
+	    min-width: 20px;
+	    max-width: 20px;
+	}
+	.label-ios + ion-input .text-input, .label-ios + ion-textarea .text-input, .label-ios + .input + .cloned-input{
+		margin:0;
+		font-size:1.5rem;
+		color:#99a3a7;
+	}
+	.list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
+		border-bottom:0.55px solid #e2e0e0;
+	}
+	.user_save{
+		display:-webkit-box;
+	    display:-webkit-flex;
+	    display:-ms-flexbox;
+	    display:flex;
+	    -webkit-box-pack:justify;
+	    -webkit-justify-content:space-between;
+	    -ms-flex-pack:justify;
+	    justify-content:space-between;
+	    .user_save_login{
+			font-size:1rem;
+			color:#434d63;
+			>span{
+				vertical-align:super;
+			}
+		}
+		.user_forget{
+			font-size:1rem;
+			color:#ff9934;
+		}
+	}
+	.user_btn{
+		display: block;
+	    background-image: -webkit-gradient(linear, left top, right top, from(#3ff8ff), to(#00b4ff));
+	    background-image: linear-gradient(to right, #3ff8ff, #00b4ff);
+	    color: white;
+	    border-radius: 45px;
+	    width: 100%;
+	    height: 3.5rem;
+	    line-height: 3.5rem;
+	    text-align: center;
+	    font-size: 16px;
+	}
+	.list-ios{ margin:-1px 0 20px; }
+	.pd_25{ padding:25px 0; }
+	.pd_50{ padding:50px 0; }
+	.login_server_protocol{ 
+		position:relative;
+		margin:0 auto; 
+		text-align:center; 
+		>a{
+			 font-size:1rem; 
+			 color:#99a3a7;
+			 margin:0 5px;
+		}
+		>s{
+			position:absolute;
+			left:50%;
+			top:3px;
+			width:1px;
+			height:12px;
+			background-color:#99a3a7;
+		}
+	}
+	.reg_server_protocol{
+		position:relative;
+		margin:0 auto; 
+		text-align:center;
+		font-size:1rem; 
+		color:#99a3a7; 
+		.user_blue_color{
+			color:#00b4ff;
+		}
+	} 
+
+}

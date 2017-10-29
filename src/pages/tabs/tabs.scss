@@ -1,15 +1,49 @@
-page-tabs {
- 	.jp-tabs{
-	   .tab-button{
-	      &>ion-icon{
-	        font-family:"iconfont" !important;   /*指定在当前组件中的ion-icon使用的字体名称*/
-	      }
-	  }
-	}
-	.tabs-ios .tab-button[aria-selected=true]{
-	  color:blue;
-	  .tab-button-icon{
-	    color:blue;
-	  }
-	}
+.ion-tab-icon-base {
+    width: 34px !important;
+    height: 34px !important;
+    padding: 4px 4px 2px;
+}
+
+.tabs-ios .tabbar{
+    border-top:1px solid #dedede;
+    background:#fafafa;
+}
+$tabImageName: 'searchbar' 'order' 'dynamic' 'usercenter';
+@for $i from 1 to 5 {
+    //for ios
+    .ion-ios-tab-#{nth($tabImageName, $i)} {
+        @extend .ion-tab-icon-base;
+        content: url("../../assets/img/tabicons/icon_#{nth($tabImageName, $i)}_on.png");
+    }
+    .ion-ios-tab-#{nth($tabImageName, $i)}-outline {
+        @extend .ion-tab-icon-base;
+        content: url("../../assets/img/tabicons/icon_#{nth($tabImageName, $i)}_off.png");
+
+    }
+
+}
+.ion-ios-tab-task,.ion-ios-tab-task-outline,.ion-ios-tab-master,.ion-ios-tab-master-outline{
+    width: 34px !important;
+    height: 34px !important;
+}
+.tabs-ios .tab-button[aria-selected=true] {  
+	@for $i from 1 to 5 {
+		.ion-ios-tab-#{nth($tabImageName, $i)} {  
+	      @extend .ion-tab-icon-base;
+	        content: url("../../assets/img/tabicons/icon_#{nth($tabImageName, $i)}_on.png");  
+	    }
+	    .ion-ios-tab-#{nth($tabImageName, $i)}-outline {
+	        @extend .ion-tab-icon-base;
+	        content: url("../../assets/img/tabicons/icon_#{nth($tabImageName, $i)}_off.png");
+	    }    
+	}    
+} 
+.tabs-ios .tab-button{
+    color:#333;
+}   
+.tabs-ios .tab-button:hover:not(.disable-hover), .tabs-ios .tab-button[aria-selected=true]{
+    color:#00b4ff;
+}
+.tabs-ios .tab-button-text{
+    margin-bottom:6px;
 }

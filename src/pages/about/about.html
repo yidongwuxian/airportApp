@@ -7,16 +7,4 @@
 </ion-header>
 
 <ion-content padding>
-   <ion-item>
-        <ion-label>舱位</ion-label>
-        <ion-multi-picker id="cabin" [(ngModel)]="cabin" item-content [multiPickerColumns]="cabins" [cancelText]="'取消'" [doneText]="'确定'"></ion-multi-picker>
-    </ion-item>
-    <ion-item>
-        <ion-label>成人儿童选择</ion-label>
-        <ion-multi-picker id='advanced' item-content [multiPickerColumns]="dependentColumns" [cancelText]="'取消'" [doneText]="'确定'"></ion-multi-picker>
-    </ion-item>
-    <ion-item>
-	  <ion-label>Start Time</ion-label>
-	  <ion-datetime displayFormat="YYYY M DD" pickerFormat="YYYY M DD" [(ngModel)]="currentDate" [cancelText]="'取消'" [doneText]="'确定'"></ion-datetime>
-	</ion-item>
 </ion-content>
