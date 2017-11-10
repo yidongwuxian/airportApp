@@ -8,13 +8,23 @@ import {Group} from "../models/group.model";
 @Injectable()
 export class Contacts {
     constructor(public http: Http) {}
-    dataUrl: string;
     /**
      * Get contacts data
      * @returns {Promise<TResult|T>}
      */
-    getContacts(dataUrl) {
-        return this.http.get(dataUrl)
+
+
+    getContactsGn() {
+        return this.http.get('./assets/data/inlandData.json')
+            .toPromise()
+            .then(response => response.json())
+            .catch(err => {
+                return Promise.reject(err)
+            })
+    }
+
+    getContactsGj() {
+        return this.http.get('./assets/data/internationalData.json')
             .toPromise()
             .then(response => response.json())
             .catch(err => {
@@ -40,7 +50,6 @@ export class Contacts {
                     contacts: []
                 }
             });
-
         // Push into the correct group
         groupContacts.forEach((item) => {
             for (let i of array) {
@@ -51,7 +60,6 @@ export class Contacts {
                 }
             }
         });
-        
         let tempContacts: Group[]=[];
         tempContacts.push(
         {

@@ -1,0 +1,21 @@
+.travelTypeYellow{
+    background-color:#ff9934;
+    color:#fff;
+    border-radius:0.2rem;
+    font-size:1.2rem;
+}
+.minusBox{
+    display: inline-block;
+    margin-left: 10px;
+    padding:0.1rem 0 0.1rem 0.2rem;
+    .minus_type{
+        padding:0 0.2rem;
+    }
+    .minus_amount{
+        display:inline-block;
+        padding:0 0.3rem;
+        font-size:1.2rem;
+        color:#ff9934;
+        background-color:white;
+    }
+} 

@@ -5,83 +5,213 @@
 </ion-header>
 <ion-content>
 <div class="content">
+	<input type="hidden" value="{{switch}}" />
+	<flightinfo [switch]="on"></flightinfo>
+	<div (click)="goPas()">跳转</div>
+</div>	
+<!-- <div class="content">
 	<div class="order">
-		<div *ngFor="let item of routerMess; index as i; trackBy:trackByRouterMess;">
-			<div class="route">
-				<div>
-					<span *ngIf="i==0" class="iconfont">&#xe608;</span>
-					<span *ngIf="i==1" class="iconfont">&#xe60a;</span>
-					<span>{{item.segments[0].fromCityCn}} - {{item.segments[item.segments.length-1].toCityCn}}</span>
-					<span class="depTime">{{fromDate}}</span>
-				</div>
-				<div><span class="duration">总时长{{item.segments[0].flightDuration}}m</span></div>
-			</div>
-			<div class="routeMess">
-				<div class="routeMess_top">
-					<div class="cangwei">
-						<div>
-							<!-- <span v-for="(cabin,n) in cabinDetail(i,item)">{{cabin|cabin}}
-								<label v-if="n!=(cabinDetail(i,item).length-1)">+ </label>
-							</span> -->
+		<div>
+				<div class="route_bd">
+					<div class="route">
+						<div class="flex_left">
+							<span>去</span>
+							<p>{{flightMess[0].fromCityCn}} - {{flightMess[flightMess.length-1].toCityCn}}</p>
+							<p>{{tripDay}}{{tripWeek}}</p>
 						</div>
-						<div><span (click)="endorse" class="gaiqian">退改签/行李额</span></div>
-					</div>
-					<div class="shrink" (click)="shrink(item,i)">
-						<span class="iconfont" *ngIf="!item.show">&#xe6ea;</span>
-						<span class="iconfont" *ngIf="item.show">&#xe6e9;</span>
+						<div class="flex_right">总时长{{totalTimes}}</div>
 					</div>
 				</div>
-				<div class="simpleRouterMess" *ngIf="!item.show">
-					<div>
-						<div class="time">{{item.segments[0].fromDate.substr(5,2)}} : {{item.segments[0].fromDate.substr(8,2)}}</div>
-						<div class="airport">{{item.segments[0].fromAirportCn}}{{item.segments[0].fromTower}}</div>
-					</div>
-					<div class="midmess">
-						<div v-if="item.directFlight==false">
-							<p class="type">转</p>
-							<p class="tranformCity">{{item.segments[0].toCityCn}}</p>
-						</div>
-						<div v-if="item.segments[0].stopOver.length!=0">
-							<p class="type">经停</p>
-							<p class="stopoverCity">{{item.segments[0].stopOver[0].stopAirport}}</p>
-						</div>					
-					</div>
-					<div>
-						<div class="time">{{item.segments[item.segments.length-1].toDate.substr(5,2)}} : {{item.segments[item.segments.length-1].toDate.substr(8,2)}}</div>
-						<div class="airport">{{item.segments[item.segments.length-1].toAirportCn}}{{item.segments[item.segments.length-1].toTower}}</div>
-					</div>
-				</div>
-				<div class="routeMess_bottom" *ngIf="item.show">
-					<p><span class="iconfont point top">&#xe613;</span></p>
-					<p><span class="iconfont point bottom">&#xe613;</span></p>
-					<div class="seg">
-						<div class="segLeft">
-							<div class="times">
-								<div class="time">{{seg.fromDate}}</div>
-								<div class="duration">{{seg.flightDuration}}</div>
-								<div class="time">{{seg.toDate}}</div>
+				<div class="routeMess" *ngFor="let item of flightMess; index as i; trackBy:trackByflightMess;">
+					<div class="routeMess_top" *ngIf="isShow">
+						<div class="cangwei">
+							<div>
+								<span *ngFor="let cabin of cabinDetail; index as n; trackBy:trackByCabinDetail;">
+									{{cabin.cabinRank | cabin }}
+									<label *ngIf="n!=cabinDetail.length-1">+ </label>
+								</span>
 							</div>
-							<div class="airport">
-								<div class="airpt"><span class="iconfont start">&#xe605;</span>{{seg.fromAirportCn}}{{seg.fromTower}}</div>
-								<div class="airpt"><span class="iconfont end">&#xe605;</span>{{seg.toAirportCn}}{{seg.toTower}}</div>
-								<div class="transfer" *ngIf=="!(index==(item.segments.length-1))">
-									<span class="iconfont zhuan">&#xe606;</span>
-									<span class="transferCity">{{seg.toCityCn}}</span>
-									<span>停留</span>
+							<div><span (click)="endorse()" class="gaiqian">退改签/行李额</span></div>
+						</div>
+						<div class="shrink" (click)="shrink()">
+							<span class="iconfont">&#xe8a8;</span>
+						</div>
+					</div>
+					<div *ngIf="!isShow">
+						<div class="simpleRouterMess">
+							<div class="shrink" (click)="shrink()">
+								<span class="iconfont">&#xe8a9;</span>
+							</div>
+							<div class="flex_div">
+								<div class="time">{{flightMess[0].fromDate.substr(-5,5)}}</div>
+								<div class="airport">{{flightMess[0].fromAirportCn}}{{flightMess[0].fromTower}}</div>
+							</div>
+							<div class="midmess">
+								<div *ngIf="istranCity">
+									<p class="type">转</p>
+									<p class="tranformCity">{{tranCity}}</p>
+								</div>
+								<div *ngIf="isstopCity">
+									<p class="type">经停</p>
+									<p class="stopoverCity">停留{{stopoverCityName}}</p>
+								</div>					
+							</div>
+							<div class="flex_div">
+								<div class="time">{{flightMess[flightMess.length-1].toDate.substr(-5,5)}}</div>
+								<div class="airport">{{flightMess[flightMess.length-1].toAirportCn}}{{flightMess[flightMess.length-1].toTower}}</div>
+							</div>
+					    </div>
+						<div class="segBottom">
+							<div class="flex_left">
+								<span class="sign">
+								    <img src="../assets/img/airlines/{{flightMess[0].flightNo.substr(0,2)}}.PNG" />
+								</span>						
+								<span class="flight_blue_color">{{flightMess[0].airlineChn}}{{flightMess[0].flightNo}}
+									<span *ngIf="flightMess[0].shareFlightNo"><span class="realFlightNo">实际承运</span>{{flightMess[0].shareFlightNo}}</span>| 机型{{flightMess[0].planeModel}}</span>
+							</div>
+							<div class="flex_right">
+								<span (click)="endorse()" class="gaiqian">退改签/行李额</span>
+							</div>
+						</div>
+					</div>
+					<div class="routeMess_bottom" *ngIf="isShow">
+						<div class="flight">
+							<span class="point_box">
+								<span class="point top"></span>
+						    	<span class="point bottom"></span>
+							</span>
+							<div class="seg">
+								<div class="times">
+									<div class="time">{{item.fromDate.substr(-5,5)}}</div>
+									<div class="duration">{{item.flightDuration}}m</div>
+									<div class="time">{{item.toDate.substr(-5,5)}}</div>
+								</div>
+								<div class="airport">
+									<div class="airpt">{{item.fromAirportCn}}{{item.fromTower}}</div>
+									<div *ngIf="istranCity">
+										<p class="type">转</p>
+										<p class="tranformCity">{{tranCity}}</p>
+									</div>
+									<div *ngIf="isstopCity">
+										<p class="type">经停</p>
+										<p class="stopoverCity">停留{{stopoverCityName}}</p>
+									</div>			
+									<div class="airpt">{{item.toAirportCn}}{{item.toTower}}</div>
+								</div>
+								<div class="airline">
+									<div>{{item.airlineChn}}</div>
+									<div>{{item.flightNo}}</div>
+									<div *ngIf="item.shareFlightNo"><span class="realFlightNo">实际承运</span>{{item.shareFlightNo}}</div>
+									<div>{{item.planeModel}}</div>
 								</div>
 							</div>
 						</div>
-						<div class="airline">
-							<div>{{seg.airlineChn}}</div>
-							<div>{{seg.flightNo}}</div>
-							<div>{{seg.planeModel}}</div>
-						</div>
+						
 					</div>
 				</div>
-			</div>
 		</div>
-	</div>
-	<div class="passenger">
+		
+		<div [hidden]="!isDisplay">
+			<div >
+				<div class="route_bd">
+					<div class="route">
+						<div class="flex_left">
+							<span>回</span>
+							<p>{{flightSeg[0].fromCityCn}} - {{flightSeg[flightSeg.length-1].toCityCn}}</p>
+							<p>{{tripDay}}{{tripWeek}}</p>
+						</div>
+						<div class="flex_right">总时长{{totalFlightTimes}}</div>
+					</div>
+				</div>
+				<div class="routeMess" *ngFor="let seg of flightSeg; index as i; trackBy:trackByflightSeg;">
+					<div class="routeMess_top" *ngIf="isShow">
+						<div class="cangwei">
+							<div>
+								<span *ngFor="let cabin of cabinDetailSeg; index as n; trackBy:trackByCabinDetail;">
+									{{cabin.cabinRank | cabin }}
+									<label *ngIf="n!=cabinDetailSeg.length-1">+ </label>
+								</span>
+							</div>
+							<div><span (click)="endorse()" class="gaiqian">退改签/行李额</span></div>
+						</div>
+						<div class="shrink" (click)="shrink()">
+							<span class="iconfont" *ngIf="isShow">&#xe8a8;</span>
+						</div>
+					</div>
+					<div *ngIf="!isShow">
+						<div class="simpleRouterMess">
+							<div class="shrink" (click)="shrink()">
+								<span class="iconfont">&#xe8a9;</span>
+							</div>
+							<div class="flex_div">
+								<div class="time">{{flightSeg[0].fromDate.substr(-5,5)}}</div>
+								<div class="airport">{{flightSeg[0].fromAirportCn}}{{flightSeg[0].fromTower}}</div>
+							</div>
+							<div class="midmess">
+								<div *ngIf="istranCity">
+									<p class="type">转</p>
+									<p class="tranformCity">{{tranCity}}</p>
+								</div>
+								<div *ngIf="isstopCity">
+									<p class="type">经停</p>
+									<p class="stopoverCity">停留{{stopoverCityName}}</p>
+								</div>					
+							</div>
+							<div class="flex_div">
+								<div class="time">{{flightSeg[flightSeg.length-1].toDate.substr(-5,5)}}</div>
+								<div class="airport">{{flightSeg[flightSeg.length-1].toAirportCn}}{{flightSeg[flightSeg.length-1].toTower}}</div>
+							</div>
+						</div>
+						<div class="segBottom">
+							<div class="flex_left">
+								<span>{{flightSeg[0].airlineChn}}{{flightSeg[0].flightNo}}</span>
+								<span *ngIf="flightSeg[0].shareFlightNo"><span class="realFlightNo">实际承运</span>{{flightSeg[0].shareFlightNo}}</span>
+								<span>{{flightSeg[0].planeModel}}</span>
+							</div>
+							<div class="flex_right">
+								<span (click)="endorse()" class="gaiqian">退改签/行李额</span>
+							</div>
+						</div>
+					</div>
+					<div class="routeMess_bottom" *ngIf="isShow">
+						<div class="flight">
+							<span class="point top"></span>
+							<span class="point bottom"></span>
+							<div class="seg">
+								<div class="flex_left">
+									<div class="times">
+										<div class="time">{{seg.fromDate.substr(-5,5)}}</div>
+										<div class="duration">{{seg.flightDuration}}m</div>
+										<div class="time">{{seg.toDate.substr(-5,5)}}</div>
+									</div>
+									<div class="airport">
+										<div class="airpt">{{seg.fromAirportCn}}{{seg.fromTower}}</div>
+										<div *ngIf="istranCity">
+											<p class="type">转</p>
+											<p class="tranformCity">{{tranCity}}</p>
+										</div>
+										<div *ngIf="isstopCity">
+											<p class="type">经停</p>
+											<p class="stopoverCity">停留{{stopoverCityName}}</p>
+										</div>		
+										<div class="airpt">{{seg.toAirportCn}}{{seg.toTower}}</div>
+									</div>
+								</div>
+								<div class="airline flex_right">
+									<div>{{seg.airlineChn}}</div>
+									<div>{{seg.flightNo}}</div>
+									<div *ngIf="seg.shareFlightNo"><span class="realFlightNo">实际承运</span>{{seg.shareFlightNo}}</div>
+									<div>{{seg.planeModel}}</div>
+								</div>
+							</div>
+						</div>	
+					</div>
+				</div>
+			</div>	
+		</div>	
+	</div>	
+</div> -->
+	<!-- <div class="passenger">
 		<div class="title">
 			<b>请选择乘机人</b>
 			<span>成人<span class="count"> {{adultCount}} </span>人</span>
@@ -110,8 +240,8 @@
 				</li>						
 			</ul>
 		</div>
-	</div>
-	<div class="otherMess">
+	</div> -->
+	<!-- <div class="otherMess">
 		<div class="same">
 			<div class="flex">
 				<div class="title">联系人</div>
@@ -177,13 +307,12 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<p class="explains">点击支付表示阅读及同意 
+	</div> -->
+	<!-- <p class="explains">点击支付表示阅读及同意 
 		<span (click)="tongzhi1()">锂电池及危险品通知</span> 和
 		<span (click)="tongzhi2()"> 机票预订须知</span>
-	</p>			
-	<!--点击明细-->
-	<div class="shade" (click)="particulars" [hidden]="isParticulars"></div>
+	</p> -->			
+	<!-- <div class="shade" (click)="particulars" [hidden]="isParticulars"></div>
 	<div class="bookingDetail" [hidden]="isParticulars">
 		<div class="items">
 			<div class="item">
@@ -213,11 +342,11 @@
 				<p>邮寄费用</p>
 				<p class="money"><span>￥{{postage}}</span></p>
 			</div>
-		</div>
-	</div>
+		</div> 
+	</div>-->
 	
 <!--底部-->
-<div class="footer">
+<!-- <div class="footer">
 	<div>
 		<div class="money">￥<span class="count">{{price_}}</span></div>
 		<div class="cabin">{{cabin?'经济舱':"头等舱"}}</div>
@@ -226,6 +355,6 @@
 		<span [hidden]="isParticulars"  class="iconfont detail">&#xe6e9;</span>
 		<span [hidden]="!isParticulars" class="iconfont detail">&#xe6ea;</span>
 	</div>
-</div>
-<button (click)="toPay" class="topay">去支付</button>
+</div> 
+<button (click)="toPay" class="topay">去支付</button>-->
 </ion-content>

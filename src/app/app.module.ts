@@ -23,20 +23,22 @@ import { OrderflightPage } from '../pages/orderflight/orderflight';
 import { RefundrulePage } from '../pages/refundrule/refundrule';
 import { LoginPage } from '../pages/login/login';
 import { UserCenterPage } from '../pages/usercenter/usercenter';
+import { CityPage } from '../pages/city/city';
 
 //component
 import { CountComponent } from '../components/counter/counter';
 import { FlightTabComponent } from '../components/flighttab/flighttab';
-import { CityselComponent } from '../components/citysel/citysel';
 import { FieldComponent } from '../components/field/field.component';
 import { MsgTipComponent } from '../components/msgtip/msgtip';
 import { MsgTipBdComponent } from '../components/msgtipbd/msgtipbd';
 import { MsgIconComponent } from '../components/msgicon/msgicon';
 import { FlightFilterComponent } from '../components/flightfilter/flightfilter';
 import { ModalComponent } from '../components/modal/modal';
-
+import { FlightInfoComponent } from '../components/flightinfo/flightinfo';
+import { TranscityComponent } from '../components/transcity/transcity';
+import { DisCountComponent } from '../components/discount/discount';
 //pipe
-import { AirportPipe, CabinPipe, OrderStatusPipe, OtherStatusPipe } from '../pipe/';
+import { AirportPipe, CabinPipe, OrderStatusPipe, OtherStatusPipe, MinuesPipe } from '../pipe/';
 //serice
 import { AirportService, Contacts, HttpService, UtilsService } from '../service/';
 
@@ -58,18 +60,22 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     RefundrulePage,
     LoginPage,
     UserCenterPage,
+    CityPage,
     CountComponent,
     FlightTabComponent,
-    CityselComponent,
     FieldComponent,
     MsgTipComponent,
     MsgTipBdComponent,
     MsgIconComponent,
     FlightFilterComponent,
+    FlightInfoComponent,
     ModalComponent,
-    CabinPipe,
-    OrderStatusPipe,
-    OtherStatusPipe
+    TranscityComponent,
+    DisCountComponent,
+    CabinPipe, 
+    OrderStatusPipe, 
+    OtherStatusPipe,
+    MinuesPipe
   ],
   imports: [
     BrowserModule,
@@ -102,14 +108,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     RefundrulePage,
     LoginPage,
     UserCenterPage,
+    CityPage,
     CountComponent,
     FlightTabComponent,
-    CityselComponent,
     FieldComponent,
     MsgTipComponent,
     MsgTipBdComponent,
     MsgIconComponent,
-    FlightFilterComponent
+    FlightFilterComponent,
   ],
   providers: [
     StatusBar,

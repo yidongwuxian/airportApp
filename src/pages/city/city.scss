@@ -1,0 +1,179 @@
+page-city {
+	::-webkit-scrollbar {
+	    width: 0
+	  }
+
+	  $modal-size: 20vw;
+	  .search_hd{
+	    background-image:-webkit-linear-gradient(to right, #00d2ff, #00b4ff); 
+	    background-image:linear-gradient(to right,#00d2ff,#00b4ff);
+	  }
+	  .indexed-menu {
+	    width: 20px;
+	    text-align: center;
+	    float: right;
+	    position: fixed;
+	    right: 0;
+	    top: 60px;
+	    z-index: 104;
+	    .indexed-item {
+	      transition: all .3s ease-out;
+	      margin: 0 0 6px;
+	      color: #00b4ff;
+	      &.activate {
+	        transform: scale(1.5);
+	        color:  #00b4ff;
+	      }
+	    }
+	  }
+
+	  .content-ios {
+	    .indexed-menu {
+	      top: 50px;
+	    }
+	  }
+	   
+	  .toolbar-ios-primary .toolbar-background-ios{ background-color:#00b4ff; }
+	  ion-calendar-week .week-title.primary{
+	    border-top:1px solid #e2e0e0;
+	    border-bottom:1px solid #e2e0e0;
+	    background-color:#f6f6f6;
+	    color:#333;
+	    font-size:1.4rem;
+	  }
+	  ion-calendar-week .week-title li:nth-of-type(7n), ion-calendar-week .week-title li:nth-of-type(7n+1){
+	    color:#00b4ff;
+	  }
+	  ion-calendar-modal h4{
+	    color:#333;
+	    font-size:1.4rem;
+	  }
+	  ion-calendar-month button.days-btn p{
+	    color:#333;
+	    font-size:1.4rem;
+	  }
+	  .modal {
+	    top: 50%;
+	    left: 50%;
+	    z-index: 100;
+	    position: fixed;
+	    pointer-events: none;
+	    width: $modal-size;
+	    height: $modal-size;
+	    line-height: $modal-size;
+	    margin-left: -($modal-size * 0.5);
+	    margin-top: -($modal-size * 0.5);
+	    color: #fff;
+	    font-size: 3em;
+	    text-align: center;
+	    border-radius: 8px;
+	    background-color: rgba(0, 0, 0, 0.52);
+	    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.16);
+	    transition: opacity .5s;
+	    opacity: 0;
+	    &.show {
+	      opacity: 1
+	    }
+	  }
+	  .search_box{
+	    background-image:-webkit-linear-gradient(to right, #00d2ff, #00b4ff); 
+	    background-image:linear-gradient(to right,#00d2ff,#00b4ff);
+	  }
+	  .toolbar-background-ios{
+	    background: transparent;
+	  }
+	  .bar-button-default-ios, .bar-button-default.bar-button-ios-default, .bar-button-clear-ios-default{
+	    color:#fff;
+	  }
+	  .segment-ios .segment-button{
+	    height: auto;
+	    line-height: 2.5rem;
+	    border: 1px solid transparent;
+	    margin: .6rem 0;
+	    >p{
+	      width:130px;
+	      margin:0 auto;
+	      text-align:center;
+	      color:#fff;
+	      border:1px solid #fff;
+	      border-radius:25px;
+	      font-size:1.4rem;
+	    }
+	  }
+	  .segment-ios .segment-button.segment-activated{
+	    background-color:transparent;
+	    >p{
+	      background-color:#fff;
+	      color:#2ebff0;
+	    }
+	  }
+
+
+	.in_bd{
+		background-color:#f3f5f7; 
+		.history_record{
+			>p{ 
+			 	font-size:1.2rem;
+			 	color:#434d63;
+			 	padding:2% 4%;
+			 }
+			 >ul{ 
+			 	padding:0 4%;
+			 	display:-webkit-box;
+			 	align-items: center;
+			 	flex-wrap: wrap;
+			 	justify-content: space-between; 
+			 	>li{
+			 		width: 6rem;
+			 		height:2.5rem;
+			 		line-height:2.5rem;
+			 		font-size:1.4rem;
+	                margin: 0.5rem;
+			 		text-align:center;
+			 		border-radius:45px;
+			 		background-color:white;
+			 		
+			 	}
+			}
+		}
+		.hot_city{
+			 >p{ 
+			 	font-size:1.2rem;
+			 	color:#434d63;
+			 	padding:2% 4%;
+			 }
+			 >ul{ 
+			 	padding:0 4%;
+			 	display:flex;
+			 	align-items: center;
+			 	flex-wrap: wrap;
+			 	justify-content: space-between; 
+			 	>li{
+			 		width: 6rem;
+			 		height:2.5rem;
+			 		line-height:2.5rem;
+			 		font-size:1.4rem;
+	        		margin: 0.5rem;
+			 		text-align:center;
+			 		border-radius:45px;
+			 		background-color:white;
+			 		
+			 	}
+			 }
+		}
+	}
+	.label-ios{
+		height: 41px;
+    	line-height: 41px;
+		border-bottom:1px solid #e2e0e0;
+		margin: 0 !important;
+	}
+	.item-wrapper .input-wrapper ion-label{
+		height: 41px;
+    	line-height: 41px;
+		font-size:1.4rem;
+		//border-bottom:1px solid #e2e0e0;
+		margin: 0 !important;
+	}
+
+}

@@ -1,0 +1,9 @@
+<p>
+	<input type="hidden" value="{{type}}" />
+	<input type="hidden" value="{{data}}" />
+	<span class="transfer" *ngIf="istranCity">
+		<span class="type">转</span>
+		<span class="transferCity">{{tranCity}}</span>
+	</span>
+	<span class="transferTime" *ngIf="isstopCity">停留{{stopoverCityName}}</span>
+</p>

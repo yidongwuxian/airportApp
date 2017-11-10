@@ -1,36 +1,40 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>新增乘机人</ion-title>
-  </ion-navbar>
-</ion-header>
 <ion-content>
 <form novalidate [formGroup]="Passenger" (ngSubmit)="createPas(Passenger)">	
 <div class="top">
-	<div class="declaration">
-		<p><span class="iconfont">&#xe6e8; </span> 请正确填写各项信息</p>
+	<div class="tabbar_box">
+		<ion-navbar>
+	    	<span class="pas_back">取消</span>
+		    <ion-title>新增乘机人</ion-title>
+			<button type="submit" class="pas_submit">完成</button>
+  		</ion-navbar>
 	</div>
-	<div class="content">
+	<div class="content pr">
+		<div class="switch_langBtn">
+			<span [ngClass]="{'cur':isInland == true}" (click)="goCn()">中</span>
+			<span [ngClass]="{'cur':isIntel == true}" (click)="goEn()">英</span>
+		</div>
 		<ul>
-			<li [hidden]="!isShow">
+			<li [hidden]="!isInland">
 				<div class="item">
 					<div class="title">
-						<span class="main_title">中文姓名</span>
+						<span class="main_title">姓名</span>
 						<span class="fu_title"></span>
 					</div>
 					<div class="text">
-						<input type="text" class="form-control" formControlName="chineseName" />
+						<input type="text" class="form-control pas_tx" placeholder="与乘机证件一致" formControlName="chineseName" />
 						<div *ngIf="formErrors.chineseName" class="showerr alert-danger" >{{ formErrors.chineseName }}</div>
 					</div>
+					
 				</div>
 			</li>
-			<li [hidden]="isShow">
+			<li [hidden]="!isIntel">
 				<div class="item">
 					<div class="title">
 						<span class="main_title">姓(拼音)</span>
 						<span class="fu_title">Surename</span>
 					</div>
 					<div class="text">
-						<input type="text" class="form-control" formControlName="sureName" />
+						<input type="text" class="form-control pas_tx" placeholder="如:HAN" formControlName="sureName" />
 					</div>
 				</div>
 				<div class="item">
@@ -39,11 +43,11 @@
 						<span class="fu_title">Givenname</span>
 					</div>
 					<div class="text">
-						<input type="text" class="form-control" formControlName="givenName" />
+						<input type="text" class="form-control pas_tx" placeholder="如:MEIMEI" formControlName="givenName" />
 					</div>
 				</div>
 			</li>
-			<li class="item" [hidden]="isShow">
+			<li class="item" [hidden]="!isIntel">
 				<div class="title">
 					<span class="main_title">性别</span>
 				</div>
@@ -52,21 +56,21 @@
 					<input type="radio" value="女" formControlName="sex" />
 				</div>
 			</li>
-			<li class="item" [hidden]="isShow">
+			<li class="item" [hidden]="!isIntel">
 				<div class="title">
 					<span class="main_title">国籍</span>
 				</div>
 				<div class="text">
-					<input type="text" class="form-control" formControlName="nationality"  readonly="readonly" />
+					<input type="text" class="form-control pas_tx" formControlName="nationality"  readonly="readonly" />
 				</div>
 				<div></div>
 			</li>
-			<li class="item" [hidden]="isShow">
+			<li class="item" [hidden]="!isIntel">
 				<div class="title">
 					<span class="main_title">出生日期</span>
 				</div>
 				<div class="text">
-					<input type="text" class="form-control" formControlName="birthDate"  readonly="readonly" />
+					<input type="text" class="form-control pas_tx" formControlName="birthDate"  readonly="readonly" />
 				</div>
 				<div><span class="iconfont"></span></div>
 			</li>
@@ -75,15 +79,13 @@
 					<span class="main_title">旅客类型</span>
 				</div>
 				<div class="text">
-					<ion-select formControlName="passenger" (change)="passengerType" [cancelText]="'取消'" [okText]="'确认'">
-						<div [hidden]="!isShow">
-							<ion-option value="1">成人</ion-option>
-						</div>
-						<div [hidden]="isShow">
-							<ion-option value="1">成人</ion-option>
-							<ion-option value="2">儿童</ion-option>
-						</div>
+					<ion-select formControlName="passenger" (change)="passengerType" [cancelText]="'取消'" [okText]="'确认'" [hidden]="!isInland">
+						<ion-option value="1">成人</ion-option>
 					</ion-select>
+					<ion-select formControlName="passenger" (change)="passengerType" [cancelText]="'取消'" [okText]="'确认'" [hidden]="!isIntel">
+						<ion-option value="1">成人</ion-option>
+						<ion-option value="2">儿童</ion-option>
+					</ion-select>	
 				</div>
 				<div><span class="iconfont"></span></div>
 			</li>
@@ -92,26 +94,24 @@
 					<span class="main_title">证件类型</span>
 				</div>
 				<div class="text">
-					<ion-select formControlName="certificate" (change)="certificateType" [cancelText]="'取消'" [okText]="'确认'">
-						<div [hidden]="!isShow">
-							<ion-option  value="1">身份证</ion-option>
-						</div>
-						<div [hidden]="isShow">
-							<ion-option value="2">护照</ion-option>
-							<ion-option value="3">港澳通行证</ion-option>
-							<ion-option value="4">台湾证</ion-option>
-							<ion-option value="5">回乡证</ion-option>
-						</div>	
+					<ion-select formControlName="certificate" (change)="certificateType" [cancelText]="'取消'" [okText]="'确认'" [hidden]="!isInland">
+						<ion-option  value="1">身份证</ion-option>	
+					</ion-select>
+					<ion-select formControlName="certificate" (change)="certificateType" [cancelText]="'取消'" [okText]="'确认'" [hidden]="!isIntel">
+						<ion-option value="2">护照</ion-option>
+						<ion-option value="3">港澳通行证</ion-option>
+						<ion-option value="4">台湾证</ion-option>
+						<ion-option value="5">回乡证</ion-option>
 					</ion-select>
 				</div>
 				<div><span class="iconfont"></span></div>
 			</li>
-			<li class="item">
+			<li class="item" [hidden]="!isIntel">
 				<div class="title">
 					<span class="main_title">证件有效期</span>
 				</div>
 				<div class="text">
-					<input type="text" class="form-control" formControlName="docExpireDate" />
+					<input type="text" class="form-control pas_tx" formControlName="docExpireDate" />
 				</div>
 				<div><span class="iconfont"></span></div>
 			</li>
@@ -120,20 +120,22 @@
 					<span class="main_title">证件号码</span>
 				</div>
 				<div class="text">
-					<input type="text" class="form-control" formControlName="docId" />
+					<input type="text" class="form-control pas_tx"  placeholder="请输入证件号" formControlName="docId" />
 				</div>
 			</li>
 			<li class="item">
 				<div class="title">
-					<span class="main_title">{{telTx}}</span>
+					<span class="main_title">大陆手机</span>
 				</div>
 				<div class="text">
-					<input type="tel" class="form-control" formControlName="mobile" />
+					<input type="tel" class="form-control pas_tx" placeholder="选填，用于接收航变信息" formControlName="mobile" />
 				</div>
 			</li>
 		</ul>
 	</div>
 </div>
-<button type="submit" class="submit">新增</button>
 </form>
+<p class="pas_lnk" [hidden]="!isIntel">
+	<a>儿童婴儿购票说明</a>
+</p>
 </ion-content>

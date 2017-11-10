@@ -29,14 +29,20 @@
 					<li [ngStyle]="{'background-color':selItem === 3 ? 'white' : '#f3f5f7' }" (click)="onItem(3)"><s [hidden]="!isAirportIco" class="dot"></s><span>航空公司</span></li>
 				</ul>
 				<div class="filter_tab_cn">
-					<ul [style.display]="selItem==0?'block':'none'">
-						<li *ngFor="let time of timeArrs; index as i; trackBy:trackByTimeArrs;">
-							<p class="filter_left">
-								<span>{{time.timeDate}}</span>
-							</p>
-							<ion-checkbox class="filter_right" [(ngModel)]="time.timeOption" name="timeOption"    (click)="updateTime(time.timeOption,i)"></ion-checkbox>
-						</li>
-					</ul>
+					<div [style.display]="selItem==0?'block':'none'">
+						<div class="filter_time" [hidden]="!isInland">
+							<ion-range dualKnobs="true" pin="true" step="4" [(ngModel)]="depTimes" (ionChange)="monitorStartNum()" color="dark">
+						        <ion-label range-left>{{depStartTime}}</ion-label>
+	        					<ion-label range-right>{{depEndTime}}</ion-label>
+						    </ion-range>
+						</div>
+						<div class="filter_time" [hidden]="!isInternational">
+							<ion-range dualKnobs="true" pin="true" step="4" [(ngModel)]="arrTimes" (ionChange)="monitorEndNum()" color="dark">
+						        <ion-label range-left>{{arrStartTime}}</ion-label>
+	        					<ion-label range-right>{{arrEndTime}}</ion-label>
+						    </ion-range>
+						</div>
+					</div>
 					<ul [style.display]="selItem==1?'block':'none'">
 						<li *ngFor="let air of airDepArrs; index as p; trackBy:trackByAirDepArrs;">
 							<p class="filter_left">

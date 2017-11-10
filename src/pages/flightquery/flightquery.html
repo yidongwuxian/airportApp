@@ -8,7 +8,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content>  
-        <flightTab [date]="flightDate" [week]="flightWeek" (switchFlight)="tabData($event)"></flightTab>
+        <flightTab [date]="flightDate" [week]="flightWeek" [deptStart]="deptStartVal" (switchFlight)="tabData($event)"></flightTab>
 		<div class="list">			
 			<ul>
 				<li *ngFor="let flight of flightData; index as i; trackBy:trackByFlightData;" (click)="selectTheFlight(flight)" #promptInfo>
@@ -20,15 +20,13 @@
 										<span>{{flight.segments[0].fromDate.substr(-5,5)}}</span>
 									</div>
 									<div class="airport">
-										<p class="flight_lightgray_color" [hidden]="!isTrans">{{flight.segments[flight.segments.length-1].toAirportCn}}{{flight.segments[flight.segments.length-1].toTower}}</p>
-										<p class="flight_lightgray_color" [hidden]="!isNoTrans">{{flight.segments[0].fromAirportCn}}{{flight.segments[0].fromTower}}</p>	
-
+										<p class="flight_lightgray_color">{{flight.segments[0].fromAirportCn}}{{flight.segments[0].fromTower}}</p>	
 									</div>
 								</div>
 								<div class="midmess">
 									<div *ngIf="flight.rangeSegmentCount.substr(2,1) > 1">
 										<p class="type">转</p>
-										<p class="tranformCity">{{flight.segments[flightNum].fromCityCn}}</p>
+										<p class="tranformCity">{{flight.segments[0].toCityCn}}</p>
 									</div>
 									<div *ngFor="let item of flight.segments; index as m;">
 										<div  *ngIf="item.stopOver.length >0">
@@ -36,7 +34,6 @@
 											<p class="stopoverCity">{{item.stopOver[0].stopAirport}}</p>
 										</div>
 									</div>
-									
 								</div>
 								<div>
 									<div class="time">
@@ -44,8 +41,7 @@
 									</div>
 									<div class="airport">
 										<p>
-											<span [hidden]="!isTrans">{{flight.segments[flight.segments.length-1].toAirportCn}}{{flight.segments[flight.segments.length-1].toTower}}</span>
-											<span [hidden]="!isNoTrans">{{flight.segments[0].toAirportCn}}{{flight.segments[0].toTower}}</span>
+											<span>{{flight.segments[flight.segments.length-1].toAirportCn}}{{flight.segments[flight.segments.length-1].toTower}}</span>
 										</p>
 									</div>
 								</div>
@@ -55,15 +51,10 @@
 									￥<span class="count se1" *ngIf="countryType == 'international' ">{{(flight.minAdultFacePrice+flight.minAdultAllTax)}}</span>
 							    	  <span class="count se2" *ngIf="countryType == 'inland' ">{{flight.minAdultFacePrice}}</span>
 								</p>
-								<div class="ss" [hidden]="!isSupplierId">
+								<div [hidden]="isSupplierId">
 									 <p class="travelTypeYellow directSell">{{supplierIdIcon}}</p>
 								</div>
-							    <div [hidden]="!isMinus">
-							    	<p class="travelTypeYellow minusBox">
-								    	<span class="minus_type">{{minusType}}</span>
-								    	<span class="minus_amount">¥{{minusAmount}}</span>
-								    </p>
-							    </div>
+							    <discount></discount>
 							</div>
 						</div>
 						<div class="flightBottom">
@@ -71,14 +62,12 @@
 							    <img src="../assets/img/airlines/{{flight.segments[0].flightNo.substr(0,2)}}.PNG" />
 							</span>						
 							<span class="flight_blue_color">{{flight.segments[0].airlineChn}}{{flight.segments[0].flightNo}}
-								<span *ngFor="let item of flight.segments; index as m;">
-									<span class="flight_blue m_5" *ngIf="item.shareFlightNo">共享</span>
-								</span> 
+						    <span class="flight_blue m_5" *ngIf="flight.segments[0].shareFlightNo">共享</span>
 							| 机型{{flight.segments[0].planeModel}}</span>
 						</div>
 						<div class="flightBottom">
 							<span class="sign iconfont">&#xe66b;</span>
-							<span class="flight_lightgray_color">总{{flight.segments[0].flightDuration}}m</span>
+							<span class="flight_lightgray_color">总{{flight.segments[0].flightDuration | minues }}</span>
 						</div>
 					</div>
 				</li>

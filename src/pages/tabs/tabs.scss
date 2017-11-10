@@ -13,11 +13,11 @@ $tabImageName: 'searchbar' 'order' 'dynamic' 'usercenter';
     //for ios
     .ion-ios-tab-#{nth($tabImageName, $i)} {
         @extend .ion-tab-icon-base;
-        content: url("../../assets/img/tabicons/icon_#{nth($tabImageName, $i)}_on.png");
+        content: url("../assets/img/tabicons/icon_#{nth($tabImageName, $i)}_on.png");
     }
     .ion-ios-tab-#{nth($tabImageName, $i)}-outline {
         @extend .ion-tab-icon-base;
-        content: url("../../assets/img/tabicons/icon_#{nth($tabImageName, $i)}_off.png");
+        content: url("../assets/img/tabicons/icon_#{nth($tabImageName, $i)}_off.png");
 
     }
 
@@ -30,11 +30,11 @@ $tabImageName: 'searchbar' 'order' 'dynamic' 'usercenter';
 	@for $i from 1 to 5 {
 		.ion-ios-tab-#{nth($tabImageName, $i)} {  
 	      @extend .ion-tab-icon-base;
-	        content: url("../../assets/img/tabicons/icon_#{nth($tabImageName, $i)}_on.png");  
+	        content: url("../assets/img/tabicons/icon_#{nth($tabImageName, $i)}_on.png");  
 	    }
 	    .ion-ios-tab-#{nth($tabImageName, $i)}-outline {
 	        @extend .ion-tab-icon-base;
-	        content: url("../../assets/img/tabicons/icon_#{nth($tabImageName, $i)}_off.png");
+	        content: url("../assets/img/tabicons/icon_#{nth($tabImageName, $i)}_off.png");
 	    }    
 	}    
 } 

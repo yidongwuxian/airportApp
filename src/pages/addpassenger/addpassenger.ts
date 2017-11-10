@@ -9,11 +9,10 @@ import { PasValidate } from './addpassenger.validate';
   templateUrl: 'addpassenger.html',
 })
 export class AddpassengerPage implements OnInit{
-  telTx: string;
-  isShow: boolean = false;
+  isShow: boolean;
   isInland: boolean = true;
+  isIntel: boolean = true;
   certTx: string;
-  typeBtn: boolean = false;
   sex: any;
   sexVal: number;
   chineseName: string;
@@ -48,19 +47,11 @@ export class AddpassengerPage implements OnInit{
   ngOnInit(){
   	const countryType = sessionStorage.getItem('countryType'); 
   	if(countryType === 'inland'){
-  		
+  		this.isInland = true;
+      this.isIntel = false;
   	}else{
-  		
-  	}
-
-  	if(this.typeBtn === true){
-      console.log(this.typeBtn);
-      this.telTx =  '大陆手机';
-  		this.isShow = false;
-  	}else{
-      console.log(this.typeBtn);
-      this.telTx =  '手机号码';
-		  this.isShow = true; 
+      this.isInland = false;
+  		this.isIntel = true;
   	}
 
   	if(this.sex == '男'){
@@ -72,6 +63,15 @@ export class AddpassengerPage implements OnInit{
     this.buildForm();
   }
 
+  goCn(){
+    this.isInland = true;
+    this.isIntel = false;
+  }
+
+  goEn(){
+    this.isInland = false;
+    this.isIntel = true;
+  }
 
   buildForm(): void{
     this.Passenger = this.fb.group({   
@@ -80,7 +80,6 @@ export class AddpassengerPage implements OnInit{
       ]],
       sureName:      ['', Validators.required],
       givenName:     ['', Validators.required],
-      typeBtn:       [false, Validators.required],
       sex:           ['', Validators.required],
       nationality:   ['', Validators.required],
       birthDate:     ['', Validators.required],

@@ -58,8 +58,8 @@ export class UtilsService{
     }
 
     getWeek(d,isWeek){
-        let date = d.replace(/-/g, '/');   
-        let day = new Date(date).getDay();   
+        //let date = d.replace(/-/g, '/');   
+        let day = new Date(d).getDay();   
         let fullWeek = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
         let tinyWeek = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
         let week: string;

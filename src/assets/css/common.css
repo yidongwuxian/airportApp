@@ -78,6 +78,8 @@ html,body{
 .show{
     display: block;
 }
+.pr{ position: relative;
+}
 @font-face {
   font-family: 'iconfont';  /* project id 366743 */
   src: url('../fonts/iconfont.eot');
@@ -96,3 +98,17 @@ html,body{
 }
 
 .toolbar-title-ios { font-weight: normal !important; }
+.checkbox-ios .checkbox-checked {
+    border-color: #00b4ff !important;
+    background-color: #00b4ff !important;
+}
+ion-navbar.toolbar{
+    background-image:-webkit-linear-gradient(to right, #3ff8ff, #00b4ff); 
+    background-image:linear-gradient(to right,#3ff8ff,#00b4ff);
+    color:white;
+}
+.toolbar-title-ios{
+    color:white !important;
+}
+.header-ios .toolbar-ios:last-child .toolbar-background-ios { border-width: 0 0 1px; }
+.header-ios .toolbar-background-ios, .footer-ios .toolbar-background-ios{ border-color: #4dcbff; }

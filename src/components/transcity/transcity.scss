@@ -1,0 +1,26 @@
+.transfer {
+    display: flex;
+    align-items: center;
+    position: relative;
+    left:3px;
+    .transferCity {
+        color:#666;
+        font-size: 1.2rem;
+    }
+    .transferTime {
+        font-size: 10px;
+        color: gray;
+    }
+    .type {
+        width:15px;
+        height:15px;
+        line-height:15px;
+        text-align:center;
+        background-color:#aaa;
+        color: white;
+        border-radius:45px;
+        font-size:1.2rem;
+        display: inline-block;
+        transform: translate(-32px,3px);
+    }
+}

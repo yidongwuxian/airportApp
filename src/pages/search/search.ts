@@ -4,7 +4,7 @@ import { HttpService } from '../../service/http.service';
 import { AirportService } from '../../service/airport.service';
 import { UtilsService } from '../../service/utils.service';
 import { CalendarModal, CalendarModalOptions, DayConfig } from "ion2-calendar";
-import { CityselComponent } from '../../components/citysel/citysel'; 
+import { CityPage } from '../../pages/city/city';
 import { MsgTipComponent } from '../../components/msgtip/msgtip';
 import { MsgTipBdComponent } from '../../components/msgtipbd/msgtipbd';
 import { MsgIconComponent } from '../../components/msgicon/msgicon';
@@ -35,7 +35,7 @@ export class SearchPage implements OnInit{
     isRT: false,
     isShow: false,
     isAdult: false,
-    isChd: true,
+    isChd: false,
     cabin: 'Y',
     countryEn: '',
     formCityCode: '',
@@ -73,18 +73,18 @@ export class SearchPage implements OnInit{
   }
 
   ngOnInit(){
+    this.searchView.isAdult = true;
+    this.searchView.isChd  = false;
     this.searchView.msg = 2;
     const fromCity = JSON.parse(localStorage.getItem('fromCity'));
     const toCity   = JSON.parse(localStorage.getItem('toCity'));
-
-    // const historyDep = JSON.parse(localStorage.getItem('historyDep'));
-    // const historyArr   = JSON.parse(localStorage.getItem('historyArr'));
 
     const countryType = sessionStorage.getItem('countryType');
     let depTime  = sessionStorage.getItem('depTime');
     let arrTime  = sessionStorage.getItem('arrTime');
 
     
+
     if(fromCity){
       if(fromCity.cityName){
          this.searchView.depCity = fromCity.cityName;
@@ -93,14 +93,7 @@ export class SearchPage implements OnInit{
          this.searchView.depCity = '出发城市';
       }
     }
-    // else if(historyDep){
-    //   if(historyDep.cityName){
-    //      this.searchView.depCity = historyDep.cityName;
-    //      this.searchView.depCityCode = historyDep.cityCode;
-    //   }else{
-    //      this.searchView.depCity = '出发城市';
-    //   }
-    // }
+    
     if(toCity){
       if(toCity.cityName){
          this.searchView.arrCity = toCity.cityName;
@@ -109,22 +102,15 @@ export class SearchPage implements OnInit{
          this.searchView.arrCity = '到达城市';
       }
     }
-    // else if(historyArr){
-    //   if(historyArr.cityName){
-    //      this.searchView.arrCity = historyArr.cityName;
-    //      this.searchView.arrCityCode = historyArr.cityCode;
-    //   }else{
-    //      this.searchView.arrCity = '到达城市';
-    //   }
-    // }
+
     if(countryType){
        if(countryType === 'inland'){
-          this.searchView.isAdult = false;
-          this.searchView.isChd  = true;
-       }
-       if(countryType === 'international'){
           this.searchView.isAdult = true;
           this.searchView.isChd  = false;
+       }
+       if(countryType === 'international'){
+          this.searchView.isAdult = false;
+          this.searchView.isChd  = true;
        }
     }
     if(depTime){
@@ -161,12 +147,12 @@ export class SearchPage implements OnInit{
   }
 
   depCityGo(){
-    this.navCtrl.push(CityselComponent,{
+    this.navCtrl.push(CityPage,{
       'type':'dep'
     });
   }
   arrCityGo(){
-    this.navCtrl.push(CityselComponent,{
+    this.navCtrl.push(CityPage,{
       'type':'arr'
     });
   }
@@ -263,7 +249,7 @@ export class SearchPage implements OnInit{
          this.searchView.arrTimePost = date.string;
          sessionStorage.setItem('arrTime', JSON.stringify(date));
       }else{
-         this.arr.nativeElement.value = '请选择返回日期';
+         this.arr.nativeElement.value = '返回日期';
       }
     })
   }
@@ -406,7 +392,7 @@ export class SearchPage implements OnInit{
           
       }else{
           sessionStorage.setItem('routingType','RT');
-          if(this.arr.nativeElement.value =='请选择返回日期'){
+          if(this.arr.nativeElement.value =='返回日期'){
            let msgAlert = this.alertCtrl.create({
                title: '请填写完整信息!',
                buttons: ['确定']

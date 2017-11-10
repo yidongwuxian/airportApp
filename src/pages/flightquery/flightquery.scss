@@ -5,16 +5,7 @@ page-flightquery {
         right:1.5rem;
         z-index: 111;
     }
-    ion-navbar.toolbar{
-        background-image:-webkit-linear-gradient(to right, #3ff8ff, #00b4ff); 
-        background-image:linear-gradient(to right,#3ff8ff,#00b4ff);
-        color:white;
-    }
-    .toolbar-title-ios{
-        color:white;
-    }
-    .header-ios .toolbar-ios:last-child .toolbar-background-ios { border-width: 0 0 1px; }
-    .header-ios .toolbar-background-ios, .footer-ios .toolbar-background-ios{ border-color: #4dcbff; }
+
     .flight_blue{ color:#00b4ff; }
     .flight_blue_color{ color:#111e3a; }
     .flight_lightgray_color{ color:#4c4b58; }
@@ -104,17 +95,17 @@ page-flightquery {
                                 font-size: 10px;
                             }
                             .interval{
-                                color:gray;
+                                color:#aaa;
                             }
                             .type{
-                                color: blue;
+                                color: #00b4ff;
                             }
                             .tranformCity,.stopoverCity{
-                                color: blue;
+                                color: #00b4ff;
                             }
                         }
                         .airport{
-                            color:gray;
+                            color:#aaa;
                             display: flex;                       
                             >p{
                                 font-size: 10px;
@@ -130,6 +121,9 @@ page-flightquery {
                         color: red;
                         font-size: 8px;
                         margin-top: 0.2rem;
+                        >p{
+                            text-align:center;
+                        }
                         .travelTypeYellow{
                             background-color:#ff9934;
                             color:#fff;

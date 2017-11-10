@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { HttpService } from '../../service/http.service';
 import { UtilsService } from '../../service/utils.service';
+import * as _ from 'lodash';
 @Component({
   selector: 'ex-filter',
   templateUrl:'./flightfilter.html',
@@ -53,14 +54,43 @@ export class FlightFilterComponent implements OnInit{
   temporaryData: Array<any> = [];
   senderData: Array<any> = [];
   routingType: string;
+  depTimes: any = { lower: 0, upper: 100 };
+  arrTimes: any = { lower: 0, upper: 100 };
+  depStartTime: string = '00:00';
+  depEndTime: string = '24:00';
+  arrStartTime: string = '00:00';
+  arrEndTime: string = '24:00';
+  isInland: boolean = true;
+  isInternational: boolean = true;
+  countryType: string;
+
+  fromTimeData: Array<any> = [];
+  toTimeData: Array<any> = [];
+  originflightData: any;
   constructor(public navCtrl: NavController,
               private _HttpService: HttpService,
               private _UtilsService: UtilsService){}
 
   ngOnInit(){
-    sessionStorage.removeItem("resultData");
-    this.flightData = JSON.parse(sessionStorage.getItem('flightData'));
+    this.countryType = sessionStorage.getItem('countryType');
+    if(this.countryType === 'inland'){
+      this.isInland = true;
+      this.isInternational = false;
+    }
+    if(this.countryType === 'international'){
+      this.isInland = false;
+      this.isInternational = true;
+    }
+
+     sessionStorage.removeItem("resultData");
+     this.originflightData = JSON.parse(sessionStorage.getItem('flightData'));
+     if(this.originflightData){
+       this.flightData  = this.originflightData.data;
+     }
+     
     if(this.flightData){
+      this.resultLen = _.size(this.flightData);
+
       [...this.flightData].forEach((k,i) => {
     
         if(k.rangeSegmentCount.length > 3){
@@ -91,7 +121,7 @@ export class FlightFilterComponent implements OnInit{
               let airCompanyArrAll = {
                 "value":'不限',
                 "images":'BLANK',
-                "airportcode": 'ALL',
+                "airportcode": '',
                 "airportOption": true
               } 
               this.airCompanyDepArr.push(airCompanyDepObj);
@@ -106,7 +136,7 @@ export class FlightFilterComponent implements OnInit{
               } 
               let airDepAll = {
                 "value":'不限',
-                "depcode": 'ALL',
+                "depcode": '',
                 "airDepOption": true
               } 
               this.airDepArr.push(airDepObject);
@@ -125,7 +155,7 @@ export class FlightFilterComponent implements OnInit{
               let airCompanyArrAll = {
                 "value":'不限',
                 "images":'BLANK',
-                "airportcode": 'ALL',
+                "airportcode": '',
                 "airportOption": true
               } 
               this.airCompanyArrArr.push(airCompanyArrObj);
@@ -140,7 +170,7 @@ export class FlightFilterComponent implements OnInit{
               }
               let airArrAll = {
                 "value":'不限',
-                "arrcode": 'ALL',
+                "arrcode": '',
                 "airDepOption": true
               }  
               this.airArrArr.push(airArrObject);
@@ -156,7 +186,8 @@ export class FlightFilterComponent implements OnInit{
             }
 
         });
-      });   
+      }); 
+      
     }
 
      this.cabinArrs = [
@@ -170,37 +201,8 @@ export class FlightFilterComponent implements OnInit{
          'cabincode':'F/C',
          'cabinOption': false
        }
-     ]
+     ]  
 
-     this.timeArrs = [
-       { 
-         "timeDate":"不限",
-         "time": "ALL",
-         "timeOption": true
-       },
-       { 
-         "timeDate":"00:00-06:00",
-         "time": "",
-         "timeOption": false
-       },
-       {
-         "timeDate":"06:00-12:00",
-         "time": "",
-         "timeOption": false
-       },
-       {
-         "timeDate":"12:00-18:00",
-         "time": "",
-         "timeOption": false
-       },
-       {
-         "timeDate":"18:00-24:00",
-         "time": "",
-         "timeOption": false
-       }
-     ];
-
-     this.filter('ALL');
   }
 
   onItem(type){
@@ -213,6 +215,9 @@ export class FlightFilterComponent implements OnInit{
           "value":'直飞'
       }
       this.result.push(flightTypeObj);
+      sessionStorage.setItem("resultData",JSON.stringify(this.result));
+      this.flightData = _.orderBy(this.flightData, { 'directFlight': true });
+      this.resultLen = _.size(this.flightData);
     }else{
       this.result.splice(n,1);
     } 
@@ -224,10 +229,352 @@ export class FlightFilterComponent implements OnInit{
           "value":'隐藏共享'
       }
       this.result.push(flightShareObj);
+      sessionStorage.setItem("resultData",JSON.stringify(this.result));
+      this.flightData = _.reject(this.flightData, 'segments[0].shareFlightNo' );
+      this.resultLen = _.size(this.flightData);
     }else{
       this.result.splice(n,1);
     } 
   }
+
+  monitorStartNum(){
+    if(this.depTimes.lower != 0 || this.depTimes.upper != 100){
+      //this.filterData(this.flightData,'value');
+      this.isTimeIco = true;
+    }else{
+      this.isTimeIco = false;
+    }
+
+    switch(this.depTimes.lower){
+      case 0:
+        this.depStartTime = '00:00'
+        break;
+      case 4:
+        this.depStartTime = '01:00'
+        break;
+      case 8:
+        this.depStartTime = '02:00'
+        break;
+      case 16:
+        this.depStartTime = '03:00'
+        break;
+      case 20:
+        this.depStartTime = '04:00'
+        break;
+      case 24:
+        this.depStartTime = '05:00'
+        break;
+      case 28:
+        this.depStartTime = '06:00'
+        break;  
+      case 32:
+        this.depStartTime = '07:00'
+        break;
+      case 36:
+        this.depStartTime = '08:00'
+        break;
+      case 40:
+        this.depStartTime = '09:00'
+        break;
+      case 44:
+        this.depStartTime = '10:00'
+        break;  
+      case 48:
+        this.depStartTime = '11:00'
+        break;
+      case 52:
+        this.depStartTime = '12:00'
+        break;
+      case 56:
+        this.depStartTime = '13:00'
+        break;
+      case 60:
+        this.depStartTime = '14:00'
+        break;
+      case 64:
+        this.depStartTime = '15:00'
+        break;
+      case 68:
+        this.depStartTime = '16:00'
+        break;  
+      case 72:
+        this.depStartTime = '17:00'
+        break;
+      case 76:
+        this.depStartTime = '18:00'
+        break;
+      case 80:
+        this.depStartTime = '19:00'
+        break;
+      case 84:
+        this.depStartTime = '20:00'
+        break; 
+      case 88:
+        this.depStartTime = '21:00'
+        break;
+      case 92:
+      case 96:
+      case 100:
+        this.depStartTime = '22:00'
+        break; 
+      default:
+        this.depStartTime = '00:00'
+        break;
+    }
+
+    switch(this.depTimes.upper){
+      case 0:
+      case 4:
+      case 8:
+      case 12:
+        this.depEndTime = '02:00'
+        break;
+      case 16:
+        this.depEndTime = '03:00'
+        break;
+      case 20:
+        this.depEndTime = '04:00'
+        break;
+      case 24:
+        this.depEndTime = '05:00'
+        break;
+      case 28:
+        this.depEndTime = '06:00'
+        break;
+      case 32:
+        this.depEndTime = '07:00'
+        break;
+      case 36:
+        this.depEndTime = '08:00'
+        break;  
+      case 40:
+        this.depEndTime = '09:00'
+        break;
+      case 44:
+        this.depEndTime = '10:00'
+        break;
+      case 48:
+        this.depEndTime = '11:00'
+        break;
+      case 52:
+        this.depEndTime = '12:00'
+        break;  
+      case 56:
+        this.depEndTime = '13:00'
+        break;
+      case 60:
+        this.depEndTime = '14:00'
+        break;
+      case 64:
+        this.depEndTime = '15:00'
+        break;
+      case 68:
+        this.depEndTime = '16:00'
+        break;
+      case 72:
+        this.depEndTime = '17:00'
+        break;
+      case 76:
+        this.depEndTime = '18:00'
+        break;  
+      case 80:
+        this.depEndTime = '19:00'
+        break;
+      case 84:
+        this.depEndTime = '20:00'
+        break;
+      case 88:
+        this.depEndTime = '21:00'
+        break;
+      case 92:
+        this.depEndTime = '22:00'
+        break; 
+      case 96:
+        this.depEndTime = '23:00'
+        break;
+      case 100:
+        this.depEndTime = '24:00'
+        break; 
+      default:
+        this.depEndTime = '24:00'
+        break;
+    }
+
+    // this.result.push(this.depStartTime);
+    //   this.result.push(this.depEndTime);
+    //   sessionStorage.setItem("resultData",JSON.stringify(this.result));
+    //   let zData = JSON.parse(sessionStorage.getItem("resultData"));
+    //   this.flightData = _.chain(this.flightData) 
+    //                      .filter(function(v) {
+    //                             return v.segments[0].fromDate.substr(-5,5) >= zData.arrStartTime &&  v.segments[0].toDate.substr(-5,5) <= zData.arrEndTime;
+    //                       })
+    //                      .value();
+      
+    //   this.resultLen  = _.size(this.flightData);
+
+  }
+
+  monitorEndNum(){
+    switch(this.arrTimes.lower){
+      case 0:
+        this.arrStartTime = '00:00'
+        break;
+      case 4:
+        this.arrStartTime = '01:00'
+        break;
+      case 8:
+        this.arrStartTime = '02:00'
+        break;
+      case 16:
+        this.arrStartTime = '03:00'
+        break;
+      case 20:
+        this.arrStartTime = '04:00'
+        break;
+      case 24:
+        this.arrStartTime = '05:00'
+        break;
+      case 28:
+        this.arrStartTime = '06:00'
+        break;  
+      case 32:
+        this.arrStartTime = '07:00'
+        break;
+      case 36:
+        this.arrStartTime = '08:00'
+        break;
+      case 40:
+        this.arrStartTime = '09:00'
+        break;
+      case 44:
+        this.arrStartTime = '10:00'
+        break;  
+      case 48:
+        this.arrStartTime = '11:00'
+        break;
+      case 52:
+        this.arrStartTime = '12:00'
+        break;
+      case 56:
+        this.arrStartTime = '13:00'
+        break;
+      case 60:
+        this.arrStartTime = '14:00'
+        break;
+      case 64:
+        this.arrStartTime = '15:00'
+        break;
+      case 68:
+        this.arrStartTime = '16:00'
+        break;  
+      case 72:
+        this.arrStartTime = '17:00'
+        break;
+      case 76:
+        this.arrStartTime = '18:00'
+        break;
+      case 80:
+        this.arrStartTime = '19:00'
+        break;
+      case 84:
+        this.arrStartTime = '20:00'
+        break; 
+      case 88:
+        this.arrStartTime = '21:00'
+        break;
+      case 92:
+      case 96:
+      case 100:
+        this.arrStartTime = '22:00'
+        break; 
+      default:
+        this.arrStartTime = '00:00'
+        break;
+    }
+
+    switch(this.arrTimes.upper){
+      case 0:
+      case 4:
+      case 8:
+      case 12:
+        this.arrEndTime = '02:00'
+        break;
+      case 16:
+        this.arrEndTime = '03:00'
+        break;
+      case 20:
+        this.arrEndTime = '04:00'
+        break;
+      case 24:
+        this.arrEndTime = '05:00'
+        break;
+      case 28:
+        this.arrEndTime = '06:00'
+        break;
+      case 32:
+        this.arrEndTime = '07:00'
+        break;
+      case 36:
+        this.arrEndTime = '08:00'
+        break;  
+      case 40:
+        this.arrEndTime = '09:00'
+        break;
+      case 44:
+        this.arrEndTime = '10:00'
+        break;
+      case 48:
+        this.arrEndTime = '11:00'
+        break;
+      case 52:
+        this.arrEndTime = '12:00'
+        break;  
+      case 56:
+        this.arrEndTime = '13:00'
+        break;
+      case 60:
+        this.arrEndTime = '14:00'
+        break;
+      case 64:
+        this.arrEndTime = '15:00'
+        break;
+      case 68:
+        this.arrEndTime = '16:00'
+        break;
+      case 72:
+        this.arrEndTime = '17:00'
+        break;
+      case 76:
+        this.arrEndTime = '18:00'
+        break;  
+      case 80:
+        this.arrEndTime = '19:00'
+        break;
+      case 84:
+        this.arrEndTime = '20:00'
+        break;
+      case 88:
+        this.arrEndTime = '21:00'
+        break;
+      case 92:
+        this.arrEndTime = '22:00'
+        break; 
+      case 96:
+        this.arrEndTime = '23:00'
+        break;
+      case 100:
+        this.arrEndTime = '24:00'
+        break; 
+      default:
+        this.arrEndTime = '24:00'
+        break;
+    }
+  }
+
+      
+  
+
+  
 
   updateDepAir(item,n){
       if(item  == true){
@@ -238,21 +585,33 @@ export class FlightFilterComponent implements OnInit{
                 "depcode": this.airDepArrs[i].depcode
             }
             this.result.push(airDepArrsObj);　
+            this.flightData = _.filter(this.flightData,  function(o){ return o.segments[0].fromAirport == airDepArrsObj.depcode } );
+             
+            // this.flightData = _.chain(this.flightData) 
+            //              .filter(function(v) {
+            //                     return v.segments[0].fromAirport >= zData.arrStartTime &&  v.segments[0].toAirport <= zData.arrEndTime;
+            //               })
+            //              .value();
+            
+
+
+            this.resultLen  = _.size(this.flightData);
           }
         }
         sessionStorage.setItem("resultData",JSON.stringify(this.result));
-        this.filter(this.result);
         this.isAirCompanyIco = true;
         this.airDepArrs[0].airDepOption = false;
       }else{
         this.result.splice(n-1,1);
         if(n === 1){
-          let airDepObj = {
+          let airDepArrsObj = {
               "value":this.airDepArrs[0].value,
               "depcode": this.airDepArrs[0].depcode
           }
-          sessionStorage.setItem("resultData",JSON.stringify(airDepObj));
-          this.resultLen = this.flightData.length;
+          sessionStorage.setItem("resultData",JSON.stringify(airDepArrsObj));
+          this.flightData = _.filter(this.flightData,  function(o){ return o.segments[0].fromAirport == airDepArrsObj.depcode } );
+          this.resultLen  = _.size(this.flightData);
+
           this.airDepArrs[0].airDepOption = true;
           this.isAirCompanyIco = false;
         }
@@ -268,72 +627,30 @@ export class FlightFilterComponent implements OnInit{
               "arrcode": this.airArrArrs[i].arrcode
           }
           this.result.push(airArrArrsObj);
+          this.flightData = _.filter(this.flightData,  function(o){ return o.segments[0].toAirport == airArrArrsObj.arrcode } );
+          this.resultLen  = _.size(this.flightData);          
         }
       }
       sessionStorage.setItem("resultData",JSON.stringify(this.result));
-      this.filter(this.result);
       this.isAirCompanyIco = true;
       this.airArrArrs[0].airArrOption = false;
     }else{
       this.result.splice(n-1,1);
       if(n === 1){
-        let airArrObj = {
+        let airArrArrsObj = {
             "value":this.airArrArrs[0].value,
             "arrcode": this.airArrArrs[0].arrcode
         }
-        sessionStorage.setItem("resultData",JSON.stringify(airArrObj));
-        this.resultLen = this.flightData.length;
+        sessionStorage.setItem("resultData",JSON.stringify(airArrArrsObj));
+        this.flightData =  _.filter(this.flightData,  function(o){ return o.segments[0].toAirport == airArrArrsObj.arrcode } );
+        this.resultLen  = _.size(this.flightData);
         this.airArrArrs[0].airArrOption = true;
         this.isAirCompanyIco = false;
       }
     }
   }
 
-  updateTime(item,n){
-    // console.log('item:'+item);
-    // console.log('n:'+n);
-    if(item  == true){
-      for(let i=1; i<this.timeArrs.length; i++){
-        if(i == n){
-          let timeArrsObj = {
-              "value":this.timeArrs[i].timeDate,
-              "time": this.timeArrs[i].time
-          }
-          this.result.push(timeArrsObj);
-        }
-      }
-      sessionStorage.setItem("resultData",JSON.stringify(this.result));
-      this.filter(this.result);
-      this.isTimeIco = true;
-      this.timeArrs[0].timeOption = false;
-    }else{
-      // if(n<1){
-      //   this.result.splice(n,1);
-      // }
-      this.result.splice(n-1,1);
-      sessionStorage.setItem("resultData",JSON.stringify(this.result));
-      let num = JSON.parse(sessionStorage.getItem("resultData")).length;
-      //console.log('num:'+ num );
-      if(num === 1){
-         this.result.splice(0,1);
-         sessionStorage.setItem("resultData",JSON.stringify(this.result));
-      }
-      if(num === 0){
-        let timeObj = {
-             "value":this.timeArrs[0].timeDate,
-             "time": this.timeArrs[0].time
-         }
-         sessionStorage.setItem("resultData",JSON.stringify(timeObj));
-         this.resultLen = this.flightData.length;
-         this.timeArrs[0].timeOption = true;
-         this.isTimeIco = false;
-      }
-    }
-  }
-
-
   getCabinCheck(item,n){
-    //console.log('n:'+n);
     if(item  == true){
       for(let i=0; i<this.cabinArrs.length; i++){
         if(i == n){
@@ -342,10 +659,12 @@ export class FlightFilterComponent implements OnInit{
               "cabincode": this.cabinArrs[i].cabincode
           }
           this.result.push(cabinObj);
+          this.flightData = _.filter(this.flightData,  function(o){ return o.prices[0].cabinList[0].cabinRank == cabinObj.cabincode } );
+          this.resultLen  = _.size(this.flightData);
         }
       }
       sessionStorage.setItem("resultData",JSON.stringify(this.result));
-      this.filter(this.result);
+     
       this.isCabinIco = true;
       this.cabinArrs[0].cabinOption = false;
     }else{
@@ -356,7 +675,8 @@ export class FlightFilterComponent implements OnInit{
             "cabincode": this.cabinArrs[0].cabincode
         }
         sessionStorage.setItem("resultData",JSON.stringify(cabinObj));
-        this.resultLen = this.flightData.length;
+        this.flightData = _.filter(this.flightData,  function(o){ return o.prices[0].cabinList[0].cabinRank == cabinObj.cabincode } );
+        this.resultLen  = _.size(this.flightData);
         this.cabinArrs[0].cabinOption = true;
         this.isCabinIco = false;
       }
@@ -372,10 +692,11 @@ export class FlightFilterComponent implements OnInit{
               "airportcode": this.Filters[i].airportcode
           }
           this.result.push(filtersObj);
+          this.flightData = _.filter(this.flightData, function(o){ return o.segments[0].flightNo.substr(0,2) == filtersObj.airportcode } );
+          this.resultLen  = _.size(this.flightData);            
         }
       }
       sessionStorage.setItem("resultData",JSON.stringify(this.result));
-      this.filter(this.result);
       this.isAirportIco = true;
       this.Filters[0].airportOption = false;
     }else{
@@ -386,7 +707,9 @@ export class FlightFilterComponent implements OnInit{
             "airportcode": this.Filters[0].airportcode
         }
         sessionStorage.setItem("resultData",JSON.stringify(filtersObj));
-        this.resultLen = this.flightData.length;
+        this.flightData = _.filter(this.flightData, function(o){ return o.segments[0].flightNo.substr(0,2) == filtersObj.airportcode } );
+        this.resultLen  = _.size(this.flightData);
+
         this.Filters[0].airportOption = true;
         this.isAirportIco = false;
       }
@@ -406,15 +729,6 @@ export class FlightFilterComponent implements OnInit{
         if(item == this.shareFlight){
           this.result.splice(m,1);
           this.shareFlight = false;
-        }
-      }
-
-      for(let i=0; i<this.timeArrs.length; i++){
-        if(this.timeArrs[i].timeOption === true){
-          if(item == this.timeArrs[i].timeDate){
-            this.result.splice(m,1);
-            this.timeArrs[i].timeOption = false;
-          }
         }
       }
 
@@ -456,185 +770,12 @@ export class FlightFilterComponent implements OnInit{
 
   }
 
-  filter(options){
-      if(options == 'ALL'){
-        this.resultLen = this.flightData.length;
-      }else{
-          for(let item of options){
-            this.filterData(this.flightData,item);
-          }
-      }
-      
-  }
-
-  filterData(objData,item){
-    this.temporaryData = [];
-    [...objData].forEach((items,o) => {
-        let segs = items.segments;
-        let prices = items.prices;
-        
-        if(item.time === 'ALL' || item.depcode === 'ALL' || item.arrcode === 'ALL' || item.cabincode === 'Y' || item.airportcode === 'ALL'){
-          this.resultLen = this.flightData.length;
-        }
-
-        this.timeUp   = item.value.split('-')[0];
-        this.timeDown = item.value.split('-')[1];
-  
-        let resultView = JSON.parse(sessionStorage.getItem("resultData"));
-        //起飞时间
-          if(item.value){
-            if(this.flag){
-              for(let k of segs){
-                if(resultView.length > 1){
-                    if( (segs[0].fromDate.substr(-5,5) >= this.timeUp && segs[segs.length-1].toDate.substr(-5,5) <= this.timeDown) 
-                        // ( (segs[0].fromDate.substr(-5,5) >= this.timeUp && segs[segs.length-1].toDate.substr(-5,5) <= this.timeDown) && k.fromAirport === item.depcode) ||
-                        // ( (segs[0].fromDate.substr(-5,5) >= this.timeUp && segs[segs.length-1].toDate.substr(-5,5) <= this.timeDown) && k.toAirport === item.arrcode)   ||
-                        // ( (segs[0].fromDate.substr(-5,5) >= this.timeUp && segs[segs.length-1].toDate.substr(-5,5) <= this.timeDown) && k.fromAirport === item.depcode && k.toAirport === item.arrcode) ||
-                        // ( (segs[0].fromDate.substr(-5,5) >= this.timeUp && segs[segs.length-1].toDate.substr(-5,5) <= this.timeDown) && k.flightNo.substr(0,2) === item.airportcode)  ||
-                        // ( (segs[0].fromDate.substr(-5,5) >= this.timeUp && segs[segs.length-1].toDate.substr(-5,5) <= this.timeDown) && prices[0].cabinList[0].cabinRank === item.cabincode) ||
-                        // ( (segs[0].fromDate.substr(-5,5) >= this.timeUp && segs[segs.length-1].toDate.substr(-5,5) <= this.timeDown) && k.fromAirport === item.depcode && k.toAirport === item.arrcode && k.flightNo.substr(0,2) === item.airportcode) ||
-                        // ( (segs[0].fromDate.substr(-5,5) >= this.timeUp && segs[segs.length-1].toDate.substr(-5,5) <= this.timeDown) && k.fromAirport === item.depcode && k.toAirport === item.arrcode && prices[0].cabinList[0].cabinRank === item.cabincode) ||
-                        // ( (segs[0].fromDate.substr(-5,5) >= this.timeUp && segs[segs.length-1].toDate.substr(-5,5) <= this.timeDown) && k.fromAirport === item.depcode && k.toAirport === item.arrcode && k.flightNo.substr(0,2) === item.airportcode && prices[0].cabinList[0].cabinRank === item.cabincode)
-                      ){
-                      this.senderData.push(this.timeUp);
-                      this.senderData.push(this.timeDown);
-                      this.flag = true;
-                    }else{
-                    this.flag = false;
-                    this.resultLen = 0;
-                    }
-                }else{
-                  
-                    
-                }    
-              }
-            }            
-          }
-        
-        
-
-        //出发机场三字码
-        if(item.depcode){
-          if(this.flag){
-              for(let k of segs){
-               if(k.fromAirport === item.depcode 
-                    // (k.fromAirport === item.depcode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) )   ||
-                    // (k.fromAirport === item.depcode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) && k.toAirport === item.arrcode) ||
-                    // (k.fromAirport === item.depcode && k.flightNo.substr(0,2) === item.airportcode)  ||
-                    // (k.fromAirport === item.depcode && prices[0].cabinList[0].cabinRank === item.cabincode) ||
-                    // (k.fromAirport === item.depcode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) && k.toAirport === item.arrcode && k.flightNo.substr(0,2) === item.airportcode) ||
-                    // (k.fromAirport === item.depcode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) && k.toAirport === item.arrcode && prices[0].cabinList[0].cabinRank === item.cabincode) ||
-                    // (k.fromAirport === item.depcode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) && k.toAirport === item.arrcode && k.flightNo.substr(0,2) === item.airportcode && prices[0].cabinList[0].cabinRank === item.cabincode)
-                  ){  
-                  this.senderData.push(item.depcode);
-                  this.flag = true;
-                }else{
-                  this.flag = false;
-                }
-              }
-          }          
-        }
-
-        //到达机场三字码
-        if(item.arrcode){
-          if(this.flag){
-            for(let k of segs){
-              if(k.toAirport === item.arrcode  
-                  // (k.toAirport === item.arrcode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) )   ||
-                  // (k.toAirport === item.arrcode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) && k.fromAirport === item.depcode) ||
-                  // (k.toAirport === item.arrcode && k.flightNo.substr(0,2) === item.airportcode)  ||
-                  // (k.toAirport === item.arrcode && prices[0].cabinList[0].cabinRank === item.cabincode) ||
-                  // (k.toAirport === item.arrcode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) && k.fromAirport === item.depcode && k.flightNo.substr(0,2) === item.airportcode) ||
-                  // (k.toAirport === item.arrcode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) && k.fromAirport === item.depcode && prices[0].cabinList[0].cabinRank === item.cabincode) ||
-                  // (k.toAirport === item.arrcode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) && k.fromAirport === item.depcode && k.flightNo.substr(0,2) === item.airportcode && prices[0].cabinList[0].cabinRank === item.cabincode)
-                ){  
-                this.senderData.push(item.arrcode);
-                this.flag = true;
-              }else{
-                this.flag = false;
-              }
-            }
-          }     
-        }
-
-        //航空公司二字码
-        if(item.airportcode){
-          if(this.flag){
-               for(let k of segs){
-                  if(k.flightNo.substr(0,2) === item.airportcode
-                  //     (k.flightNo.substr(0,2) === item.airportcode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) )   ||
-                  //     (k.flightNo.substr(0,2) === item.airportcode && k.fromAirport === item.depcode)  ||
-                  //     (k.flightNo.substr(0,2) === item.airportcode && k.toAirport === item.arrcode)  ||
-                  //     (k.flightNo.substr(0,2) === item.airportcode && prices[0].cabinList[0].cabinRank === item.cabincode) ||
-                  //     (k.flightNo.substr(0,2) === item.airportcode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) && k.fromAirport === item.depcode) ||
-                  //     (k.flightNo.substr(0,2) === item.airportcode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) && k.toAirport   === item.arrcode) ||
-                  //     (k.flightNo.substr(0,2) === item.airportcode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) && k.fromAirport === item.depcode && prices[0].cabinList[0].cabinRank === item.cabincode) ||
-                  //     (k.flightNo.substr(0,2) === item.airportcode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) && k.toAirport   === item.arrcode && prices[0].cabinList[0].cabinRank === item.cabincode) 
-                  // ){
-                    ){
-                    this.senderData.push(item.airportcode);
-                    this.flag = true;
-                  }else{
-                    this.flag = false;            
-                  }
-                }
-          }
-          
-        }
-
-        //舱位三字码
-        if(item.cabincode){
-          if(this.flag){
-               for(let k of segs){
-                  if(prices[0].cabinList[0].cabinRank === item.cabincode 
-                    //   (prices[0].cabinList[0].cabinRank === item.cabincode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) )   ||
-                    //   (prices[0].cabinList[0].cabinRank === item.cabincode && k.fromAirport === item.depcode)  ||
-                    //   (prices[0].cabinList[0].cabinRank === item.cabincode && k.toAirport === item.arrcode)  ||
-                    //   (prices[0].cabinList[0].cabinRank === item.cabincode && k.flightNo.substr(0,2) === item.airportcode) ||
-                    //   (prices[0].cabinList[0].cabinRank === item.cabincode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) && k.fromAirport === item.depcode) ||
-                    //   (prices[0].cabinList[0].cabinRank === item.cabincode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) && k.toAirport   === item.arrcode) ||
-                    //   (prices[0].cabinList[0].cabinRank === item.cabincode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) && k.flightNo.substr(0,2) === item.airportcode && k.fromAirport === item.depcode) ||
-                    //   (prices[0].cabinList[0].cabinRank === item.cabincode && (k.fromDate.substr(-5,5) >= this.timeUp && k.toDate.substr(-5,5) <= this.timeDown) && k.flightNo.substr(0,2) === item.airportcode && k.toAirport   === item.arrcode) 
-                    ){
-                    this.senderData.push(item.cabincode);
-                    this.flag = true;
-                  }else{
-                    this.flag = false;
-                  }
-               }
-          }
-          
-        }        
-
-
-      if(this.flag){
-        console.log('senderData:'+this.senderData);
-        for(let o of this.senderData){
-          if(items.indexOf(o) === -1){
-            this.temporaryData.push(items);
-          }
-        }
-        this.resultData = this.temporaryData;
-        this.resultLen = this.temporaryData.length;
-        //console.log('len:'+this.resultLen);
-      }
-
-        
-
-    });
-    console.log('data:'+JSON.stringify(this.temporaryData));
-    
-  }
-
   cancelFilter(){
-    this.filterChange.emit(this.resultData);
-    //console.log('cancel');
+    this.filterChange.emit(this.originflightData.data);
   }
 
   updateFilter(){
-    //console.log('temp:'+JSON.stringify(this.resultData));
-    this.filterChange.emit(this.resultData);
-    //console.log('success');
+    this.filterChange.emit(this.flightData);
   }
   
 }

@@ -7,7 +7,7 @@
         	</div>
         	<ion-slides pager autoplay="2000" loop="true" autoplayDisableOnInteration="true">
 				  <ion-slide>
-				    <img class="swiper_img" src="../assets/img/search/banner1.jpg">
+				    <img class="swiper_img" src="assets/img/search/banner1.jpg">
 				  </ion-slide>
 			</ion-slides>
 			<div class="kuai"></div>
@@ -25,7 +25,7 @@
 							<div class="dateItem">
 							    <span class="iconfont">&#xe6bd;</span>
 								<div class="dateBox">
-									<input type="text" (click)="fromDate()" class="riqi" #dep placeholder="请选择出发日期" readonly="readonly" />
+									<input type="text" (click)="fromDate()" class="riqi" #dep placeholder="出发日期" readonly="readonly" />
 									<span class="week" #depWeek></span>
 								</div>							
 							</div>
@@ -36,7 +36,7 @@
 								<div class="dateItem">
 							    	<span class="iconfont">&#xe6eb;</span>
 									<div class="dateBox">
-										<input type="text" (click)="toDate()" class="riqi" #arr placeholder="请选择返回日期" readonly="readonly" />
+										<input type="text" (click)="toDate()" class="riqi" #arr placeholder="返回日期" readonly="readonly" />
 										<span class="week" #arrWeek></span>
 									</div>							
 								</div>
@@ -91,7 +91,7 @@
 				</div>
 			</div>
 			<div class="searchbtn">
-				<span class="search" (click)="searchbtn()">搜索</span>
+				<span class="search" (click)="searchbtn()">搜索</span>		
 			</div>
 		</div>	
 </ion-content>

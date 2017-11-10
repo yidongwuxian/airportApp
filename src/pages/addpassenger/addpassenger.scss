@@ -3,6 +3,23 @@ page-addpassenger {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    .tabbar_box{
+        position:relative;
+        .pas_back{
+            flex:1;
+            float:left;
+            padding-left:4%;
+            font-size:1.6rem;
+        }
+        .pas_submit{
+            flex:1;
+            float:right;
+            color:#fff;
+            background:none;
+            padding-right:4%;
+            font-size:1.6rem;
+        }
+    }
     .top{
         flex-grow: 1;
         .resultTip{
@@ -34,11 +51,15 @@ page-addpassenger {
         }
     }
     .content {
+        background:#f3f5f7;
         >ul {
-            padding: 0 4%;
+            margin: 3%;
             background: white;
+            border-radius:3px;
             >li {
+                padding:0 4%;
                 height: 4.8rem;
+                line-height:4.8rem;
                 position: relative;
 			    &:before {
 			        display: block;
@@ -89,7 +110,7 @@ page-addpassenger {
 			            transform: scaleY(0.3);
 			        }
 			    }
-                &:last-child:after {
+                &:last-child:before {
                     border: none;
                 }
             }
@@ -106,12 +127,13 @@ page-addpassenger {
                     flex-direction: column;
                     min-width: 9rem;
                     .main_title {
-                        font-size: 16px;
-                        color: #999;
+                        font-size: 1.5rem;
+                        color: #99a3a7;
+                        line-height:1;
                     }
                     .fu_title {
                         color: #999;
-                        line-height: 10px;
+                        line-height: 18px;
                     }
                 }
                 .underline{
@@ -120,7 +142,12 @@ page-addpassenger {
                 //开关颜色样式重置
                 
                 .text{
+
                     flex-grow: 1;
+                    .pas_tx{
+                        font-size:1.5rem;
+                        color:#99a3a7;
+                    }
                     //单选按钮颜色重置
                     .sexRadio{
                         margin:5px 20px 0 0;
@@ -177,5 +204,35 @@ page-addpassenger {
         -moz-box-shadow: 0 -2px 10px #e2e0e0;
         /* 老的 Firefox */
         box-shadow: 0 -2px 10px #e2e0e0;
+    }
+    .pas_lnk{
+        margin:3%;
+        >a{
+            float:right;
+            color:#00b4ff;
+            font-size:1.2rem;
+        }
+    }
+    .switch_langBtn{
+        position:absolute;
+        top:6%;
+        right:5%;
+        z-index:1003;
+        border:1px solid #00b4ff;
+        background-color:#00b4ff;
+        border-radius:2px;
+        >span{
+            display:inline-block;
+            width:17px;
+            height:16px;
+            line-height:16px;
+            text-align:center;
+            background-color:#fff;
+            color:#00b4ff;
+        }
+         .cur{
+                background-color:#00b4ff;
+                color:#fff;
+            }
     }
 }

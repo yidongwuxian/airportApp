@@ -1,10 +1,33 @@
 page-flightdetail {
-    ion-navbar.toolbar{
-        background:#00b4ff;
-    }
-    .toolbar-title{ color:white; }
+    .minus_div{ display:inline; }
+    .from_trip{
+                display:flex;
+                margin:1rem 0;
+                justify-content: space-between;
+                .flex_left{
+                    flex:1;
+                    >span{
+                        display:inline-block;
+                        width:15px;
+                        height:15px;
+                        line-height:15px;
+                        text-align:center;
+                        color:#fff;
+                        background-color:#00b4ff;
+                        margin-right:5px;
+                    }
+                    >p{
+                        display:inline-block;
+                    }
+                }
+                .flex_right{
+                     flex:1;
+                     text-align:right;
+                     color:gray;
+                }
+            }
 	.flightMess {
-        padding: 0 4%;
+        padding: 0 4% 4%;
         position: relative;
 		    &:after {
 		        display: block;
@@ -57,24 +80,33 @@ page-flightdetail {
 		    }
         background: url('../../assets/img/search/index_map.png') center 10px no-repeat;
         background-size: 80%;
+
         .specific {
+            
             .flight {
-                padding-top: 20px;
                 position: relative;
+                .point_box{
+                    position: absolute;
+                    left:20%;
+                    top:0;
+                    width:1px; 
+                    height:100%;
+                    background-color:#bbb;
+                }
                 .point{
                     position: absolute;      
-                    width:10px;
-                    height:10px;             
+                    width:5px;
+                    height:5px;             
                     background-color:#00b4ff;
                     border-radius:45px;
                 }
                 .top{
-                    left:52px;
-                    top:10px
+                    left:-2px;
+                    top:-2px;
                 }
                 .bottom{
-                    bottom:-4px;
-                    left:52px;
+                    left:-2px;
+                    bottom:-2px;
                 }
                 .seg {
                     display: flex;
@@ -89,19 +121,15 @@ page-flightdetail {
                         .duration {
                             font-size: 10px;
                             color: #666;
-                            text-align:center;
                             margin:0.5rem 0;
                         }
                     }
                     .airport {
-                        border-left: 1px solid #e1e1e1;
                         flex-grow: 1;
                         padding-left: 22px;
-                        margin-left: 12px;
-                        
-                        p {
+                        >p {
                             font-size: 14px;
-                            margin-bottom: 15px;
+                            line-height:35px;
                             .iconfont {
                                 font-size: 14px;
                                 margin-right: 6px;
@@ -112,26 +140,6 @@ page-flightdetail {
                             .end {
                                 color: orange;
                             }
-                            .transfer {
-                                display: flex;
-                                align-items: center;
-                                position: relative;
-                                left:-32px;
-                                .transferCity {
-                                    font-size: 14px;
-                                    margin-right: 5px;
-                                }
-                                .transferTime {
-                                    font-size: 10px;
-                                    color: gray;
-                                }
-                                .zhuan {
-                                    color: #00b4ff;
-                                    font-size: 18px;
-                                    padding-right:10px;
-                                }
-                            }
-
                         }
 
                     }
@@ -216,28 +224,7 @@ page-flightdetail {
                 .count {
                     font-size: 16px;
                 }
-            }
-            .travelTypeYellow{
-                background-color:#ff9934;
-                color:#fff;
-                border-radius:0.2rem;
-                font-size:1.2rem;
-            }
-            .minusBox{
-                display: inline-block;
-                margin-left: 10px;
-                padding:0.1rem 0 0.1rem 0.2rem;
-                .minus_type{
-                    padding:0 0.2rem;
-                }
-                .minus_amount{
-                    display:inline-block;
-                    padding:0 0.3rem;
-                    font-size:1.2rem;
-                    color:#ff9934;
-                    background-color:white;
-                }
-            }   
+            }  
             .cabinAndDiscount{
                 display: inline-block;
                 color:#666;

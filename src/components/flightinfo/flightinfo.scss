@@ -1,0 +1,217 @@
+.order{  
+    position:relative;
+    .shrink{
+        position:absolute;
+        top:10%;
+        right:0;
+        .iconfont{
+            display: inline-block;
+            transform: translateY(-3px);
+            color:#00b4ff;
+            font-size: 16px;
+        }
+    }      
+    >div{
+        .route_bd{
+            height:40px;
+            line-height:40px;
+            background-color:#f6f6f6;
+            .route{
+                padding: 0 4%;
+                height:34px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .flex_left{
+                    flex:1;
+                    >span{
+                        display: inline-block;
+                        width:15px;
+                        height:15px;
+                        line-height:15px;
+                        text-align:center;
+                        margin-right:5px;
+                        font-size: 14px;
+                        color:#fff;
+                        background-color:#00b4ff;
+                    }
+                    >p{
+                        display:inline-block;
+                    }
+                }    
+                .flex_right{
+                     flex:1;
+                     text-align:right;
+                     color:gray;
+                }
+            }
+        }
+        
+        .routeMess{
+            padding: 12px 4%;
+            background: white;
+            .routeMess_top{
+                position: relative;
+                padding-bottom:18px;
+                display: flex;
+				justify-content: space-between;
+                .cangwei{
+                    display: flex;
+                }
+                .gaiqian{
+                    color:#00b4ff;
+                    margin-left:10px;
+                } 
+            }
+            .simpleRouterMess{
+                position: relative;
+                display: flex;
+                .flex_div{
+                    text-align:center;
+                    min-width:70px;
+                }
+                .time{
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+                .airport{
+                    font-size: 10px;
+                    color:gray;
+                }
+                .midmess{
+                    width:20%;
+                    background: url(../../assets/img/flightquery/line.png) no-repeat center 20%; 
+                    p{
+                        font-size: 10px;                            
+                    }                       
+                    .type{
+                        margin-top:5px;
+                        color:#00b4ff;
+                    }
+                    .tranformCity,.stopoverCity{
+                        color:#00b4ff;
+                    }
+                }
+            }
+            .routeMess_bottom{   
+                .flight{
+                    position: relative;  
+                    .point_box{
+                        position: absolute;
+                        left:30%;
+                        top:0;
+                        width:1px; 
+                        height:100%;
+                        background-color:#bbb;
+                    }
+                    .point{
+                        position: absolute;
+                        display:block;
+                        width:5px;
+                        height:5px;
+                        border-radius:45px;                   
+                        background-color:#00b4ff;
+                    }
+                    .top{
+                        left:-2px;
+                        top:-2px;
+                    }
+                    .bottom{
+                        left:-2px;
+                        bottom:-2px;
+                    }  
+                    .seg{                      
+                    display: flex;
+                    justify-content: space-between;
+                    .times{
+                        .time{
+                            font-size: 2rem;
+                            color:#333;
+                            line-height:1.5;
+                        }
+                        .duration{
+                            color:#aaa;
+                            font-size: 1.2rem;
+                            line-height:1.5;
+                        }
+                    }
+                    .airport{
+                        padding-left: 22px;
+                        .airpt{
+                            font-size: 1.7rem;
+                            color:#333;
+                            margin-bottom:12px;
+                            &:nth-of-type(2){
+                                margin:0;
+                            }
+                            .iconfont {
+                                font-size: 14px;
+                                margin-right: 6px;
+                            }
+                            .start {
+                                color: green;
+                            }
+                            .end {
+                                color: orange;
+                            }
+                        }
+                        .transfer{
+                            color:gray;
+                            line-height: 36px;
+                            .zhuan {
+                                width:10px;
+                                height:10px;
+                                line-height:10px;
+                                text-align:center;
+                                background-color:#aaa;
+                                color: white;
+                                border-radius:45px;
+                                display: inline-block;
+                                transform: translate(-32px,3px);
+                            }
+                            .transferCity{
+                                margin-right: 5px;
+                            }
+                        }    
+                    } 
+                    .airline{                        
+                        >div{
+                            text-align: right;
+                            color:#aaa;
+                            font-size: 1.2rem;
+                        }
+                    }  
+                }
+                           
+                
+                    
+                }
+            }
+            .segBottom{
+                display: flex;
+                margin:3% 0;
+                .flex_left{
+                    flex:1;
+                    color:#666;
+                    text-align:left;
+                     .sign{
+                        img{
+                            width:12px;
+                            height:12px;
+                            position: relative;
+                            top:2px;
+                        }
+                    }
+                }
+                .flex_right{
+                     flex:.5;
+                     text-align:right;
+                     color:gray;
+                }
+                .gaiqian{
+                    color:#00b4ff;
+                }
+            }
+        }
+    }
+}

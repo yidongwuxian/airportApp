@@ -5,13 +5,16 @@ import { UtilsService } from '../../service/utils.service';
 import { FlightTabComponent } from '../../components/flighttab/flighttab';
 import { FlightdetailPage } from '../../pages/flightdetail/flightdetail';
 import { baseUrl,shoppingUrl } from '../../providers/url';
+import { DisCountComponent } from '../../components/discount/discount';
 import { FlightFilterComponent } from '../../components/flightfilter/flightfilter';
 import { ModalComponent } from '../../components/modal/modal';
+import { MinuesPipe } from '../../pipe/minues.pipe';
+import * as _ from 'lodash';
 @IonicPage()
 @Component({
   selector: 'page-flightquery',
   templateUrl: 'flightquery.html',
-  providers:[HttpService,UtilsService,FlightTabComponent]
+  providers:[HttpService,UtilsService,FlightTabComponent,MinuesPipe]
 })
 
 export class FlightqueryPage implements OnInit{
@@ -23,8 +26,8 @@ export class FlightqueryPage implements OnInit{
   imagePath: any;
   isShareIco: boolean = false;
   stopoverCityName: string;
-  timeFlag: number = 0;
-  priceFlag: number = 1;
+  timeFlag: boolean = false;
+  priceFlag: boolean = true;
   sortType: string = "price_asc";
   deptStartDateStr: string;
   routingType: string;
@@ -40,8 +43,6 @@ export class FlightqueryPage implements OnInit{
   showPrices:     any;
   supplierIdIcon: string;
   tranCity:       string;
-  isNoTrans:    boolean = false;
-  isTrans:      boolean = true;
   jumpTo: string;
   loader: any;
   isFilter: boolean = false;
@@ -49,13 +50,13 @@ export class FlightqueryPage implements OnInit{
   forDate: string;
   toDate: string;
   isSupplierId: boolean = true;
-  isMinus: boolean = true;
-  minusType: string = '';
-  minusAmount: number;
-  flightNum: any;
   stopAirportName: any;
   isStopCity: boolean = false;
   stopOvers: any;
+  deptStartVal: string;
+  seTotal: string;
+  seFirst: string;
+  seLast: string;
   constructor(public navCtrl: NavController, 
   	          public navParams: NavParams,
               public alertCtrl: AlertController,
@@ -85,6 +86,7 @@ export class FlightqueryPage implements OnInit{
     this.priceTx.nativeElement.innerText = '从低到高';
     let deptStartDate = this.navParams.get('deptStartDate');
     this.deptStartDateStr = deptStartDate;
+    this.deptStartVal = deptStartDate;
 
     this.routingType = this.navParams.get('routingType');
     this.deptCity = this.navParams.get('deptCity');
@@ -94,6 +96,8 @@ export class FlightqueryPage implements OnInit{
     this.adtCnt = this.navParams.get('adtCnt');
     this.chdCnt = this.navParams.get('chdCnt');
     this.infCnt = 0; 
+
+    
 
     this.query(this.deptStartDateStr,this.sortType,this.routingType);
 
@@ -122,17 +126,28 @@ export class FlightqueryPage implements OnInit{
   }
 
   query(deptStartDate,sortType,routingType){
-    this.flightDate = this._UtilsService.addDateStr(deptStartDate, -1,2);
-    this.flightWeek = this._UtilsService.getWeek(deptStartDate,1);
+    
 
     if(routingType == 'OW'){
+      this.flightDate = this._UtilsService.addDateStr(deptStartDate, 0,2);  
+      this.flightWeek = this._UtilsService.getWeek(deptStartDate,1);
       this.QUERY_URL = baseUrl+shoppingUrl+'?routingType='+this.routingType+'&deptCity='+this.deptCity+'&arrCity='+this.arrCity+'&deptStartDate='+
       this.deptStartDateStr+'&seatClass='+this.seatClass+'&adtCnt='+this.adtCnt+'&chdCnt='+this.chdCnt+'&infCnt='+this.infCnt+'&sortType='+sortType+'&temp='+Math.random().toString();
-      //this.QUERY_URL = '../assets/data/ae.json';
     }else{
-        //this.QUERY_URL = '../assets/data/ae.json';
+      if(this.jumpTo === 'flightdatilToQuery'){
+        let flightQueryInfoData = JSON.parse(sessionStorage.getItem("flightQueryInfo"));
+        this.flightDate = this._UtilsService.addDateStr(flightQueryInfoData.deptEndDate, 0,2);  
+        this.flightWeek = this._UtilsService.getWeek(flightQueryInfoData.deptEndDate,1);
+        this.QUERY_URL = baseUrl+shoppingUrl+'?routingType='+flightQueryInfoData.routingType+'&deptCity='+flightQueryInfoData.arrCity+'&arrCity='+flightQueryInfoData.deptCity+'&deptStartDate='+
+        flightQueryInfoData.deptEndDate+'&deptEndDate='+flightQueryInfoData.deptStartDate+'&seatClass='+flightQueryInfoData.seatClass+'&adtCnt='+flightQueryInfoData.adtCnt+'&chdCnt='+flightQueryInfoData.chdCnt+'&infCnt='
+        +flightQueryInfoData.infCnt+'&sortType='+sortType+'&temp='+Math.random().toString();
+      }else{
+        this.flightDate = this._UtilsService.addDateStr(deptStartDate, 0,2);  
+        this.flightWeek = this._UtilsService.getWeek(deptStartDate,1);
         this.QUERY_URL = baseUrl+shoppingUrl+'?routingType='+this.routingType+'&deptCity='+this.deptCity+'&arrCity='+this.arrCity+'&deptStartDate='+
         this.deptStartDateStr+'&deptEndDate='+this.deptEndDate+'&seatClass='+this.seatClass+'&adtCnt='+this.adtCnt+'&chdCnt='+this.chdCnt+'&infCnt='+this.infCnt+'&sortType='+sortType+'&temp='+Math.random().toString();
+      }
+        
     }
 
         this.createLoader();
@@ -142,17 +157,10 @@ export class FlightqueryPage implements OnInit{
             (res) => { 
               if(res.status == '1001'){
                 this.loader.dismiss();
-                let flightData = JSON.parse(sessionStorage.getItem('flightData'));
-                if(flightData){
-                  //console.log('1');
-                  this.flightData = flightData;
-                  this.flightQuery(flightData);
-                }else{
-                  //console.log('2');
-                  this.flightData = res.data;
-                  sessionStorage.setItem('flightData',JSON.stringify(res.data));
-                  this.flightQuery(res.data);
-                }
+                  this.flightData = _.orderBy(res.data, 'minAdultFacePrice');
+                  sessionStorage.setItem('flightData',JSON.stringify(res));
+                  
+                  this.flightQuery(res);
               }else if(res.status == '1002'){
                   this.promptInfo.nativeElement.innerText = '没有找到相匹配的航班信息!';
                   return false;
@@ -185,7 +193,6 @@ export class FlightqueryPage implements OnInit{
                 this.forDate = segments.fromDate.substr(-5,5);
                 this.toDate  = segments.toDate.substr(-5,5);
                 let prices   = value.prices;
-                let activity = value.activity;
                 let minAdultFacePrice = value.minAdultFacePrice;
                 let shareFlightNo = segments.shareFlightNo;
                     if(shareFlightNo){
@@ -194,22 +201,6 @@ export class FlightqueryPage implements OnInit{
                       this.isShareIco = false;
                     }
                     
-                    let rangeSegmentCount = value.rangeSegmentCount;
-                    let flightCount:number;
-                    if(rangeSegmentCount.length > 3){
-                      flightCount = rangeSegmentCount.split(',')[0].substr(-1);
-                    }else{
-                      flightCount = rangeSegmentCount.substr(-1);
-                    }
-                    this.flightNum = Math.ceil(value.segments.length/2);
-                    if(flightCount != 1){
-                      this.isTrans = false;
-                      this.isNoTrans = true;
-                    }else{
-                      this.isTrans = true;
-                      this.isNoTrans = false;   
-                    }
-
                     //经停 start
                     let stopoverCity = '';
                     for(let item of value.segments){
@@ -223,7 +214,7 @@ export class FlightqueryPage implements OnInit{
                     for(let item of prices){
                       if(minAdultFacePrice == item.adultFacePrice){
                          let supplierId = item.supplierId;
-                         if(supplierId == 'JHAD'){
+                         if(supplierId === 'JHAD'){
                            this.isSupplierId = false;
                            this.supplierIdIcon = '航司直销';
                          }else{
@@ -231,21 +222,18 @@ export class FlightqueryPage implements OnInit{
                          }
                       }
                     }
-                    
-                     
 
-                    //活动优惠
-                    if(activity){
-                      if(activity.actContent == 0){
-                        this.minusType = '票面立减';
-                      } 
-                      if(activity.actContent == 1){
-                        this.minusType = '保险立减';
-                      } 
-                      this.minusAmount = activity.actMoney;
-                      this.isMinus = false;
+                  this.seTotal = segments.flightDuration;
+                  if(segments.flightDuration){
+                    if((segments.flightDuration/60) >= 1){
+                      this.seFirst = String(segments.flightDuration/60).split('.')[0]
+                      this.seLast = String(segments.flightDuration/60).split('.')[1]
+                      this.seTotal = this.seFirst + 'h' + this.seLast + 'm';
+                    }else{
+                      this.seTotal = segments.flightDuration + 'm';
                     }
-             
+                   
+                  }  
               }
   }
 
@@ -261,44 +249,44 @@ export class FlightqueryPage implements OnInit{
 
   filterResult($event){
     this.flightData = $event;
-    this.flightQuery(this.flightData);
-    console.log('flightdata:'+JSON.stringify(this.flightData));
+    this.flightQuery($event);
     this.isFilter = false;
     this.isModal  = false;
   }
 
   filterAsDate(){
     this.priceTx.nativeElement.innerText = '价格';
-    if(this.timeFlag%2 === 0){
+    if(this.timeFlag){
       this.dateTx.nativeElement.innerText = '从早到晚';
-      this.sortType = "date_asc";
+      this.flightData = _.orderBy(this.flightData, 'segments[0].fromDate'); //由低到高
     }else{
       this.dateTx.nativeElement.innerText = '从晚到早';
-      this.sortType = "date_desc";
+      this.flightData = _.orderBy(this.flightData, 'segments[0].fromDate').reverse(); //由低到高
     }
-    
-    this.timeFlag++;
-    this.query(this.deptStartDateStr,this.sortType,this.routingType);
+    this.timeFlag = !this.timeFlag;
   }
 
   filterAsPrice(){
     this.dateTx.nativeElement.innerText = '时间';
-    if(this.priceFlag%2 === 0){
-      this.priceTx.nativeElement.innerText = '从低到高';
-      this.sortType = "price_asc";
+    if(this.priceFlag){
+      this.flightData = _.orderBy(this.flightData, 'minAdultFacePrice'); //由低到高  
     }else{
-      this.priceTx.nativeElement.innerText = '从高到低';
-      this.sortType = "price_desc";
-    }
-    this.priceFlag++;
-    this.query(this.deptStartDateStr,this.sortType,this.routingType);
+      this.flightData = _.orderBy(this.flightData, 'minAdultFacePrice').reverse(); //由高到低
+    }    
+    this.priceFlag = !this.priceFlag;  
   }
 
   selectTheFlight(flight){
-    const flightObjFrom = {'data': flight};
-    flightObjFrom.data.prices = this._UtilsService.filterPrice(flightObjFrom.data.prices);
-    sessionStorage.setItem("flightObjFrom", JSON.stringify(flightObjFrom));
-    this.navCtrl.push(FlightdetailPage,{'type':'from'});
+    if(this.jumpTo === 'flightdatilToQuery'){
+      const flightObjTo = {'data': flight};
+      flightObjTo.data.prices = this._UtilsService.filterPrice(flightObjTo.data.prices);
+      sessionStorage.setItem("flightObjTo", JSON.stringify(flightObjTo));
+    }else{
+      const flightObjFrom = {'data': flight};
+      flightObjFrom.data.prices = this._UtilsService.filterPrice(flightObjFrom.data.prices);
+      sessionStorage.setItem("flightObjFrom", JSON.stringify(flightObjFrom));
+    }
+    this.navCtrl.push(FlightdetailPage);
   }
 
   ionViewWillLeave() {

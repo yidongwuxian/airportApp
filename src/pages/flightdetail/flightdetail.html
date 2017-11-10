@@ -4,39 +4,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-<div class="flightMess"  *ngFor="let seg of flightSegs; index as i; trackBy:trackByFlightData;">
-	<div class="specific">
-		<div class="flight">
-			<p><span class="point top"></span></p>
-			<p><span class="point bottom"></span></p>
-			<div>
-				<div class="seg">
-					<div class="time">
-						<p class="depTime">{{fromDateStr}}</p>
-						<p class="duration">{{seg.flightDuration}}m</p>
-						<p class="arrTime">{{toDateStr}}</p>
-					</div>
-					<div class="airport">
-						<p>{{seg.fromAirportCn}}{{seg.fromTower}}</p>
-						<p>{{seg.toAirportCn}}{{seg.toTower}}</p>
-						<p>
-							<span class="transfer" *ngIf="istranCity">
-								<span class="iconfont zhuan">&#xe606;</span>
-								<span class="transferCity">{{tranCity}}</span>
-							</span>
-							<span class="transferTime" *ngIf="isstopCity">停留{{stopoverCityName}}</span>
-						</p>
-					</div>
-					<div class="airline">
-						<p class="company">{{seg.airlineChn}}</p>
-						<p class="flightNo">{{seg.flightNo}}</p>
-						<p class="craft">{{seg.planeModel}}</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+<flightinfo [switch]="off"></flightinfo>
 <div class="cabin">
 	<ul>
 		<li class="item"  *ngFor="let price of flightPrices; index as i;">
@@ -44,10 +12,7 @@
 				<div class="money">
 					<span class="currencyType">￥</span>
 					<span class="count">{{price.adultFacePrice}}</span>
-					<p class="travelTypeYellow minusBox" [hidden]="!isMinus">
-				    	<span class="minus_type">{{minusType}}</span>
-				    	<span class="minus_amount">¥{{minusAmount}}</span>
-				    </p>
+					<discount></discount>
 				</div>
 				<div>
 					<span class="cabinAndDiscount">

@@ -97,16 +97,15 @@ page-search {
                             margin-right: 0.8rem;                       
                         }
                         .riqi{
+                            max-width:70px;
                             font-size: 1.6rem;
                             color:#00b4ff;
                             background:transparent;
                         }
                         .week{
-                            position: absolute;
-                            left:40%;
-                            top:0;
                             color:gray;
                             margin-left:5px;
+                            font-size:1.4rem;
                         }                   
                     }
                     .dataItem1{
@@ -238,8 +237,8 @@ page-search {
                     >span{
                         display:block;
                         position: absolute;
-                        top:9px;
-                        right:0px;
+                        top:5px;
+                        right:0;
                         z-index:114;
                         font-size:1.2rem;
                         color:#fff;
@@ -250,9 +249,9 @@ page-search {
                         right:0px;
                         width: 0px;
                         height: 0px;
-                        border-right: 23px solid #00b4ff;   
+                        border-right: 35px solid #00b4ff;   
                         border-bottom: 0px solid transparent;
-                        border-top: 15px solid transparent;
+                        border-top: 20px solid transparent;
 
                     }      
                 }

@@ -9,6 +9,8 @@ import { CabinPipe } from '../../pipe/cabin.pipe';
 import { OrderflightPage } from '../../pages/orderflight/orderflight';
 import { RefundrulePage } from '../../pages/refundrule/refundrule';
 import { FlightqueryPage } from '../../pages/flightquery/flightquery';
+import { DisCountComponent } from '../../components/discount/discount';
+import { FlightInfoComponent } from '../../components/flightinfo/flightinfo';
 import { LoginPage } from '../../pages/login/login';
 import { baseUrl,ordercmUrl } from '../../providers/url';
 @IonicPage()
@@ -17,17 +19,10 @@ import { baseUrl,ordercmUrl } from '../../providers/url';
   templateUrl: 'flightdetail.html',
   providers:[UtilsService,HttpService,CabinPipe]
 })
-export class FlightdetailPage {
-  flightSegs: any;
+export class FlightdetailPage implements OnInit{
   flightPrices: any;
+  priceTo: any;
   flightPrice: any;
-  fromDate: string;
-  fromDateStr: string;
-  toDateStr: string;
-  tranCity: string;
-  istranCity: boolean = false;
-  isstopCity: boolean = false;
-  stopoverCityName: string;
   routingType: string;
   countryType: string;
   internaCount: string;
@@ -38,12 +33,9 @@ export class FlightdetailPage {
   flightObjTo:  any;
   confirmParam: any;
   flightData: any;
-  flightseg: any;
-  flightpro: any;
   writeStr: string;
   calNumbers?:string;
   flightItem?: any;
-  priceItem?: any;
   flightInfo: object;
   airlineCompany: string;
   policyId: string;
@@ -59,15 +51,11 @@ export class FlightdetailPage {
   flightRangeArrayBack:Array<any> = [];
   QUERY_URL: string;
   token: string;
-  jumpTo: string;
   resData: any;
   type:string;
   headers: any;
   loader: any;
-  isMinus: boolean = true;
-  minusType: string = '';
-  minusAmount: number;
-  activity: any;
+  off: boolean = false;
   constructor(public navCtrl: NavController, 
   			      public navParams: NavParams,
               public alertCtrl: AlertController,
@@ -81,7 +69,7 @@ export class FlightdetailPage {
   }
 
   ngOnInit(){
-      sessionStorage.removeItem('flightData');
+      //sessionStorage.removeItem('flightData');
       this.type = this.navParams.get('type');
       this.flightObjFrom = JSON.parse(sessionStorage.getItem("flightObjFrom"));
       this.flightObjTo   = JSON.parse(sessionStorage.getItem("flightObjTo"));
@@ -89,79 +77,30 @@ export class FlightdetailPage {
       this.internaCount  = JSON.parse(localStorage.getItem('internaCount'));
       this.countryType   = sessionStorage.getItem('countryType');
       this.flightQueryInfo   = sessionStorage.getItem('flightQueryInfo');
+      this.flightPrices = this.flightObjFrom.data.prices;
 
-      this.flightSegs     = this.flightObjFrom.data.segments;
-      this.flightPrices   = this.flightObjFrom.data.prices;
-      this.fromDate       = this._UtilsService.getCurrentDate(this.flightSegs[0].fromDate,false);
-      this.activity = this.flightObjFrom.data.activity;
-   
-
-      //活动优惠 start
-      if(this.activity){
-        if(this.activity.actContent == 0){
-          this.minusType = '票面立减';
-        } 
-        if(this.activity.actContent == 1){
-          this.minusType = '保险立减';
-        } 
-        this.minusAmount = this.activity.actMoney;
-        this.isMinus = true;
+      if(this.flightObjTo){
+        this.flightPrices = this.flightObjTo.data.prices;
       }
-      
-      //活动优惠 end
-      console.log('item:'+JSON.stringify(this.activity));
-
-    if(this.routingType  == 'OW'){
-      this.flightData     = this.flightObjFrom.data;
-    }
-    if(this.routingType  == 'RT'){
-      this.flightData     = this.flightObjTo.data;
-    }  
-    for (let value of this.flightSegs) {
-      this.fromDateStr    = value.fromDate.substr(-5,5);
-      this.toDateStr      = value.toDate.substr(-5,5);
-      let rangeSegmentCount = this.flightObjFrom.data.rangeSegmentCount;
-      let stopOver:Array<any> = value.stopOver;
-      let flightCount:number;
-      if(rangeSegmentCount.length > 3){
-        if(this.routingType == 'OW'){
-          flightCount = rangeSegmentCount.split(',')[0].substr(-1);
-        }else{
-          flightCount = rangeSegmentCount.split(',')[1].substr(-1);
-        }
-      }else{
-        flightCount = rangeSegmentCount.substr(-1);
-      }
-      if(flightCount > 1){
-         this.tranCity = this.flightSegs[0].toAirport;
-         this.istranCity = true;
-      }else{
-         if(stopOver && stopOver.length !=0 ){
-            let stopoverCity = '';
-            for (let stopItem of stopOver) {
-              stopoverCity += stopItem.stopAirport;
-            }
-            this.stopoverCityName = stopoverCity;
-            this.isstopCity = true;
-        }    
-      }
-    }
   }
+
+  
 
   booking(price,priceIndex){
     this.flightPrice = {
         "prices": price
     }
     if(this.routingType  == 'OW'){
-      let adultPrice = this.flightData.prices.adultFacePrice;
+      let adultPrice = this.flightObjFrom.data.prices.adultFacePrice;
       this.goPrice(adultPrice,priceIndex,this.flightPrice,price,'from');
-    }else if(this.routingType  == 'RT'){
-      let adultPrice = this.flightData.prices.adultFacePrice;
-      this.goPrice(adultPrice,priceIndex,this.flightPrice,price,'to');
     }else{
-      sessionStorage.setItem("flightPriceFrom", JSON.stringify(this.flightPrice));
-      this.jumpUrl();
+      if(this.flightObjTo){
+        let adultPrice = this.flightObjTo.data.prices.adultFacePrice;
+        this.goPrice(adultPrice,priceIndex,this.flightPrice,price,'to');
+      }
     }
+    sessionStorage.setItem("flightPriceFrom", JSON.stringify(this.flightPrice));
+    this.jumpUrl();
   }
 
   createLoader(){
@@ -174,11 +113,10 @@ export class FlightdetailPage {
 
   goPrice(adultPrice,priceIndex,flightPrice,price,type){
     let params:any;
-    if(this.routingType == 'OW'){
-       this.getConfirmJson(this.flightObjFrom,priceIndex,price)
-    }
-    if(this.routingType == 'RT'){
+    if(this.flightObjTo){
       this.getConfirmJson(this.flightObjTo,priceIndex,price)
+    }else{
+      this.getConfirmJson(this.flightObjFrom,priceIndex,price)
     }
     this.QUERY_URL = baseUrl+ordercmUrl+'?temp='+Math.random().toString();
       
@@ -458,17 +396,13 @@ export class FlightdetailPage {
 
   jumpUrl(){
     if(this.routingType  == 'RT'){
-      if(this.type == 'from'){
-        this.navCtrl.push(FlightqueryPage,{'jumpTo':'flightdatilToQuery'});
+      if(this.flightObjTo){
+        this.navCtrl.push(OrderflightPage)
       }else{
-        this.navCtrl.push(OrderflightPage,{
-          'urlType': 'RT'
-        })
+        this.navCtrl.push(FlightqueryPage,{'jumpTo':'flightdatilToQuery'});
       }
-    }else if(this.routingType  == 'OW'){
-      this.navCtrl.push(OrderflightPage,{
-        'urlType': 'OW'
-      })
+    }else{
+      this.navCtrl.push(OrderflightPage)
     }
   }
 
